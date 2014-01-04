@@ -1,0 +1,143 @@
+{% extends 'restaurant/base_bootstrap_black_edition.html' %}
+{% block content3 %}
+	<div style="margin: 0 auto; padding-top:20px;">
+
+		<div class="span3">
+			<h1>Menu</h1>
+			<br>
+			<ul id="myTab" class="nav nav-pills nav-stacked">
+	          <li class="active"><a href="#dashboard" data-toggle="tab">Starter</a></li>
+	          <li><a href="#menu" data-toggle="tab" >Main diches</a></li>
+	          <li><a href="#post" data-toggle="tab" >Desert</a></li>
+	        </ul>
+	        <ul class="nav nav-list">
+	          <li class="nav-header">List header</li>
+	          <li class="active"><a href="#">Home</a></li>
+	          <li><a href="#">Library</a></li>
+	          ...
+	        </ul>
+
+		</div>
+		<div class="span9">
+	 		<div id="myCarousel" class="carousel slide row-fluid">
+	 		 
+		 		<ol class="carousel-indicators">
+		 		    <li data-target="#myCarousel" data-slide-to="0" class="active"></li>
+		 		    <li data-target="#myCarousel" data-slide-to="1"></li>
+		 		    <li data-target="#myCarousel" data-slide-to="2"></li>
+		 		</ol>
+		 		 
+		 		
+		 		<div class="carousel-inner">
+		 			
+			 		<div class="item active">
+			 			<img src="http://www.hyderabadi.info/warehouse/biryani.jpg" alt="Image" />
+			 		</div>
+			 		 
+			 		<div class="item">
+			 			<img src="http://www.kettlecuisine.com/assets/images/home/slideshow/2.jpg"  />
+			 		</div>
+			 		 
+			 		<div class="item">
+			 			<img src="http://rumbaonpike.com/images/hero_tacos.jpg" alt="Image"/>
+			 		</div>
+		 		 
+		 		</div>
+		 		 
+		 		<a class="left carousel-control" href="#myCarousel" data-slide="prev">‹</a>
+		 		<a class="right carousel-control" href="#myCarousel" data-slide="next">›</a>
+	 		</div>
+			<ul class="inline">
+			{% for i in food %}
+	  			<li>
+	  				<!-- <div class="thumbnail"> -->
+	  					<img src="{{MEDIA_URL}}{{i.picture}}" style="height:150px;">
+	  					<!-- <p>{{i.description}}</p> -->
+	  				<!-- </div> -->
+	  			</li>
+			{% endfor %}
+			</ul>
+			<!-- img capture ps. have to enable capture.css in base -->
+			<!-- <div id="mainwrapper">
+					<div class="box">
+						<img src="{{MEDIA_URL}}{{i.picture}}" alt="description of image" title="right way">
+					<span class="caption full-caption">
+						<p>Simple Caption</p>
+					</span>
+				</div>
+			</div> -->
+		</div>
+		
+	</div>
+
+<script type="text/javascript">
+function createBlock(data, column){
+    var row = document.createElement("div")
+    var img = document.createElement("img")
+    var h5 = document.createElement("h5")
+    var p1 = document.createElement("p")
+    var p2 = document.createElement("p")
+    var p3 = document.createElement("p")
+    var p4 = document.createElement("p")
+    var p5 = document.createElement("p")
+    var br = document.createElement("br")
+
+    row.setAttribute("class", "business-block")
+    row.setAttribute("href", "/restaurant/business/"+data['name'])
+    $(row).click(function(e){
+    	window.location = $(this).attr("href");
+    })
+
+    $(img).attr('src',  '{{MEDIA_URL}}imgs/'+data['picture'])
+    h5.innerHTML = data['name'];
+    // p1.innerHTML = data['address'];
+    // p2.innerHTML = data['city'];
+    // p3.innerHTML = data['country'];
+    // p4.innerHTML = data['zip_code'];
+    // p5.innerHTML = data['telephone'];
+    // p1.innerHTML = data['address'];
+    $(row).append(img)
+    $(row).append(h5)
+    // $(row).append(p1)
+    // $(row).append(p2)
+    // $(row).append(p3)
+    // $(row).append(p4)
+    // $(row).append(p5)
+
+    column.append(row)
+    column.append(br)
+}
+$(document).ready(function(){
+	$('#check-in').click(function(){
+		$(this).parent().slideUp("slow")
+	})
+})
+
+var business_id = $('#title').attr('business_id')
+var type = $('#form').attr('type')
+var url;
+if (type == 'restaurant'){
+	url = '/restaurant/get_menu';
+}
+else {
+	url = '/restaurant/get_product';
+}
+$.get(url, {"business_id":business_id}, function(data){
+	for (var i=0;i<data.length; i++){
+		if((i+1)%4 == 1){
+			createBlock(data[i],$('#block-column1'))
+		}
+		else if((i+1)%4 == 2){
+			createBlock(data[i],$('#block-column2'))
+		}
+		else if((i+1)%4 == 3){
+			createBlock(data[i],$('#block-column3'))
+		}
+		else{
+			createBlock(data[i],$('#block-column4'))
+		}	
+	}
+});
+
+</script>
+{% endblock %}

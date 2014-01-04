@@ -1,0 +1,362 @@
+{% extends 'restaurant/base_bootstrap_black_edition.html' %}
+{% block content3 %}
+	<div class="container2" style="margin: 0 auto; padding-top:20px; max-width:900px;">
+		<div style="background-color:white;">   
+     		<!-- <img src="https://fbcdn-sphotos-d-a.akamaihd.net/hphotos-ak-ash3/556334_10151559830962014_2068011705_n.jpg" style="width:100%; height:300px"> -->
+     		<img src="https://fbcdn-sphotos-d-a.akamaihd.net/hphotos-ak-ash3/556334_10151559830962014_2068011705_n.jpg" alt="Image" style="width:100%; height:300px"/>	
+ 			<div class="media">
+     		  <a class="pull-left" href="#">
+     		    <img class="media-object" src="{{MEDIA_URL}}{{restaurant.picture}}" style="height:150px; width:150px">
+     		  </a> 		  
+     		  <div class="media-body">
+     		  	<div class="span8">
+     		  				<h1 id="title" restaurant_id="{{restaurant.id}}" type="{{type}}">{{restaurant.name}}</h1>
+     		    			<p>{{restaurant.description}}</p>
+			    		  	{% if restaurant.user != userProfile %}
+					  	  		{% if restaurant in userProfile.follower.all %}
+					  	  			<button id="followBtn" class="btn btn-primary" follow="true" onclick="follow(this)">Following</button>
+					  	  		{% else %}
+					  	  			<button id="followBtn" class="btn btn-primary " follow="false" onclick="follow(this)">Follow</button>
+					  	  		{% endif %}
+			    		  	  	
+			    		  	{% endif %}
+     		  	</div>
+  	     		<div class="span4">
+ 		  		  	<ul class="inline" style="text-align:center;">
+ 		  				<li><h3>{{restaurant.visiting}}</h3><p>visiting</p></li>
+ 		  				<li><h3>{{restaurant.visitor}}</h3><p>visitor</p></li>
+ 		  				<li><h3>{{restaurant.follow}}</h3><p>Follower</p></li>
+ 		  			</ul>
+ 		  			<ul class="nav nav-pills ">
+			          <li><a href="/restaurant/business/{{restaurant.name}}">Home</a></li>
+			          <li class="active"><a href="#f">Check In</a></li>
+			          <li><a href="/restaurant/business/{{restaurant.name}}/hungry">Hungry</a></li>
+			          <li><a href="/restaurant/business/{{restaurant.name}}/follower">Follower</a></li>
+			          <li><a href="/restaurant/business/{{restaurant.name}}/about">About</a></li>
+			        </ul>
+  	     	  	</div>
+     		  </div>
+ 			</div>
+ 		</div>
+ 		<br>
+ 		<!-- currently info -->
+ 		<div id="info" class='container-fluid' style="background-color:white;padding:20px 20px;">
+ 			<div class="span4">
+	 			<div class="media">
+	     		  <a class="pull-left" href="#">
+	     		    <img class="media-object" src="{{MEDIA_URL}}{{userProfile.picture}}" style="height:50px; width:50px">
+	     		  </a> 		  
+	     		  <div class="media-body">
+		  				<h4 class="media-heading"><a href="#">{{userProfile.name}}</a></h4>
+		  				<h5 id="order_method">Order Method: </h5>
+	     		  </div>
+	 			</div>
+	 			<button id="orders_tab" class="btn btn-primary btn-block">Order</button>
+	 			<button class="btn btn-block">dlf</button>
+	 		</div>
+	 		<div class="span8">
+	 			<!-- <p class="lead"></p> -->
+	 			<legend>Table</legend>
+	 			
+	 			<!-- <div class="well container-fluid">
+ 				 				<table id="table" class="table" >
+ 					              <thead>
+ 					                <tr>
+ 					                  <th>Name</th>
+ 					                  <th>price</th>
+ 					                  <th>Amount</th>
+ 					                  <th>Action</th>
+ 					                </tr>
+ 					              </thead>
+ 					              <tbody id="order_row2">
+ 				                      
+ 					              </tbody>
+ 					            </table>
+ 					            <div class="pull-right">
+ 					            	<h4 id="total2">Total: $0</h4>
+ 					            	<a id="send_order2" class="btn btn-primary ">send_order</a>
+ 					            </div>
+ 				</div> -->
+ 				 			<div id="order_content">
+ 				 				<legend>Customer's order</legend>
+ 				 				<div class="row-fluid">
+ 						 				<div class="span8">
+ 							 				<div id="order" class="panel container-fluid">
+ 							 				<h4 id="order_header"></h4>
+ 							 				<table id="table" class="table" >
+ 								              <thead>
+ 								                <tr>
+ 								                  <th>Name</th>
+ 								                  <th>price</th>
+ 								                  <th>Quantity</th>
+ 								                  <th>Status<th>
+ 								                  <th>Action</th>
+ 								                </tr>
+ 								              </thead>
+ 								              <tbody id="bill_row">
+ 								              	
+ 							                      
+ 								              </tbody>
+ 								            </table>
+ 								            <div class="pull-right">
+ 								            	<!-- <h4 id="bill_total"></h4> -->
+ 								            	<a id="check_bill" class="btn btn-primary ">check bill</a>
+ 								            </div>
+ 								        	</div>
+ 								        </div>
+ 								        <div class="span4">
+ 								        	
+ 								        	<div class='well container-fluid'>
+ 								        		<legend>Total</legend>
+ 								        		<ul class="inline" >
+ 												  <li class="pull-right"><h4 id='bill_total' >0.00</h4></li>
+ 												  <li class="pull-right"><h4>£ </h4></li>
+ 												</ul>
+ 							                </div>
+ 							                <div class="row-fluid">
+ 								        		<div id="pay_function" table_id="" class="select-block">
+ 								        			Pay Bill
+ 								        		</div>
+ 								        	</div>
+ 								        	<br>
+ 							                <div class="row-fluid">
+ 								        		<div id="print_receipt" table_id="" class="select-block">
+ 								        			Print Receipt
+ 								        		</div>
+ 								        	</div>
+
+ 					                </div>
+
+ 				 				</div>
+
+ 				 	
+ 				 			</div>
+	 		</div>
+ 		</div>
+ 		<br>
+ 		<div class='container-fluid' style="background-color:white;padding:20px 0px; text-align:center">
+ 			<div class="span4 thumbnail" onclick="order()">
+				<img src="http://images1.friendseat.com/2011/05/Ordering.jpg"  style="width:140px; height:140px">
+ 				<h4><a href="#f">Order By Myself</a></h4>
+ 				<p>Quisque dignissim et cursus leo libero in nisi. Donec sit amet ipsum velit, a faucibus purus</p>
+			</div>
+ 			<div class="span4 thumbnail" onclick="kitchen()">
+ 				<img src="http://farm7.staticflickr.com/6043/6373812747_c57291a2e6.jpg" style="width:140px; height:140px">
+ 				<h4><a href="/restaurant/{{restaurant.name}}/kitchen">Take Away</a></h4>
+ 				<p>Quisque dignissim et cursus leo libero in nisi. Donec sit amet ipsum velit, a faucibus purus</p>
+			</div>
+			<div class="span4 thumbnail" onclikc="reservation()">
+				<img src="{{ MEDIA_URL }}imgs/reservation.jpg" style="width:140px; height:140px">
+ 				<h4><a href="/restaurant/{{restaurant.name}}/kitchen">Reservation</a></h4>
+ 				<p>Quisque dignissim et cursus leo libero in nisi. Donec sit amet ipsum velit, a faucibus purus</p>
+			</div>
+ 		</div>
+ 		<br>
+ 		<!-- tables -->
+ 		<legend>Select Table</legend>
+ 		<div id="table_list" class='container-fluid' style="background-color:white;padding:20px 0px;">
+ 			
+
+ 		</div>
+ 		<br>
+ 		<!-- menu -->
+ 		<legend>Select Food</legend>
+ 		<div id="menu-content" class='container-fluid' style="background-color:white;padding:20px 5px;">
+ 			<div id="menu" class="span8">
+ 				<div class="tabbable tabs-left"> <!-- Only required for left/right tabs -->
+ 				  <ul class="nav nav-tabs ">
+ 				    <li class="active"><a href="#main" data-toggle="tab">Main Course</a></li>
+ 				    <li><a href="#tab2" data-toggle="tab">Section 2</a></li>
+ 				  </ul>
+ 				  <div class="tab-content">
+ 				    <div class="tab-pane active" id="main">
+ 				    </div>
+ 				    <div class="tab-pane" id="tab2">
+ 				      <p>Howdy, I'm in Section 2.</p>
+ 				    </div>
+ 				  </div>
+ 				</div>
+ 			</div>
+ 			<div class="span4">
+ 				<h2 id="order_table_number"></h2>
+ 				 			<div class="well container-fluid">
+ 				 				<h1 id="order_header"></h1>
+ 				 				<table id="table" class="table" >
+ 					              <thead>
+ 					                <tr>
+ 					                  <th>Name</th>
+ 					                  <th>price</th>
+ 					                  <th>Amount</th>
+ 					                  <th>Action</th>
+ 					                </tr>
+ 					              </thead>
+ 					              <tbody id="order_row">
+ 				                      
+ 					              </tbody>
+ 					            </table>
+ 					            <div class="pull-right">
+ 					            	<h4 id="total">Total: $0</h4>
+ 					            	<a id="send_order" class="btn btn-primary ">send_order</a>
+ 					            </div>
+ 					        </div>
+ 			</div>
+ 		</div>
+ 	</div>
+ 	<script type="text/javascript">
+		var restaurant_id = $('#title').attr('restaurant_id')
+		var total=0;
+		var selected_table_id
+ 		function order(){
+ 			$('#table_list').empty()
+ 			$.get('/restaurant/get_restaurant_table', {'restaurant_id':restaurant_id}, function(data){
+ 				for (var i=0; i<data.length; i++){
+ 					var available = data[i].fields.available
+ 					color = ""
+ 					if (available){
+ 						color = "label-success"
+ 					}
+ 					else{
+ 						color = "label-important"
+ 					} 
+ 					$('#table_list').append("<div class='span2 label "+color+"' onclick='select_table("+data[i].pk+","+data[i].fields.number+")'>"+
+ 												"<h3>Table "+data[i].fields.number+"</h3>"+
+ 											"</div>")
+ 				}
+ 			})
+ 		}
+ 		function select_table(table_id, number){
+ 			// $.get('/restaurant/select_table', {'restaurant_id':restaurant_id,'number':number}, function(data){
+
+ 			// })
+			// alert(table_id)
+			selected_table_id = table_id
+			$("#order_table_number").text("Table "+number+"'s Order")
+ 			$.get('/restaurant/get_menu', {'restaurant_id':restaurant_id}, function(data){
+ 				for (var i=0; i<data.length; i++){
+ 					$("#main").append("<div class='thumbnail media'>"+
+ 											"<img class='pull-left' src='{{MEDIA_URL}}imgs/"+data[i]['picture']+"'style='height:80px;width:80px'/>"+
+ 											"<div class='media-body'>"+
+	 											"<div class='span8'>"+
+	 												"<h4>"+data[i]['name']+"</h4>"+
+	 												"<p>"+data[i]['description']+"</p>"+
+	 												"<p>"+data[i]['price']+"</p>"+
+	 											"</div>"+
+	 											"<div class='span4'>"+
+	 												"<button class='btn btn-primary btn-block foodBtn' data-id="+data[i]['id']+" data-name="+data[i]['name']+" data-price="+data[i]['price']+"> Select</button>"+
+	 												"<button class='btn btn-danger btn-block'>Reviews</button>"+
+	 											"</div>"+
+ 											"</div>"+
+ 										"</div>")
+ 				}
+ 			})
+ 		}
+ 		$('#menu').on('click', '.foodBtn', function() {
+ 		    var id = $(this).data('id');
+ 		    var name = $(this).data('name');
+ 		    var price = $(this).data('price')
+ 		    var check_dupicate_row = 0;
+ 		    total = total+price
+			$('#total').html("Total: $"+total)
+ 		    $('#order_row  tr').each(function(){
+ 		    	if ($(this).find(".name").text() == name){
+ 		    		$a = $(this)
+ 		    		old_amount = $(this).find(".amount").text()
+ 		    		$(this).find(".amount").html(parseInt(old_amount)+1);
+ 		    		check_dupicate_row = 1;
+ 		    	}
+ 		    })
+ 		    if (check_dupicate_row == 0) {
+				$("<tr>"+
+					"<td class='name' food_id="+id+">"+name+"</td>"+
+					"<td>"+price+"</td>"+
+					"<td class='amount'>"+1+"</td>"+
+					"<td><button class='btn btn-danger btn-block deleteOrderBtn'>Delete</button></td>"+
+				  "</tr>").hide().appendTo($('#order_row')).fadeIn(1000); 		    
+	 		    $(".deleteOrderBtn").click(function(){
+	 		    	$row = $(this).parent().parent()
+	 		    	$column = $(this).parent().parent().find(".amount")
+					if ($column.text() == 1) {
+						$row.fadeOut(1000, complete);
+					}
+					else{
+						old_amount = $column.text()
+						$column.html(parseInt(old_amount)-1);
+					}					
+					total = total-price
+					$('#total').html("Total: $"+total)
+					function complete() {
+						$row.empty();
+					}
+				})
+	 		}
+ 		});
+		$('#send_order').click(function(){
+			var food_list = new Array();
+			var index = 0;
+			$('#order_row  tr').each(function(){
+				var food = {};
+				food['food_id'] = $(this).find(".name").attr("food_id")
+				food['food_amount'] = $(this).find(".amount").text()
+				food_list[index] = food
+				index++;
+
+			})
+			var jsonText = JSON.stringify(food_list);
+			$.get('/restaurant/send_order', {'restaurant_id':restaurant_id, 'food_list':jsonText, 'table_id':selected_table_id}, function(data){
+				$("#order_row").empty()
+				$('#total').text("Total: $0")
+			})
+		})
+		$('#orders_tab').click(function(){
+			var total_price = 0;
+			$.get('/restaurant/get_order', {'table_id':selected_table_id}, function(order){
+				$('#bill_row').empty()
+	      		for (var i = 0; i < order.length; i += 1) {
+	      			for (var j=0; j < order[i].fields.foods.length; j+=1){
+	      				var check_dupicate_row = 0;
+	      				food = order[i].fields.foods[j]
+	      				total_price = total_price + (parseInt(food[1])*parseInt(food[2]))
+	      				// $('#bill_row  tr').each(function(){
+		      			// 	if ($(this).find(".name").text() == food[0]){
+		      			// 		$a = $(this)
+		      			// 		old_amount = $(this).find(".amount").text()
+		      			// 		$(this).find(".amount").html(parseInt(old_amount)+food[2]);
+		      			// 		check_dupicate_row = 1;
+		      			// 	}
+		      			// })<span class="badge badge-info">8</span>
+		      			if (check_dupicate_row ==0) {
+							if (food[3] == 'pending') {
+								$("#bill_row").append("<tr><td class='name'>"+food[0]+"</td>"+
+				          							"<td>"+food[1]+"</td>"+
+				          							"<td class='amount'>"+food[2]+"</td>"+
+				          							"<td><span class='badge badge-info'>"+food[3]+"</span></td>"+
+				          							"<td></td>"+
+				          							"<td><button>Delete</button></td></tr>");
+							}
+							else if (food[3] == 'cooking'){
+								$("#bill_row").append("<tr><td class='name'>"+food[0]+"</td>"+
+				          							"<td>"+food[1]+"</td>"+
+				          							"<td class='amount'>"+food[2]+"</td>"+
+				          							"<td><span class='badge badge-warning'>"+food[3]+"</span></td>"+
+				          							"<td></td>"+
+				          							"<td></td></tr>");
+							}
+							else{
+								$("#bill_row").append("<tr><td class='name'>"+food[0]+"</td>"+
+				          							"<td>"+food[1]+"</td>"+
+				          							"<td class='amount'>"+food[2]+"</td>"+
+				          							"<td><span class='badge badge-success'>"+food[3]+"</span></td>"+
+				          							"<td></td>"+
+				          							"<td></td></tr>");
+							}
+		      			};
+	      			}
+				}
+				$('#bill_total').html(total_price)
+			})
+			$('#print_receipt').attr('table_id', selected_table_id)
+		
+	})
+	
+ 	</script>
+{% endblock %}

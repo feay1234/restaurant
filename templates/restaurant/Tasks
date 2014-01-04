@@ -1,0 +1,30 @@
+1. Need to understand web server. the following link is helpful.
+	http://www.techradar.com/news/computing/how-to-install-a-personal-web-server-1110709
+	
+2. some js files provided by bootstrap have to be removed because they are not needed and waste of data transfer rate.
+
+3. Jquery tools on map http://addyosmani.github.io/jquery-ui-bootstrap/map.html#block-tabs
+
+4. AJAX IM http://ajaxim.com/documentation/
+
+5. css jquery ajax chat feature http://tutorialzine.com/2010/10/ajax-web-chat-css-jquery/
+
+6. some cool features web that support bootstrap
+	http://designshack.net/articles/css/20-awesome-resources-for-twitter-bootstrap-lovers/ 
+
+7. http://www.tripadvisor.co.uk/  This website is a good idea for restaurant community
+
+8. 6 main metro color used v-#00A600  p-#FF2E12  f-#8C0095   o-#261300  d-#1FAEFF  c-#E1B700
+
+9. display the music someone listening to.
+
+10. join video, if someone watching youtube video, you can click join button to watch the video at the same shot.
+
+11. an ineffective an insecure of using static and media directory for production.
+
+12. ajax not support sending file. try to use plug in instead. wow hard work is coming. WTF
+
+13. find way to send post request via jquery, now cannot do cause fucking csrf_token required.
+
+14. To do aggregation on database need to you aggregation provided by Django. Cool.
+15. Communication api, Disqus. fucking cool may use it

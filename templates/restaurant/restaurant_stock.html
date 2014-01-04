@@ -1,0 +1,648 @@
+{% extends 'restaurant/base_bootstrap_black_edition.html' %}
+{% block sidebar %}
+<ul class="nav nav-list">
+    <li class="nav-header"><h6>User Profiel</h6></li>
+      <li><a href="/restaurant/"><i class="icon-home"></i> Home</a></li>
+      <li>
+        <a href="#">
+          <i class="icon-pencil"></i> 
+          Applications 
+          <span class="badge badge-warning pull-right">6</span>
+        </a>
+      </li>
+      <li><a href="#"><i class="i"></i> Misc</a></li>
+  <li class="nav-header"><h6>Restaurant</h6></li>
+      <!-- <li><a href="#"><i class="icon-home"></i> Home</a></li>
+      <li><a href="/restaurant/restaurant_home/"><i class="icon-book"></i> Restaurant</a></li>
+      <li><a href="#"><i class="icon-pencil"></i> Applications</a></li> -->
+      {% if restaurant_list %}
+            {% for res in restaurant_list %}
+                {% if res.url == restaurant_selected.url %}
+                  <li class="active"><a href="/restaurant/{{ res.url }}/restaurant_home"><i class="icon-home"></i>{{res.url}}</a></li>
+
+                {% else %}
+                  <li><a href="/restaurant/{{ res.url }}/restaurant_home"><i class="icon-home"></i>{{res.url}}</a></li>
+                {% endif %}
+            {% endfor %}
+    {% else %}
+            
+    {% endif %}
+
+
+      <li><a type="button" data-toggle="collapse" data-target="#demo"><i class="icon-plus-sign"></i>Create restaurant2</a></li>
+
+    <div id="demo" class="collapse">
+      <form id="create_restaurant" method="post" action="/restaurant/create_restaurant/">
+        {% csrf_token %}
+        <fieldset>
+          <label>Restaurant Name</label>
+          <input type="text" placeholder="Type something…" name="restaurant_name" id="restaurant_name">
+          <button type="submit" class="btn">Submit</button>
+        </fieldset>
+      </form>
+
+    </div>  
+    <!-- <li><a href="#create_restaurant" role="button" class="btn" data-toggle="modal"><i class="icon-plus-sign"></i>Create restaurant</a></li> -->
+ 
+      <!-- role="button" class="btn" data-toggle="modal" -->
+  <li class="nav-header"><h6>Store</h6></li>
+      
+
+
+</ul>
+
+
+<!-- Create Restaurant Modal-->
+<div id="create_restaurant" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-body">
+    <form>
+        <fieldset>
+          <label>Restaurant Name</label>
+          <input type="text" placeholder="Type something…">
+          <button type="submit" class="btn">Submit</button>
+        </fieldset>
+      </form>
+  </div>
+  <div class="modal-footer">
+    <button class="btn btn-primary" type="submit">Create</button>
+    <button class="btn" data-dismiss="modal" aria-hidden="true">Close</button>
+  </div>
+</div>
+
+
+{% endblock %}
+
+
+{% block content3 %}
+	    <div class="masthead">
+    
+        <ul class="nav nav-pills pull-right">
+          <li><a href="/restaurant/{{ restaurant_selected.url }}/restaurant_home">Home</a></li>
+          <li><a href="/restaurant/{{ restaurant_selected.url }}/restaurant_services/">Services</a></li>
+          <li><a href="/restaurant/{{ restaurant_selected.url }}/restaurant_kitchen/">Kitchen</a></li>
+          <li class="active"><a href="/restaurant/{{ restaurant_selected.url }}/restaurant_stock/">Stock</a></li>
+          <li><a href="/restaurant/{{ restaurant_selected.url }}/restaurant_employee">Employee</a></li>
+          <li><a href="/restaurant/{{ restaurant_selected.url }}/restaurant_statistic">Statistic</a></li>
+        </ul>
+        <h3 id="res_name" restaurant="{{ restaurant_selected.url }}" class="muted">{{ restaurant_selected.url }}</h3>
+        
+      </div>
+      <hr>
+
+<!-- ------------------------------------------------------------------------------------------------------ -->
+
+<div class="row-fluid"> 
+<div class="span4">  
+  <!-- <div class="accordion" id="accordion2"> -->
+    <div class="accordion-group">
+      <div class="accordion-heading">
+        <div style="background-color:#FF2E12;">
+          <h4 style="padding-left:10px;color:white; margin: 0px 0;"class="accordion-toggle" data-toggle="collapse" data-parent="#accordion2" href="#collapse1">Protein
+            <div class="btn-group pull-right" style="padding-right:5px;">
+              <a class="btn dropdown-toggle btn-mini" data-toggle="dropdown" href="#">
+                <i class="icon-align-center"></i>
+              </a>
+              <ul class="dropdown-menu pull-right">
+                <li><a class="add_ingredient" category="protein" >Add new itmes</a></li>
+                <li><a class="update_all_ingredient" category="protein">update_all</a></li>
+              </ul>
+            </div>
+          </h4>
+      </div>   
+      </div>
+      <div id="collapseOne" class="accordion-body collapse in">
+        <div class="accordion-inner">
+          <table class="table table-hover">
+              <thead>
+                <tr>
+                  <th>Name</th>
+                  <th>Amount</th>
+                  <th>Status</th>
+                  <th>Action</th>
+                </tr>
+              </thead>
+              <tbody id="protein">
+                  {% for j in protein %}
+                      <tr>
+                        <td>{{j.name}}</td>
+                        <td id="{{j.name}}">{{j.amount}}</td>
+                        <td><span class="label label-warning">Cooking</span></td>
+                        <td><button class="update_ingedient" category="protein" name="{{j.name}}" amount="{{j.amount}}">Update</button></td>
+                      </tr>
+                  {% endfor %}                                              
+              </tbody>
+            </table>
+        </div>
+      </div>
+    </div>
+    
+
+  <div class="accordion-group">
+      <div class="accordion-heading">
+        <div style="background-color:#00A600;">
+          <h4 style="padding-left:10px;color:white; margin: 0px 0;"class="accordion-toggle" data-toggle="collapse" data-parent="#accordion2" href="#collapseTwo">Vegetable
+            <div class="btn-group pull-right" style="padding-right:5px;">
+              <a class="btn dropdown-toggle btn-mini" data-toggle="dropdown" href="#">
+                <i class="icon-align-center"></i>
+              </a>
+              <ul class="dropdown-menu pull-right">
+                <li><a class="add_ingredient" category="vegetable">Add new itmes</a></li>
+                <li><a href="/restaurant/update_all_ingredient">update_all</a></li>
+              </ul>
+            </div>
+          </h4>
+      </div>   
+      </div>
+      <div id="collapseTwo" class="accordion-body collapse in">
+        <div class="accordion-inner">
+          <table class="table table-hover">
+              <thead>
+                <tr>
+                  <th>Name</th>
+                  <th>Amount</th>
+                  <th>Status</th>
+                  <th>Action</th>
+                </tr>
+              </thead>
+              <tbody id="vagetable">
+                  {% for j in vegetable %}
+                      <tr>
+                        <td>{{j.name}}</td>
+                        <td id="{{j.name}}">{{j.amount}}</td>
+                        <td><span class="label label-warning">Cooking</span></td>
+                        <td><button class="update_ingedient" category="vegetable" name="{{j.name}}" amount="{{j.amount}}">Edit</button></td>
+                      </tr>
+                  {% endfor %}                                              
+              </tbody>
+            </table>
+        </div>
+      </div>
+    </div>
+
+</div> 
+  <!-- ------------------------------------------------------------------------------------------------------ -->
+<div class="span4">  
+  <!-- <div class="accordion" id="accordion2"> -->
+    <div class="accordion-group">
+      <div class="accordion-heading">
+        <div style="background-color:#8C0095;">
+          <h4 style="padding-left:10px;color:white; margin: 0px 0;"class="accordion-toggle" data-toggle="collapse" data-parent="#accordion2" href="#collapseThree">Fruit
+            <div class="btn-group pull-right" style="padding-right:5px;">
+              <a class="btn dropdown-toggle btn-mini" data-toggle="dropdown" href="#">
+                <i class="icon-align-center"></i>
+              </a>
+              <ul class="dropdown-menu pull-right">
+                <li><a class="add_ingredient" category="fruit" >Add new itmes</a></li>
+                <li><a href="/restaurant/update_all_ingredient">update_all</a></li>
+              </ul>
+            </div>
+          </h4>
+      </div>   
+      </div>
+      <div id="collapseThree" class="accordion-body collapse in">
+        <div class="accordion-inner">
+          <table class="table table-hover">
+              <thead>
+                <tr>
+                  <th>Name</th>
+                  <th>Amount</th>
+                  <th>Status</th>
+                  <th>Action</th>
+                </tr>
+              </thead>
+              <tbody id="fruit">
+                  {% for j in fruit %}
+                      <tr>
+                        <td>{{j.name}}</td>
+                        <td id="{{j.name}}">{{j.amount}}</td>
+                        <td><span class="label label-warning">Cooking</span></td>
+                        <td><button class="update_ingedient" category="fruit" name="{{j.name}}" amount="{{j.amount}}">Edit</button></td>
+                      </tr>
+                  {% endfor %}                                              
+              </tbody>
+            </table>
+        </div>
+      </div>
+    </div>
+    
+  <!-- </div> -->
+
+  <div class="accordion-group">
+      <div class="accordion-heading">
+        <div style="background-color:#261300;">
+          <h4 style="padding-left:10px;color:white; margin: 0px 0;"class="accordion-toggle" data-toggle="collapse" data-parent="#accordion2" href="#collapseFour">Other
+            <div class="btn-group pull-right" style="padding-right:5px;">
+              <a class="btn dropdown-toggle btn-mini" data-toggle="dropdown" href="#">
+                <i class="icon-align-center"></i>
+              </a>
+              <ul class="dropdown-menu pull-right">
+                <li><a class="add_ingredient" category="other" >Add new itmes</a></li>
+                <li><a href="/restaurant/update_all_ingredient">update_all</a></li>
+              </ul>
+            </div>
+          </h4>
+      </div>   
+      </div>
+      <div id="collapseFour" class="accordion-body collapse in">
+        <div class="accordion-inner">
+          <table class="table table-hover">
+              <thead>
+                <tr>
+                  <th>Name</th>
+                  <th>Amount</th>
+                  <th>Status</th>
+                  <th>Action</th>
+                </tr>
+              </thead>
+              <tbody id="other">
+                  {% for j in other %}
+                      <tr>
+                        <td>{{j.name}}</td>
+                        <td id="{{j.name}}">{{j.amount}}</td>
+                        <td><span class="label label-warning">Cooking</span></td>
+                        <td><button class="update_ingedient" category="other" name="{{j.name}}" amount="{{j.amount}}">Edit</button></td>
+                      </tr>
+                  {% endfor %}                                              
+              </tbody>
+            </table>
+        </div>
+      </div>
+    </div>
+
+ </div>
+ <div class="span4">  
+  <!-- <div class="accordion" id="accordion2"> -->
+    <div class="accordion-group">
+      <div class="accordion-heading">
+        <div style="background-color:#F3B200;">
+          <h4 style="padding-left:10px;color:white; margin: 0px 0;"class="accordion-toggle" data-toggle="collapse" data-parent="#accordion2" href="#collapseFive">Carbohydrate
+            <div class="btn-group pull-right" style="padding-right:5px;">
+              <a class="btn dropdown-toggle btn-mini" data-toggle="dropdown" href="#">
+                <i class="icon-align-center"></i>
+              </a>
+              <ul class="dropdown-menu pull-right">
+                <li><a class="add_ingredient" category="carbohydrate" >Add new itmes</a></li>
+                <li><a href="/restaurant/update_all_ingredient">update_all</a></li>
+              </ul>
+            </div>
+          </h4>
+      </div>   
+      </div>
+      <div id="collapseFive" class="accordion-body collapse in">
+        <div class="accordion-inner">
+          <table class="table table-hover">
+              <thead>
+                <tr>
+                  <th>Name</th>
+                  <th>Amount</th>
+                  <th>Status</th>
+                  <th>Action</th>
+                </tr>
+              </thead>
+              <tbody id="carbohydrate">
+                  {% for j in carbohydrate %}
+                      <tr>
+                        <td>{{j.name}}</td>
+                        <td id="{{j.name}}">{{j.amount}}</td>
+                        <td><span class="label label-warning">Cooking</span></td>
+                        <td><button class="update_ingedient" category="carbohydrate" name="{{j.name}}" amount="{{j.amount}}">Edit</button></td>
+                      </tr>
+                  {% endfor %}                                              
+              </tbody>
+            </table>
+        </div>
+      </div>
+    </div>
+    
+  <!-- </div> -->
+
+  <div class="accordion-group">
+      <div class="accordion-heading">
+        <div style="background-color:#0A5BC4;">
+          <h4 style="padding-left:10px;color:white; margin: 0px 0;"class="accordion-toggle" data-toggle="collapse" data-parent="#accordion2" href="#collapseSix">Drinks
+            <div class="btn-group pull-right" style="padding-right:5px;">
+              <a class="btn dropdown-toggle btn-mini" data-toggle="dropdown" href="#">
+                <i class="icon-align-center"></i>
+              </a>
+              <ul class="dropdown-menu pull-right">
+                <li><a class="add_ingredient" category="drink" >Add new itmes</a></li>
+                <li><a href="/restaurant/update_all_ingredient">update_all</a></li>
+              </ul>
+            </div>
+          </h4>
+      </div>   
+      </div>
+      <div id="collapseSix" class="accordion-body collapse in">
+        <div class="accordion-inner">
+          <table class="table table-hover">
+              <thead>
+                <tr>
+                  <th>Name</th>
+                  <th>Amount</th>
+                  <th>Status</th>
+                  <th>Action</th>
+                </tr>
+              </thead>
+              <tbody id="drink">
+                  {% for j in drink %}
+                      <tr>
+                        <td>{{j.name}}</td>
+                        <td id="{{j.name}}">{{j.amount}}</td>
+                        <td><span class="label label-warning">Cooking</span></td>
+                        <td><button class="update_ingedient" category="drink" name="{{j.name}}" amount="{{j.amount}}">Edit</button></td>
+                      </tr>
+                  {% endfor %}                                              
+              </tbody>
+            </table>
+        </div>
+      </div>
+    </div>
+
+ </div> 
+</div> 
+
+
+ 
+<!-- Modal -->
+<div id="update_modal" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="width: 300px;">
+  <div class="modal-body">
+    <h3 id="ingredient-name" category=""></h3>
+    <p>Please update the amount</p>
+    <input type="number" placeholder="Type number" id="amount">
+  </div>
+  <div class="modal-footer">
+    <button class="btn" data-dismiss="modal" aria-hidden="true">Close</button>
+    <button id="send_update" class="btn btn-primary" data-dismiss="modal" aria-hidden="true">Save changes</button>
+  </div>
+</div>
+
+
+
+
+<div id="add_modal" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-header">
+    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+    <h3 id="myModalLabel">Create New Ingredient</h3>
+  </div>
+  <div class="modal-body">
+    <div class=" well span6">
+      <div style="padding-left:10px;">          
+            <label class="control-label">Name</label>
+            <input type="text" id="input_ingredient_name" placeholder="Type ingredient name">
+            <label class="control-label">Amount</label>
+            <input type="number" id="input_ingredient_amount" placeholder="Type number zero or more">
+            <label class="control-label">Unit</label>
+            <input type="text" id="input_ingredient_unit" placeholder="Type unit ex. kg,L">
+            <label class="control-label">Alert</label>
+            <input type="text" id="input_ingredient_alert" placeholder="Alert when amount lower than">      
+      </div>
+      <button class="btn btn-primary btn-block" id="add_new" style="padding-left:10px;">Add</button>
+
+    </div>
+    <div class="well span6">        
+            <table class="table table-hover">
+              <thead>
+                <tr>
+                  <th>Name</th>
+                  <th>Amount</th>
+                  <th>unit</th>
+                  <th>Alert</th>
+                </tr>
+              </thead>
+              <tbody id="add_row">
+                
+                                                               
+              </tbody>
+
+            </table>
+    </div>
+  </div>
+  <div class="modal-footer">
+
+    <button class="btn btn-primary"  id="save_new">Save</button>
+  </div>
+</div>
+
+
+
+<div id="update_all_modal" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-header">
+    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+    <h3 id="myModalLabel">Update All Ingredient</h3>
+  </div>
+  <div class="modal-body">
+         
+            <table class="table table-hover">
+              <thead>
+                <tr>
+                  <th>Name</th>
+                  <th>Amount</th>
+                  <th>unit</th>
+                  <th>Alert</th>
+                </tr>
+              </thead>
+              <tbody id="ingredient_row">
+                
+                                                               
+              </tbody>
+
+            </table>
+      
+  </div>
+  <div class="modal-footer">
+
+    <button class="btn btn-primary" >Save</button>
+  </div>
+</div>
+
+
+
+
+
+   
+<script type="text/javascript">
+        
+        $('.update_ingedient').click(function(){
+          var category = $(this).attr('category');
+          var name = $(this).attr('name');
+          var amount = $(this).attr('amount');
+          $('#amount').val(amount);
+          $('#ingredient-name').text(name);
+          $('#ingredient-name').attr("category",category);
+          $('#update_modal').modal('toggle');
+
+
+          document.getElementById('send_update').onclick = function() {
+                var name = $('#ingredient-name').text();
+                var amount = $('#amount').val();
+                var category = $('#ingredient-name').attr('category')                       
+                
+                $.get('/restaurant/update_ingredient_amount',{name:name,amount:amount,category:category}, function(data){
+                      if (data="success") {
+                        var change = document.getElementById(name);
+                        change.innerHTML = amount;
+                      };
+                });
+                
+          }
+         
+        });
+
+        $('.update_all_ingredient').click(function(){
+          $('#update_all_modal').modal('show')
+          var category = $(this).attr('category')
+          var restaurant_url_selected = $('#res_name').attr("restaurant")
+          $.get('/restaurant/get_ingredient',{restaurant_url_selected:restaurant_url_selected,category:category}, function(data){
+
+                var ing_row = document.getElementById("ingredient_row");
+
+                for (var i=0;i<data.length;i++){
+
+                      var row = document.createElement("tr");
+                      var name = document.createElement("td");
+                      var amount = document.createElement("td");
+                      var unit = document.createElement("td");
+                      var alert = document.createElement("td");
+
+                      var name_input = document.createElement("input");
+                      var amount_input = document.createElement("input")
+                      var unit_input = document.createElement("input");
+                      var alert_input = document.createElement("input")
+
+                      amount_input.setAttribute("class","input-block-level");
+                      unit_input.setAttribute("class","input-block-level");
+                      alert_input.setAttribute("class","input-block-level");
+
+                      amount_input.setAttribute("maxlength","4");
+                      unit_input.setAttribute("maxlength","4");
+                      alert_input.setAttribute("maxlength","4");
+
+
+                      
+
+                      name_input.value = data[i].fields.name
+                      amount_input.value = data[i].fields.amount
+                      unit_input.value = "none"
+                      alert_input.value = "none"
+
+                      name.appendChild(name_input)
+                      amount.appendChild(amount_input)
+                      unit.appendChild(unit_input)
+                      alert.appendChild(alert_input)
+
+
+
+                      row.appendChild(name);
+                      row.appendChild(amount);
+                      row.appendChild(unit);
+                      row.appendChild(alert);
+
+                      ing_row.appendChild(row);
+
+
+
+                }
+                
+
+
+
+                      
+            });
+
+        });
+
+        $('.add_ingredient').click(function(){
+          var category = $(this).attr('category');
+          $("#add_modal").modal('show');
+
+
+          document.getElementById('add_new').onclick = function(){
+
+            var value = $('#input_ingredient_name').val();
+              
+              if(value.length >0){
+                var add_row = document.getElementById("add_row");
+                var row = document.createElement("tr")
+                var name = document.createElement("td")
+                var amount = document.createElement("td")
+                var unit = document.createElement("td")
+                var alert = document.createElement("td")
+
+                name.innerHTML = $('#input_ingredient_name').val()
+                amount.innerHTML = $('#input_ingredient_amount').val()
+                unit.innerHTML = $('#input_ingredient_unit').val()
+                alert.innerHTML = $('#input_ingredient_alert').val()
+
+                row.appendChild(name);
+                row.appendChild(amount);
+                row.appendChild(unit);
+                row.appendChild(alert);
+
+                add_row.appendChild(row);
+
+
+                $('#input_ingredient_name').val("");
+                $('#input_ingredient_amount').val("");
+                $('#input_ingredient_unit').val("");
+                $('#input_ingredient_alert').val("");                
+              }
+
+              
+          }
+
+          document.getElementById('save_new').onclick = function(){
+
+              var td = $("#add_row").find("td")
+              var ingredient_list = new Array();
+              var list = new Array();
+              for (var i=0;i<td.length;i++){               
+
+                ingredient_list[i]=$(td[i]).text()
+
+              }
+
+
+              var restaurant_url_selected = $('#res_name').attr("restaurant")
+              alert(restaurant_url_selected)
+              $.get('/restaurant/add_ingredient', {restaurant_url_selected:restaurant_url_selected,category:category,ingredient_list:ingredient_list}, function(response){
+
+                  var tr = $("#add_row").find("tr")
+                  var update_row = document.getElementById(category)
+                  for ( var i=0;i<tr.length;i++){
+                    update_row.appendChild(tr[i]);
+                  }
+                  $('#add_modal').modal('hide');
+                  
+
+              });
+
+          }
+          $('#add_modal').on('hidden', function () {
+          // do sometahing…
+              $('#add_row').empty();
+              $('#input_ingredient_name').val("");
+              $('#input_ingredient_amount').val("");
+              $('#input_ingredient_unit').val("");
+              $('#input_ingredient_alert').val("");
+            })
+
+        });
+        
+        
+        
+        
+        
+         
+
+  
+</script>
+  
+  
+
+  
+
+{% endblock %}
+{% block content2 %}  
+
+
+{% endblock %}

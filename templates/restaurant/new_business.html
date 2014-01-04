@@ -1,0 +1,19 @@
+{% extends 'restaurant/base_bootstrap_black_edition.html' %}
+{% block content3 %}
+<div class="container-fluid" style="margin: 0 auto; max-width: 600px;">
+	{% if resForm %}
+	<FORM enctype="multipart/form-data" method="post" action="/restaurant/new_business/restaurant/">
+	        {% csrf_token %}
+	        {{ resForm.as_p }}
+	    <INPUT type="submit" name="submit" value="submit" />
+	</FORM>
+	{% else %}
+	<FORM enctype="multipart/form-data" method="post" action="/restaurant/new_business/shop/">
+	        {% csrf_token %}
+	        {{ shopForm.as_p }}
+	    <INPUT type="submit" name="submit" value="submit" />
+	</FORM>
+
+	{% endif %}
+</div>
+{% endblock %}}

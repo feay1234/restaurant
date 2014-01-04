@@ -1,0 +1,39 @@
+{% extends 'restaurant/base_bootstrap_black_edition.html' %}
+{% block content3 %}
+<style type="text/css">
+.container {
+	margin: 0 auto;
+	padding-top: 100px;
+	max-width: 1000px;
+}
+.content {
+	background-color:white; 
+	padding:20px;
+}
+</style>
+<div class="container">
+	
+	<div class="span8">
+		<div class="container-fluid content">
+			<iframe width="620" height="350" src="//www.youtube.com/embed/v_Rve_1u7II" frameborder="0" allowfullscreen></iframe>
+		</div>
+	</div>
+	<div class="span4">
+		<div class="container-fluid content">
+			<p class="lead">Sign up and start running your restaurant.</p>
+			<button class="btn btn-primary btn-block"><h3>Get Started</h3></button>
+		</div>
+		<br>
+		<div class="container-fluid content">
+			<p class="lead">Already have one? Sign in.</p>
+			<div class="row-fluid">
+				<input class="input-block-level" type="text" id="inputEmail" placeholder="Email or username">
+				<input class="input-block-level" type="password" id="inputPassword" placeholder="Password">
+				<button class='btn pull-right'>Sign in</button>
+				<input type="checkbox"> Remember me
+			</div>
+			
+		</div>
+	</div>
+</div>
+{% endblock %}

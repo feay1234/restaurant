@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <title>Restaurant</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <!--<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.1/jquery.min.js">
+    </script>
+      <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.10.1/jquery-ui.min.js"></script> -->
+      <script type="text/javascript" src="{{STATIC_URL}}js/jquery.min.js"></script>
+      
+    <script type="text/javascript" src="{{STATIC_URL}}css/bootstrap/js/bootstrap.js"></script>
+    <script type="text/javascript" src="{{STATIC_URL}}css/datepicker/js/bootstrap-datepicker.js"></script>
+    <script type="text/javascript" src="{{STATIC_URL}}css/timepicker/bootstrap-timepicker.min.js"></script>
+
+    
+
+
+    <link rel="stylesheet" type="text/css" href="{{STATIC_URL}}css/datepicker/css/datepicker.css">
+    <link rel="stylesheet" type="text/css" href="{{STATIC_URL}}css/timepicker/bootstrap-timepicker.min.css">
+    <link href="{{STATIC_URL}}css/bootstrap/css/cosmo.css" rel="stylesheet">
+    <!-- <link href="{{STATIC_URL}}css/bootstrap/css/capture.css" rel="stylesheet"> -->
+
+    <style type="text/css">
+      body {
+        padding-top: 60px;
+        padding-bottom: 40px;
+        background-color: #f5f5f5;
+      }
+    </style>
+    <link href="{{STATIC_URL}}css/bootstrap/css/bootstrap-responsive.css" rel="stylesheet">
+
+  </head>
+
+  <body >
+    <div class="navbar navbar-inverse navbar-fixed-top">
+      <div class="navbar-inner">
+        <div class="container-fluid">
+          <a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </a>
+          <a class="brand" href="/restaurant/">Restaurant</a>
+          <div class="nav-collapse collapse">
+            <p class="navbar-text pull-right">
+                                        {% if user.is_authenticated %}
+                                                <img id="user_info" user_id="{{userProfile.id}}" user_picture="{{userProfile.picture}}" user_name="{{userProfile.name}}"src="{{MEDIA_URL}}{{ userProfile.picture }}" style="height:40px; width:40px"/>
+                                                <a id="user_name" class="navbar-link" href="/restaurant/profile/{{ user.username }}" user_id="{{userProfile.id}}">
+                                                          {{ userProfile.name }}</a> |
+                                                <a href="/restaurant/logout/" class="navbar-link">Logout</a>
+                                        {% else %}
+                                                <a href="/restaurant/register/" class="navbar-link">Register</a> |
+                                                <a href="/restaurant/login/" class="navbar-link">Login</a>
+                                        {% endif %}
+            </p>
+            <ul class="nav">
+
+                                <li><a href="/restaurant/">Home</a></li>
+                                        <li><a href="/restaurant/free/">Free</a></li>
+                                        <li><a href="/restaurant/restricted" >Restricted</a></li>
+                                        <li><a href="/restaurant/feed/" >Feed</a></li>
+                                        <li><a href="/restaurant/chat/" >Chat</a></li>
+                                        <li><a href="/restaurant/business/" >Business</a></li>
+                                        <li><a href="/restaurant/hangout/" >Hangout</a></li>
+                                        <li><a href="/restaurant/first/">First</a></li>
+                                        <!-- <li><a href="/restaurant/service/" >Service</a></li> -->
+                                        
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    
+    {% if user.is_authenticated %}
+    <!-- style="background-image:url({{MEDIA_URL}}imgs/bg.jpg);
+            background-repeat:no-repeat;background-attachment:fixed;"> -->
+    <div class="container-fluid">
+      <div class="row-fluid">
+          <!-- <div class="span2" >
+            <div class="sidebar-nav sidebar-left">
+              {% block sidebar %}
+                  {% include 'restaurant/left_sidebar.html' with restaurant_list=restaurant_list %}
+              {% endblock %}
+            </div>
+          </div> -->
+          <div class="span12">
+            {% block content3 %}
+
+
+            {% endblock %}
+          </div>
+      </div>
+    </div>
+    {% else %}
+    <div class="container-fluid">  
+     
+        {% block form %}
+        {% endblock %}
+    </div>
+
+    {% endif %}
+
+
+<!-- <div id="create_business_modal" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-header">
+    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+    <h3 id="myModalLabel">Modal header</h3>
+  </div>
+  <div class="modal-body">
+    <form id="create_restaurant_form" method='post' action='/restaurant/create_restaurant/'>
+      {% csrf_token %}
+      <div class="fieldWrapper">        
+        <h4 for="id_subject">Restaurant Name</h4>
+        {{ form.name.errors }}
+        {{ form.name }}
+        {{ form.as_p}}
+      </div>
+      <button type="submit" class="btn" id="create_restaurant_submit">Submit</button>
+    </form>
+  </div>
+  <div class="modal-footer">
+    <button class="btn" data-dismiss="modal" aria-hidden="true">Close</button>
+    <button class="btn btn-primary">Save changes</button>
+  </div>
+</div> -->
+<!-- Le javascript
+================================================== -->
+<!-- Placed at the end of the document so the pages load faster -->
+<script type="text/javascript">
+    $("#create_restaurant_submit").click(function() {
+        var url = "/restaurant/create_restaurant/";
+        $.ajax({
+               type: "POST",
+               url: url,
+               enctype: "multipart/form-data",
+               data: $("#create_restaurant_form").serialize(),
+               success: function(data)
+               {
+                Object.keys(data);
+                Object.keys(data).forEach(function (key) {
+
+                  alert(data[key])
+                });
+                
+               }
+        });
+        return false; 
+    });
+ </script>
+
+
+
+
+      
+
+    
+    <!-- <hr>
+    <div class="container-fluid">
+          <footer>
+            <p>&copy; Restaurant 2013</p>
+          </footer>
+
+      </div> -->
+
+    
+
+  </body>
+</html>

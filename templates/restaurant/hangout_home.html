@@ -1,0 +1,809 @@
+{% extends 'restaurant/base_bootstrap_black_edition.html' %}
+{% block content3 %}
+	<div class="container" style="margin: 0 auto; padding-top:60px;">
+		<!-- <a href="/restaurant/business/{{business.name}}">Back</a> -->
+		<!-- <div id="album" class="row-fluid">
+ 			<h4>This area is a bunch of albums</h4>
+ 			<img src="http://placehold.it/144x144" alt="fpo" />
+ 			<img src="http://placehold.it/144x144" alt="fpo" />
+ 			<img src="http://placehold.it/144x144" alt="fpo" />
+ 			<img src="http://placehold.it/144x144" alt="fpo" />
+ 			<img src="http://placehold.it/144x144" alt="fpo" />
+ 			<img src="http://placehold.it/144x144" alt="fpo" />
+ 		</div>
+		<br> -->
+
+
+
+
+
+
+		<div class="container-fluid">   
+			<div class='span2'>
+				<img class="img-rounded" src="{{ MEDIA_URL }}{{business.picture}}"/>
+			</div>
+			<div class="span10">
+				<div id="social-info" class="container-fluid">
+						<div id="" class="span8">	
+							<h2 id="title" business_id="{{business.id}}" business_name="{{business.name}}">{{business.name}}<small> @glasgow</small>  <button class='btn'>Follow</button> <button class='btn'><i class="icon-heart"></i></button></h2>
+			 			</div>
+
+			 			<div id="" class="span1">
+			 				<p class="muted">Rate</p>
+			 				<span id ="rate" class="label label-success">{{business.like}}</span>
+			 			</div>
+			 			<div id="" class="span1" >
+			 				<p class="muted">Visiting</p>
+			 				<h5>{{business.visiting}}</h5>
+			 			</div>
+			 			<div id="" class="span1">
+			 				<p class="muted">Visitors</p>
+			 				<h5 id="visitor">{{business.visitor}}</h5>
+			 			</div>
+			 			<div id="" class="span1">
+			 				<p class="muted">Following</p>
+			 				<h5>{{business.follow}}</h5>
+			 			</div>
+				</div>
+				<hr>
+				<div id="profile" class='container-fluid'>
+					<div id="" class="span6">
+						<dl class="dl-horizontal">
+		 					<dt><i class="icon-info-sign"></i> Info</dt>
+							<dd>{{business.description}}</dd>
+			 				<dt><i class="icon-map-marker"></i> Address</dt>
+							<dd>{{business.address}},{{business.city}},{{business.country}},{{business.zip_code}}</dd>
+							<dt><i class="icon-globe"></i> Website</dt>
+							<dd><a href="www.google.com"> www.google.com</a></dd>
+						</dl>
+					
+		 			</div>
+		 			<div id="" class="span6">
+		 				<dl class="dl-horizontal">
+		 					<dt><i class="icon-time"></i> Hours</dt>
+							<dd>{{business.opening}}</dd>
+			 				<dt><i class="icon-certificate"></i>Price</dt>
+							<dd>$4.99 - $20.99</dd>
+							<dt><i class="icon-signal"></i> Telephone</dt>
+							<dd>{{business.telephone}}</dd>
+						</dl>
+		 			</div>
+			 	</div>
+			</div>
+ 		</div>
+ 		<a href="/restaurant/hangout/{{business.name}}/menu">go manu</a>
+ 		
+
+ 		
+ 				
+
+ 		<!-- <div class="container-fluid">
+ 			<div class="span2">
+
+ 			</div>
+ 			<div class="span10">
+ 				<div id="test" class="container-fluid">
+ 			<div id="" class="span6">
+ 				<div class="thumbnail">
+ 					<a href="#"><img alt="fpo" src="http://s3.amazonaws.com/foodspotting-ec2/reviews/390/thumb_600.jpg?1257389457?1376202361" height="400px" width="400px"/></a>
+ 					<h4>Food name</h4>
+ 					<p>Tags: 
+					     	| <i class="icon-comment"></i> <a href="#">3 Comments</a>
+					       	| <i class="icon-share"></i> <a href="#">39 Shares</a>
+					</p>
+ 				</div>
+ 			</div>
+			<div id="" class="span3">
+				<div class="thumbnail">
+ 					<a href="#"><img alt="fpo" src="http://s3.amazonaws.com/foodspotting-ec2/reviews/2582637/thumb_600.jpg?1350420316" height="159px" width="250px"></a>
+ 					<h4>Sweet Chilli Crispy Chicken Wrap</h4>
+ 					<p>
+					     	| <i class="icon-comment"></i> <a href="#">3 Comments</a>
+					</p>
+ 				</div>
+ 				<div class="thumbnail">
+ 					<a href="#"><img alt="fpo" src="http://s3.amazonaws.com/foodspotting-ec2/reviews/1107868/thumb_600.jpg?1323232697" height="159px" width="250px"/></a>
+ 					<h4>Food name</h4>
+ 					<p>
+					     	| <i class="icon-comment"></i> <a href="#">3 Comments</a>
+					</p>
+ 				</div>
+ 			</div>
+ 			<div id="" class="span3">
+				<div class="thumbnail">
+ 					<a href="#"><img alt="fpo" src="http://s3.amazonaws.com/foodspotting-ec2/reviews/2582637/thumb_600.jpg?1350420316" height="159px" width="250px"></a>
+ 					<h4>Food name</h4>
+ 					<p>
+					     	| <i class="icon-comment"></i> <a href="#">3 Comments</a>
+					</p>
+ 				</div>
+ 				<div class="thumbnail">
+ 					<a href="#"><img alt="fpo" src="http://s3.amazonaws.com/foodspotting-ec2/reviews/1107868/thumb_600.jpg?1323232697" height="159px" width="250px"/></a>
+ 					<h4>Food name</h4>
+ 					<p>
+					     	| <i class="icon-comment"></i> <a href="#">3 Comments</a>
+					</p>
+ 				</div>
+ 			</div>
+ 			</div>
+ 			</div>
+
+ 		</div> -->
+ 			
+ 		<br>
+
+
+
+
+ 		
+ 		<div id="pay" class="row-fluid" style="display:none">
+ 			<div class="well">
+ 				<h1>Thank you , don't be stranger, come and meet us again.</h1>
+ 				back to home page in 3 senconds
+ 			</div>
+ 		</div>
+
+
+ 		<div id="reservation" class="container-fluid" style="display:none">
+	 		<div class='container-fluid panel'>
+	 			<div id="" class="span3">
+	 				<label class="">Date</label>
+	 				<div class="input-append date" id="dp3" data-date="12-02-2012" data-date-format="dd-mm-yyyy">
+						<input  class='span11' type="text" value="12-02-2012" >
+						<span class="add-on"><i class="icon-calendar"></i></span>
+					</div>
+					<label class="">Time</label>
+					<div class="input-append bootstrap-timepicker">
+			            <input class='span11' id="timepicker1" type="text">
+			            <span class="add-on"><i class="icon-time"></i></span>
+			        </div>
+			        <label class="">People</label>
+			        <select class="input-block-level">
+					  <option>1</option>
+					  <option>2</option>
+					  <option>3</option>
+					  <option>4</option>
+					  <option>5</option>
+					</select>
+			        <label class="pull-left">Notes</label>
+			        <textarea rows="2"  class="input-block-level" placeholder="If any specific deatail type..."></textarea>
+			        <button class="btn btn-primary btn-block">Book table</button>
+			       	<button id="reservation_back" class="btn btn-block">Back</button>
+	 			</div>
+				<div id="table_row" num="{{business.table_number}}" class="span9">
+					<div id="table_column1" class="span3">
+						
+						  	<!-- <div class="row-fluid" id="customer">
+						  		<img class="img-rounded pull-left" alt="fpo" src="{{ MEDIA_URL }}{{userProfile.picture}}" width="20px" height="20px">
+						  	</div> -->
+		 			</div>
+		 			<div id="table_column2" class="span3">
+		 			</div>
+		 			<div id="table_column3" class="span3">
+		 			</div>
+		 			<div id="table_column4" class="span3">
+		 			</div>
+		 		</div>
+	
+
+	 		</div>
+ 		</div>
+
+ 		
+
+ 		
+
+ 		<!-- <div id="profile" class='row-fluid' style="padding:15px">
+ 			<div id="" class="span4">
+ 			</div>
+			<div id="" class="span4">
+ 			</div>
+ 			<div id="" class="span4">
+ 			</div>
+ 		</div> -->
+ 		
+
+
+ 		
+
+ 		<div id="function" class="container-fluid" style="text-align:center;; padding:40px 20px">
+ 				<div id="function_service" class="span4 select-block">
+					<img src="{{ MEDIA_URL }}imgs/checkin.jpg" class="img-circle" width="140px" height="140px">
+	 				<h4>Service</h4>
+	 				<p>Quisque dignissim et cursus leo libero in nisi. Donec sit amet ipsum velit, a faucibus purus</p>
+				</div>
+	 			<div id="function_kitchen" class="span4 select-block" onclick="">
+	 				<img src="{{ MEDIA_URL }}imgs/menu2.jpg" class="img-circle" width="140px" height="140px">
+	 				<h4>Kitchen</h4>
+	 				<p>Quisque dignissim et cursus leo libero in nisi. Donec sit amet ipsum velit, a faucibus purus</p>
+				</div>
+				<div id="function_reservation"class="span4 select-block" >
+					<img src="{{ MEDIA_URL }}imgs/reservation.jpg" class="img-circle" width="140px" height="140px">
+	 				<h4>Reservation</h4>
+	 				<p>Quisque dignissim et cursus leo libero in nisi. Donec sit amet ipsum velit, a faucibus purus</p>
+				</div>
+				<br>
+ 		</div>
+ 		
+
+
+ 		<div id="post" class="container-fluid" style="padding-top:20px">
+ 			<div class="span7">
+	 			<div class="row-fluid">
+	 				<iframe id="post-frame" src="/restaurant/upload_post/{{business.name}}" width="800px" height="150" scrolling="no">
+ 					<!-- height="100%" width="100%" -->
+		     	</iframe>
+	 			</div>
+	 			<br>
+			        
+				{% for i in post %}
+				<div class="panel">
+					<div class="media">
+					    <img class="img-rounded pull-left" alt="fpo" src="{{ MEDIA_URL }}{{i.user.picture}}" width="50px" height="50px">
+					    <div class="media-body">
+					    	<h4 class="media-heading">{{i.user.name}}</h4>
+						  	<p>{{i.text}}<img class="img-rounded" alt="fpo" src="{{ MEDIA_URL }}imgs/1.png" width="60px" height="60px"></p>
+						    <!-- <p><img alt="fpo" src="http://placehold.it/625x240"></p> -->
+						    {% if i.picture %}
+						    	<p><img alt="fpo" src="{{ MEDIA_URL }}{{i.picture}}"></p>
+						    {% endif %}
+						    <ul class="inline">
+						      	<li>
+							      	<a class="likeBtn" post_id="{{i.id}}" href="#f">
+								  		{% if userProfile in i.who_like.all %}
+								  			Unlike
+								  		{% else %}
+								  			Like
+								  		{% endif %}
+							  		</a>
+						  	  	</li>
+							  	<li><a href="#fpo"></i>comment</a></li>
+							  	<li><a href="#fpo">share</a></li>
+							  	<li >
+							  		<i class="icon-thumbs-up"></i>
+							  		<a id="like_num_post-{{i.id}}" href="#fpo">{{i.like}}</a>
+							  	</li>
+							  	<li>
+							  		<i class="icon-comment"></i>
+							  		<a id="comment_num_post-{{i.id}}" href="#fpo">{{i.comment_num}}</a>
+							  	</li>
+							  	<li>
+							  		<i class="icon-list-alt"></i>
+							  		<a href="#fpo">{{i.share}}</a>
+							  	</li>
+							  	<li><a class="muted">{{i.datetime}}</a></li>
+							  
+							</ul>
+						  	<hr>
+						  	<div id="comment_row-{{i.id}}">
+						  		{% for j in i.comments.all %}
+					    	        <div class="media">
+									    	<img class="img-rounded pull-left" alt="fpo" src="{{ MEDIA_URL }}{{j.user.picture}}" width="40px" height="40px">
+										<div class="media-body">
+									    	<h5 class="media-heading">{{j.user.name}}</h5>
+										  	<p>{{j.text}}</p>
+										  	<ul class="inline">
+										  		<li>
+										  			<a class="likeBtn" comment_id="{{j.id}}" href="#f">
+										  				{% if userProfile in j.who_like.all %}
+												  			Unlike
+												  		{% else %}
+												  			Like
+												  		{% endif %}
+										  			</a>
+										  		</li>
+										  		
+										  		<li>
+										  			<a class="commentBtn" comment_id={{j.id}} href="#f">comment</a>
+										  		</li>
+										  		<li>
+										  			<i class="icon-thumbs-up"></i>
+										  			<a id="like_num_comment-{{j.id}}" href="#fpo">{{j.like}}</a>
+										  		</li>
+										  		<li>
+										  			<i class="icon-comment"></i>
+							  						<a id="comment_num_comment-{{j.id}}" href="#fpo">{{j.comment_num}}</a>
+										  		</li>
+										  		<li><a class="muted">{{j.datetime}}</a></li>
+										  	</ul>
+										  		
+										  	<div id="commentcomment_row-{{j.id}}">
+											  	{% for k in j.comments.all %}
+												  	<div class="media">
+													  	<a class="pull-left" href="#">
+													    	<img class="img-rounded" alt="fpo" src="{{ MEDIA_URL }}{{k.user.picture}}" width="30px" height="30px">
+													  	</a>							
+														<div class="media-body">
+													    	<h5 class="media-heading">{{k.user.name}}</h5>
+														  	<p>{{k.text}}<img class="img-rounded" alt="fpo" src="{{ MEDIA_URL }}imgs/2.png" width="60px" height="60px"></p>
+										  				  	<ul class="inline">
+										  				  		<li>
+										  				  			<a class="likeBtn" commentOf_id="{{k.id}}" href="#f">
+										  				  				{% if userProfile in k.who_like.all %}
+										  						  			Unlike
+										  						  		{% else %}
+										  						  			Like
+										  						  		{% endif %}
+										  				  			</a>
+										  				  		</li>
+										  				  		<li>
+										  				  			<i class="icon-thumbs-up"></i>
+										  				  			<a id="like_num_coc-{{k.id}}" href="#fpo">{{k.like}}</a>
+										  				  		</li>
+										  				  		<li><a class="muted">{{k.datetime}}</a></li>
+										  				  	</ul>
+														</div>
+													</div>
+												{% endfor %}
+											</div>
+										    <div class="media keyboard">
+									    	</div>
+										</div>
+							        </div>
+							        <hr>
+							    {% endfor %}
+							</div>
+					    	<div class="media keyboard">
+							        <img class="img-rounded pull-left" alt="fpo" src="{{ MEDIA_URL }}{{i.user.picture}}" width="40px" height="40px">
+							    <div class="media-body">
+							    	<textarea class="input-block-level commentInput" post_id="{{i.id}}"placeholder="Write a comment..."></textarea>​
+							    </div>
+					    	</div>
+					    </div>
+						
+					</div>
+				</div>
+				{% endfor %}
+ 			</div>
+ 			<div class="span5">
+ 				<h3 >Got a Great Idea?</h3>
+				<a href="#"><img alt="fpo" src="http://placehold.it/144x96" /></a>
+				<p>We want it! Share your ideas and see what other people are suggesting at <a href="#">My Starbucks </a></p>
+ 			</div>
+ 		</div>
+
+ 		<a href="#top" style="position:fixed; right:0; bottom:0;">Return to top</a>
+	</div>
+
+
+<script type="text/javascript">
+var total=0;
+var visitor = $("#visitor").text();
+var like = $("#rate").text();
+var rate = like/visitor*10
+$("#rate").html(rate.toFixed(1))
+$('.datepicker').datepicker()
+  .on('changeDate', function(ev){
+    $(this).datepicker("hide")
+});
+$('#timepicker1').timepicker();
+$('#dp3').datepicker();
+
+
+function like(data){
+
+}
+
+function createComment(data, position, mode){
+	var media = document.createElement("div");
+	media.setAttribute("class","media");
+	var media_keyboard = document.createElement("div")
+
+	var media_keyboard = document.createElement("div")
+	media_keyboard.setAttribute("class","media keyboard")
+
+	var commentcomment_row = document.createElement("div")
+	commentcomment_row.setAttribute("id","commentcomment_row-"+data['comment_id'])
+
+	var user_img = document.createElement("img");
+	user_img.setAttribute("class","img-rounded pull-left");
+	user_img.setAttribute("src","{{MEDIA_URL}}imgs/"+data['user_picture']);
+
+
+	var media_body = document.createElement("div");
+	media_body.setAttribute("class","media-body");
+
+
+	var user_name = document.createElement("h5");
+	user_name.setAttribute("class","media-heading");
+	var p =  document.createElement("p");
+
+	
+	var likeBtn = document.createElement("a");
+	likeBtn.setAttribute("class","likeBtn3");
+	likeBtn.setAttribute("href","#f")
+	
+	likeBtn.onclick = function(){
+		var mode;
+		var id;
+		var obj = $(this)
+		if ($(this).attr("post_id")){
+			var post_id = $(this).attr("post_id");
+			$.get('/restaurant/like',{'user_id':user_id,'mode':"post",'id':post_id}, function(data){
+					obj.text(data)
+					likeNum = parseInt($("#like_num_post-"+post_id).html())
+					if (data == "Unlike"){
+						$("#like_num_post-"+post_id).text(likeNum+1)
+					}
+					else{
+						$("#like_num_post-"+post_id).text(likeNum-1)
+					}
+					
+			})
+		}
+		else if ($(this).attr("comment_id")){
+			var comment_id = $(this).attr("comment_id");
+			$.get('/restaurant/like',{'user_id':user_id,'mode':"comment",'id':comment_id}, function(data){
+					obj.text(data)
+					likeNum = parseInt($("#like_num_comment-"+comment_id).html())
+					if (data == "Unlike"){
+						$("#like_num_comment-"+comment_id).text(likeNum+1)
+					}
+					else{
+						$("#like_num_comment-"+comment_id).text(likeNum-1)
+					}
+					
+			})
+		}
+		else if ($(this).attr("commentOf_id")){
+			coc_id = $(this).attr("commentOf_id");
+			$.get('/restaurant/like',{'user_id':user_id,'mode':"commentOf",'id':coc_id}, function(data){
+					obj.text(data)
+					var likeNum = parseInt($("#like_num_coc-"+coc_id).html())
+					if (data == "Unlike"){
+						$("#like_num_coc-"+coc_id).text(likeNum+1)
+					}
+					else{
+						$("#like_num_coc-"+coc_id).text(likeNum-1)
+					}
+					
+			})
+		}
+		
+	}
+
+	var likeNum = document.createElement("a");
+
+	var commentBtn = document.createElement("a");
+	commentBtn.setAttribute("class","commentBtn2")
+	commentBtn.setAttribute("comment_id",data['comment_id'])
+	commentBtn.setAttribute("href","#f")
+	commentBtn.innerHTML = " comment";
+	
+	var commentNum = document.createElement("a")
+	commentNum.innerHTML = " "+data['comment_num']
+
+	
+	var icon_like = document.createElement("i");
+	var icon_comment = document.createElement("i");
+	var icon_share = document.createElement("i");
+	icon_like.setAttribute("class","icon-thumbs-up");
+	icon_comment.setAttribute("class","icon-comment");
+	icon_share.setAttribute("class","icon-list-alt");
+
+	
+	var datetime = document.createElement("a");
+	datetime.setAttribute("class","muted");
+
+
+	var ul = document.createElement("ul");
+	ul.setAttribute("class","inline");
+	var li1 = document.createElement("li");
+	var li2 = document.createElement("li");
+	var li3 = document.createElement("li");
+	var li4 = document.createElement("li");
+	var li5 = document.createElement("li");
+	var li6 = document.createElement("li");
+	var li7 = document.createElement("li");
+	var hr = document.createElement("hr");
+
+
+	user_name.innerHTML = data['name'];
+	p.innerHTML = data['text'];
+	likeBtn.innerHTML = "Like";
+	commentBtn.innerHTML = "comment"
+	likeNum.innerHTML = " "+data['like'];
+	commentNum.innerHTML = " "+data['comment_num']
+	datetime.innerHTML = data['datetime'];
+
+
+
+
+
+	li1.appendChild(likeBtn);
+	li4.appendChild(icon_like);	
+	li4.appendChild(likeNum)
+	li7.appendChild(datetime);
+
+	
+
+	if (mode == "post"){
+		user_img.setAttribute("width","50px");
+		user_img.setAttribute("height","50px");
+		likeNum.setAttribute("id","like_num_post-"+data['comment_id'])
+		commentNum.setAttribute("id","comment_num_post-"+data['comment_id'])
+		li2.appendChild(commentBtn)
+		li5.appendChild(icon_comment)
+		li5.appendChild(commentNum)
+		likeBtn.setAttribute("post_id", data['comment_id']);
+	}
+	else if (mode == "comment") {
+		user_img.setAttribute("width","40px");
+		user_img.setAttribute("height","40px");
+		likeNum.setAttribute("id","like_num_comment-"+data['comment_id'])
+		commentNum.setAttribute("id","comment_num_comment-"+data['comment_id'])
+		li2.appendChild(commentBtn)
+		li5.appendChild(icon_comment)
+		li5.appendChild(commentNum)
+		likeBtn.setAttribute("comment_id", data['comment_id']);
+
+	}
+	else{
+		user_img.setAttribute("width","30px");
+		user_img.setAttribute("height","30px");
+		likeNum.setAttribute("id","like_num_coc-"+data['comment_id'])
+		likeBtn.setAttribute("commentOf_id", data['comment_id']);
+	}
+
+
+	ul.appendChild(li1);
+	ul.appendChild(li2);
+	ul.appendChild(li3);
+	ul.appendChild(li4);
+	ul.appendChild(li5);
+	ul.appendChild(li6);
+	ul.appendChild(li7);
+
+
+	media_body.appendChild(user_name);
+	media_body.appendChild(p);
+	media_body.appendChild(ul);
+	media_body.appendChild(commentcomment_row);
+	media_body.appendChild(media_keyboard);
+	media.appendChild(user_img);
+	media.appendChild(media_body);
+
+	position.append(media);
+	
+	position.append(hr);
+
+	var user_picture = data['user_picture']
+	// $(".likeBtn2").click(function())
+	
+	$(".commentBtn2").click(function(){
+		if($(this).parent().parent().parent().find(".keyboard").children().size() == 0){
+			var hr = document.createElement("hr");
+			var aImg = document.createElement("img");
+			var div = document.createElement("div")
+			var textarea = document.createElement("textarea")
+
+			aImg.setAttribute("class","img-rounded pull-left")
+			aImg.setAttribute("src","{{MEDIA_URL}}imgs/"+user_picture)
+			aImg.setAttribute("width","30px");
+			aImg.setAttribute("height","30px");
+			div.setAttribute("class","media-body")
+			textarea.setAttribute("class","input-block-level commentcommentInput")
+			textarea.setAttribute("comment_id", $(this).attr("comment_id"))
+			textarea.setAttribute("placeholder","Write a comment...")
+
+			div.appendChild(textarea)							
+			$(this).parent().parent().parent().find(".keyboard").append(aImg)
+			$(this).parent().parent().parent().find(".keyboard").append(div)
+			$(textarea).focus();
+			$(".commentcommentInput").keyup(function(e){
+				text = $(this).val();
+				if (e.keyCode == 13 && text.length > 0 && !e.shiftKey){
+					var comment_id = $(this).attr("comment_id");
+					$.get('/restaurant/comment', {'user_id':user_id, 'text':text, 'comment_id':comment_id,'mode':"comment"}, function(data){
+								createComment(data, $("#commentcomment_row-"+comment_id), "commentOf")
+								comment_num = parseInt($("#comment_num_comment-"+comment_id).html())
+								$("#comment_num_comment-"+comment_id).text(comment_num+1)
+						})
+					$(this).val("")
+				}			
+			})
+		}
+		else{
+			
+		}
+	})								
+}
+
+
+
+var business_id = $('#title').attr('business_id')
+
+
+
+// ----------------------------------------create table
+
+
+
+// ------------------------------------------------------------------- end create table
+$('#complete').click(function(){
+	$(this).hide("slow")
+	$("#menu").hide("slow")
+	$("#service").show("slow")
+	// setTimeout(function(){
+	// 	window.location = "//";
+	// },3000);
+})
+
+var business_name = $('#title').attr("business_name")
+$('#function_service').click(function(){
+	// $('#service').slideDown("slow")
+	// $('#function').hide("slow")
+	window.location = "/restaurant/"+business_name+"/service";
+})
+$('#function_kitchen').click(function(){
+	window.location = "/restaurant/"+business_name+"/kitchen";
+})
+$('#service_back').click(function(){
+	$('#function').slideDown("slow")
+	$('#service').hide("slow")
+})
+$('#function_reservation').click(function(){
+	$('#reservation').slideDown("slow")
+	$('#function').hide("slow")
+})
+$('#reservation_back').click(function(){
+	$('#function').slideDown("slow")
+	$('#reservation').hide("slow")
+})
+$('#menu_back').click(function(){
+	$('#function').slideDown("slow")
+	$('#menu').hide("slow")
+})
+
+$('#back').click(function(){
+	$(".second").slideUp("slow");
+	$("#menu").slideUp("slow");
+	$("#recommend").slideUp("slow");
+	$("#function").slideDown("slow");
+})
+
+$('#info-buy').click(function(){
+	$(this).hide("slow")
+	$("#info-confirm").show("slow")
+	$("#info-input").show("slow")
+	$("#info-cancel").show("slow")
+	
+})
+$('#info-cancel').click(function(){
+	$("#info-buy").show("slow")
+	$("#info-confirm").hide("slow")
+	$("#info-cancel").hide("slow")
+	$("info-input").hide("slow")
+	$("info-input").attr("value","1")
+	
+})
+$('#info-confirm').click(function(){
+	$(".second").slideDown("slow");
+	createOrderRow($(this).attr('name'), $(this).attr('price'), $("#info-input").val(), $(this).attr('picture'))
+	total = total+($(this).attr('price')* $("#info-input").val())
+	$('#total').html("Total: $"+total)
+	$("#info").slideUp("slow")
+	$("#menu").slideDown("slow")
+	$("#info-buy").show("slow")
+	$("#info-confirm").hide("slow")
+	$("#info-cancel").hide("slow")
+	$("info-input").val("1")
+	$("info-input").hide("slow")
+	
+})
+$("a[href='#top']").click(function() {
+  $("html, body").animate({ scrollTop: 0 }, "slow");
+  return false;
+});
+
+$('#myCarousel').carousel({
+  interval: 1000
+})
+
+var user_id = $("#user_info").attr("user_id");
+var user_picture = $("#user_info").attr("user_picture")
+$(".commentBtn").click(function(){
+	if($(this).parent().parent().parent().find(".keyboard").children().size() == 0){
+		var hr = document.createElement("hr");
+		var aImg = document.createElement("img");
+		var div = document.createElement("div")
+		var textarea = document.createElement("textarea")
+
+		aImg.setAttribute("class","img-rounded pull-left")
+		aImg.setAttribute("src","{{MEDIA_URL}}"+user_picture)
+		aImg.setAttribute("width","30px");
+		aImg.setAttribute("height","30px");
+		div.setAttribute("class","media-body")
+		textarea.setAttribute("class","input-block-level commentcommentInput")
+		textarea.setAttribute("comment_id", $(this).attr("comment_id"))
+		textarea.setAttribute("placeholder","Write a comment...")
+
+		div.appendChild(textarea)							
+		$(this).parent().parent().parent().find(".keyboard").append(aImg)
+		$(this).parent().parent().parent().find(".keyboard").append(div)
+		$(textarea).focus();
+		$(".commentcommentInput").keyup(function(e){
+			text = $(this).val();
+			if (e.keyCode == 13 && text.length > 0 && !e.shiftKey){
+				var comment_id = $(this).attr("comment_id");
+				$.get('/restaurant/comment', {'user_id':user_id, 'text':text, 'comment_id':comment_id,'mode':"comment"}, function(data){
+							createComment(data, $("#commentcomment_row-"+comment_id), "commentOf")
+							comment_num = parseInt($("#comment_num_comment-"+comment_id).html())
+							$("#comment_num_comment-"+comment_id).text(comment_num+1)
+					})
+				$(this).val("")
+			}			
+		})
+	}
+	else{
+		
+	}
+})
+$(".commentInput").keyup(function (e) {
+    // have to show text before save text to database if not success show re-send button to user.
+    // at this postition, you can tell receiver that sender is typing. should do.
+    text = $(this).val();
+    if (e.keyCode == 13 && text.length > 0 && !e.shiftKey) {
+    	post_id = $(this).attr("post_id")
+		$.get('/restaurant/comment', {'user_id':user_id, 'text':text, 'post_id':post_id, 'mode':"post"},function(data){
+			createComment(data, $("#comment_row-"+post_id),"comment")
+			comment_num = parseInt($("#comment_num_post-"+post_id).html())
+			$("#comment_num_post-"+post_id).text(comment_num+1)
+		})
+      	$(this).val("")
+    }
+});
+
+$(".likeBtn").click(function(){
+	var mode;
+	var id;
+	var obj = $(this)
+	if ($(this).attr("post_id")){
+		post_id = $(this).attr("post_id");
+		$.get('/restaurant/like',{'user_id':user_id,'mode':"post",'id':post_id}, function(data){
+				obj.text(data)
+				likeNum = parseInt($("#like_num_post-"+post_id).html())
+				if (data == "Unlike"){
+					$("#like_num_post-"+post_id).text(likeNum+1)
+				}
+				else{
+					$("#like_num_post-"+post_id).text(likeNum-1)
+				}
+				
+		})
+	}
+	else if ($(this).attr("comment_id")){
+		comment_id = $(this).attr("comment_id");
+		$.get('/restaurant/like',{'user_id':user_id,'mode':"comment",'id':comment_id}, function(data){
+				obj.text(data)
+				likeNum = parseInt($("#like_num_comment-"+comment_id).html())
+				if (data == "Unlike"){
+					$("#like_num_comment-"+comment_id).text(likeNum+1)
+				}
+				else{
+					$("#like_num_comment-"+comment_id).text(likeNum-1)
+				}
+				
+		})
+	}
+	else if ($(this).attr("commentOf_id")){
+		coc_id = $(this).attr("commentOf_id");
+		$.get('/restaurant/like',{'user_id':user_id,'mode':"commentOf",'id':coc_id}, function(data){
+				obj.text(data)
+				likeNum = parseInt($("#like_num_coc-"+coc_id).html())
+				if (data == "Unlike"){
+					$("#like_num_coc-"+coc_id).text(likeNum+1)
+				}
+				else{
+					$("#like_num_coc-"+coc_id).text(likeNum-1)
+				}
+				
+		})
+	}
+	
+})
+$(window).scroll(function(){
+  $("#test2").stop().animate({"marginTop": ($(window).scrollTop()) + "px", "marginLeft":($(window).scrollLeft()) + "px"}, "slow" );
+});
+</script>
+{% endblock %}

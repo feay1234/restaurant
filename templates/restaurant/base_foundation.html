@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<!--[if IE 8]>    <html class="no-js lt-ie9" lang="en"> <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en"> <!--<![endif]-->
+<head>
+  <meta charset="utf-8" />
+
+  <!-- Set the viewport width to device width for mobile -->
+  <meta name="viewport" content="width=device-width" />
+
+  <title>Welcome to Foundation | Marketing</title>
+
+  <link rel="stylesheet" href="{{ STATIC_URL}}css/foundation4/css/normalize.css">
+  <link rel="stylesheet" href="{{ STATIC_URL}}css/foundation4/css/foundation.css">
+  
+
+  <script src="{{ STATIC_URL}}css/foundation4/js/vendor/custom.modernizr.js"></script>
+</head>
+<body>
+ 	<!-- Navigation -->
+  <nav class="top-bar">
+    <ul class="title-area">
+      <!-- Title Area -->
+      <li class="name">
+        <h1>
+        	<a href="/restaurant/">
+            	Top Bar Title
+            </a>
+        </h1>
+      </li>
+    </ul>    
+    <section class="top-bar-section">
+      <!-- Right Nav Section -->
+      <ul class="right">
+      	{% if user.is_authenticated %}
+      		<li class="divider"></li>
+      		<li>
+      			<a href="#">username</a>
+      	 	</li>
+      
+      	 	<li class="divider"></li>
+       		<li>
+        		<a href="/restaurant/logout/">Logout</a>
+      		</li>
+      	{% endif %}
+
+      </ul>
+
+    </section>
+    
+    
+  </nav>
+
+  <div class="panel callout ">
+      <h1>The Grid</h1>
+        <h4>Flexible, efficient layout.</h4>
+  </div>
+  
+  	<div style="background-color:#2ba6cb;">
+    	<h1>dfdfdfdf</h1>
+    </div>
+  <!-- <div class="row"> -->
+  <div class="row">
+  	{% if user.is_authenticated %}
+  		{% block content %}
+  		{% endblock %}
+
+  	{% else %}
+  		
+  		{% block form %}
+  		{% endblock %}
+
+  	{% endif %}
+  </div>
+  
+
+</body>

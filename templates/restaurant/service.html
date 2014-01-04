@@ -1,0 +1,811 @@
+{% extends 'restaurant/base_bootstrap_black_edition.html' %}
+{% block content3 %}
+{% load poll_extras %}
+<style type="text/css">
+.number {
+  margin: 0 5px 5px 0;
+  line-height: 50px;
+  font-weight: bold;
+  font-size: 25px;
+}
+
+</style>
+<div id="restaurant_info" restaurant_id="{{restaurant.id}}">
+	<div id="table_content" class="container-fluid panel">
+		<br>
+		{% for i in tables %}
+			{% if i.number|mod:6 == 1 %}
+			<div class="row-fluid">
+			{% endif %}
+				{% if not i.available %}
+				<div id="table-{{i.id}}" class="span2 label label-important table" table_number="{{i.number}}" table_id="{{i.id}}">
+					<div class="panel-heading">
+					    <h3 class="panel-title">Table {{i.number}}</h3>
+				  	</div>
+					  Panel content
+				</div>
+				{% else %}
+				<div id="table-{{i.number}}" class="span2 label label-success table" table_number="{{i.number}}" table_id="{{i.id}}">
+					<div class="panel-heading">
+					    <h3 class="panel-title">Table {{i.number}}</h3>
+				  	</div>
+					  Panel content
+				</div>
+				{% endif %}
+			{% if i.number == tables|length or i.number|mod:6 == 0 %}
+			</div>	
+			{% endif %}
+		{% endfor %}			
+	</div>
+	<br>
+
+	<div id="function_content" style="display:none;padding-top:20px;">
+		<div class="span2">
+			<ul class="nav nav-list">
+			  <li class="nav-header">Menu</li>
+			  <li id="starter_tab" class="tab active"><a href="#" data-toggle="tab">Starter</a></li>
+			  <li class="nav-header">Information</li>
+			  <li id="orders_tab" class="tab"><a href="#" data-toggle="tab">Orders</a></li>
+			  <li id="bill_tab" class="tab"><a href="#" data-toggle="tab">Check Bill</a></li>
+			  <li><a id="back_to_main" href="#">Back to main page<i class="icon-chevron-right"></i></a></li>
+			</ul>
+		</div>
+		<div class="span10">
+			<div id="menu_content">
+				<div class="span7">
+					<div class="menu">
+					{% for i in menu %}
+						<div class="row-fluid menu-thumbnail" food_id='{{i.id}}' food_name='{{i.name}}' food_price='{{i.price}}'>
+							<div class="span2">
+								<img class="pull-left" src="{{ MEDIA_URL }}{{i.picture}}">
+							</div>
+							<div class="span8">
+								<h4 class="media-heading" style="padding-top:10px">{{i.name}}</h4>
+								<p>{{i.description}}</p>
+
+							</div>
+							<div class="span2" style="padding-top:10px">
+								<span class="badge badge-warning" >${{i.price}}.99</span>
+							</div>
+						</div>
+						<!-- <br> -->
+					{% endfor %}
+					</div>
+				</div>
+ 				<div class="span5">
+		 			<div class="panel container-fluid">
+		 				<h1 id="order_header"></h1>
+		 				<table id="table" class="table" >
+			              <thead>
+			                <tr>
+			                  <th>Name</th>
+			                  <th>price</th>
+			                  <th>Amount</th>
+			                  <th>Action</th>
+			                </tr>
+			              </thead>
+			              <tbody id="order_row">
+		                      
+			              </tbody>
+			            </table>
+			            <div class="pull-right">
+			            	<h4 id="total"></h4>
+			            	<a id="send_order" class="btn btn-primary ">send_order</a>
+			            </div>
+			        </div>
+ 				</div>
+ 			</div>
+ 			<div id="order_content" style="display:none;">
+ 				<legend>Customer's order</legend>
+ 				<div class="row-fluid">
+		 				<div class="span8">
+			 				<div id="order" class="panel container-fluid">
+			 				<h4 id="order_header"></h4>
+			 				<table id="table" class="table" >
+				              <thead>
+				                <tr>
+				                  <th>Name</th>
+				                  <th>price</th>
+				                  <th>Quantity</th>
+				                  <th>Status<th>
+				                  <th>Action</th>
+				                </tr>
+				              </thead>
+				              <tbody id="bill_row">
+				              	
+			                      
+				              </tbody>
+				            </table>
+				            <div class="pull-right">
+				            	<!-- <h4 id="bill_total"></h4> -->
+				            	<a id="check_bill" class="btn btn-primary ">check bill</a>
+				            </div>
+				        	</div>
+				        </div>
+				        <div class="span4">
+				        	
+				        	<div class='well container-fluid'>
+				        		<legend>Total</legend>
+				        		<ul class="inline" >
+								  <li class="pull-right"><h4 id='bill_total' >0.00</h4></li>
+								  <li class="pull-right"><h4>£ </h4></li>
+								</ul>
+			                </div>
+			                <div class="row-fluid">
+				        		<div id="pay_function" table_id="" class="select-block">
+				        			Pay Bill
+				        		</div>
+				        	</div>
+				        	<br>
+			                <div class="row-fluid">
+				        		<div id="print_receipt" table_id="" class="select-block">
+				        			Print Receipt
+				        		</div>
+				        	</div>
+
+	                </div>
+
+ 				</div>
+
+ 				
+ 			</div>
+ 			<div id="bill_content" style="display:none;">
+ 				<legend>Check Bill</legend>
+ 				<div class="row-fluid">
+		 			<div class="panel  span6">
+		 				<h4 id=""></h4>
+		 				<table id="" class="table" >
+			              <thead>
+			                <tr>
+			                  <th>Name</th>
+			                  <th>price</th>
+			                  <th>Quantity</th>
+			                </tr>
+			              </thead>
+			              <tbody id="">
+			              </tbody>
+			            </table>
+			            <div class="pull-right">
+			            	<h4 id=""></h4>
+			            	<a id="" class="btn btn-primary ">Print</a>
+			            </div>
+			        </div>
+			        <div class="panel  span6">
+		 				<h4 id=""></h4>
+		 				<table id="" class="table" >
+			              <thead>
+			                <tr>
+			                  <th>Name</th>
+			                  <th>price</th>
+			                  <th>Quantity</th>
+			                </tr>
+			              </thead>
+			              <tbody id="">
+			              </tbody>
+			            </table>
+			            <div class="pull-right">
+			            	<h4 id=""></h4>
+			            	<a id="" class="btn btn-primary ">Print</a>
+			            </div>
+			        </div>
+ 				</div>
+	 			
+ 			</div>
+ 			
+ 		</div>
+		<!-- <div id="" class="span4 panel">
+				<div id="" class="panel2">
+ 				<p class="lead">Today’s Special</p>
+ 				<div class="row-fluid">
+ 					<div class="span3">
+						<img src="{{ MEDIA_URL }}imgs/menu2.jpg" class="img-rounded" width="60px" height="60px">
+					</div>
+					<div class="span9">
+						<h5 class="media-heading">Colorful Summer Salad</h5>
+						<div class='row-fluid'>
+							<div class="span9">
+								
+								<p>Colorful summer salad of greens, fruit and feta cheese.</p>
+							</div>
+							<div class="span3">
+								<span class="label label-warning">$4.99</span>
+
+								<a href="#" class="btn">Buy</a>
+							</div>
+						</div>
+					</div>
+ 				</div>
+ 				<hr>
+			</div>
+		</div> -->
+	</div>
+
+
+	<div id="receipt" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+		<div class="modal-body">
+			<h3 class="text-center">Restaurant's name</h3>
+			<p class="text-center">tel: 02-996-1985</p>
+			<h4 id="receipt_table_number" class="text-center"></h4>
+			<table id="" class="table" >
+				<thead>
+				  <tr>
+				    <th>Name</th>
+				    <th>price</th>
+				    <th>Quantity</th>
+				  </tr>
+				</thead>
+                <tbody id="receipt_row">
+				</tbody>
+            </table>
+		</div>
+	</div>
+
+	<div id="input_number_modal" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+		<div class="modal-body">
+			<div class='well'>
+				<div class="row-fluid">
+	        		<legend>Recieve</legend>
+	        		<ul class="inline" >
+					  <li class="pull-right"><h4 id='receive' >0.00</h4></li>
+					  <li class="pull-right"><h4>£ </h4></li>
+					</ul>
+	        		<legend>Change</legend>
+	        		<ul class="inline" >
+					  <li class="pull-right"><h4 id='change' >0.00</h4></li>
+					  <li class="pull-right"><h4>£ </h4></li>
+					</ul>
+				</div>
+        		<hr>
+        		<div id="input">
+	              	<div class="row-fluid">
+	              		<div class="span3">
+	                      <a class="btn btn-block number number_input">7</a>
+	                    </div>  
+	                    <div class="span3">
+	                      <a class="btn btn-block number number_input">8</a>
+
+	                    </div>  
+	                    <div class="span3">
+	                      <a class="btn btn-block number number_input">9</a>
+	                    </div>  
+	                    <div class="span3">
+	                      <a id="delete" class="btn btn-danger btn-block number">Del</a>
+	                    </div>  
+	                </div>
+	                <div class="row-fluid">
+	              		<div class="span3">
+	                      <a class="btn btn-block number number_input">4</a>
+	                    </div>  
+	                    <div class="span3">
+	                      <a class="btn btn-block number number_input">5</a>
+
+	                    </div>  
+	                    <div class="span3">
+	                      <a class="btn btn-block number number_input">6</a>
+	                    </div>  
+	                    <div class="span3">
+	                      <a id="clear" class="btn btn-block number">Clear</a>
+	                    </div>  
+	                </div>
+	                <div class="row-fluid">
+	              		<div class="span3">
+	                      <a class="btn btn-block number number_input">1</a>
+	                    </div>  
+	                    <div class="span3">
+	                      <a class="btn btn-block number number_input">2</a>
+
+	                    </div>  
+	                    <div class="span3">
+	                      <a class="btn btn-block number number_input">3</a>
+	                    </div>  
+	                    <div class="span3">
+	                      <a id="total_input" class="btn btn-block number">Total</a>
+	                    </div>  
+	                </div>
+	                <div class="row-fluid">
+	              		<div class="span3">
+	                      <a class="btn btn-block number number_input">.</a>
+	                    </div>  
+	                    <div class="span3">
+	                      <a class="btn btn-block number number_input">0</a>
+
+	                    </div>  
+	                    <div class="span3">
+	                      <a class="btn btn-block number number_input">00</a>
+	                    </div>  
+	                    <div class="span3">
+	                      <a id="pay" class="btn btn-primary btn-block number" data-method="pay">Pay</a>
+	                    </div>  
+	                </div>
+	            </div>
+	            <button id="complete_payment" style="display:none" class="btn btn-success btn-large btn-block">Complete</button>
+            </div>
+		</div>
+	</div>
+	<div id="myModal" class="modal-service hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+	  	<div class="modal-body">
+			<div class="span6 block">
+				<img id="info-img">
+				<legend id="info-name"></legend>
+				<div class="row-fluid" style="text-align:left">
+					<div class="span9">
+						<p id="info-des"></p>
+					</div>
+					<div class="span3">
+						<span id="info-price"class="label label-warning"><h3>$3.99</h3></span>
+					</div>
+					
+				</div>
+				<input type="number" id="info-input" min="1" max="99" value="1" style="display:none">
+				<a id="info-buy" class="btn btn-block btn-primary">Buy</a>
+				<a id="info-confirm" class="btn btn-block btn-success" style="display:none" name="" price="" picture="">Confirm</a>
+				<a id="info-cancel" class="btn btn-block btn-danger" style="display:none">Cancel</a>
+		</div>
+		<div class="span6">
+			<div class="panel">
+ 				<h2><a href="#fpo">Blog Post Title</a></h2>
+				<p class="meta postdate">Wednesday, December 08, 2010</p>
+				<p class="meta byline">Posted by John Doe, title</p>
+
+				<p><img alt="fpo" src="http://placehold.it/625x240"></p>
+				<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
+				<p>Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+				<input type="hidden" id="BlogPostID" name="BlogPostID" value="100" />
+				<p class="more"><a href="#fpo">Read full story &gt;</a></p>
+				<a href="#fpo"><span class="comment-count">123</span> Comments</a>
+			</div>
+			<div class="panel">
+ 				<h2><a href="#fpo">Blog Post Title</a></h2>
+				<p class="meta postdate">Wednesday, December 08, 2010</p>
+				<p class="meta byline">Posted by John Doe, title</p>
+
+				<p><img alt="fpo" src="http://placehold.it/625x240"></p>
+				<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
+				<p>Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+				<input type="hidden" id="BlogPostID" name="BlogPostID" value="100" />
+				<p class="more"><a href="#fpo">Read full story &gt;</a></p>
+				<a href="#fpo"><span class="comment-count">123</span> Comments</a>
+			</div>
+		</div>
+	  	</div>
+	</div>
+
+
+</div>
+
+
+<script type="text/javascript">
+var total=0;
+function createOrderRow(id,name, price){
+	check_dupicate_row = 0;
+	$('#order_row  tr').each(function(){
+		if ($(this).find(".name").text() == name){
+			$a = $(this)
+			old_amount = $(this).find(".amount").text()
+			$(this).find(".amount").html(parseInt(old_amount)+1);
+			check_dupicate_row = 1;
+		}
+	})
+	if (check_dupicate_row == 0) {
+		var tr = document.createElement("tr")
+		var td1 = document.createElement("td")
+		var td2 = document.createElement("td")
+		var td3 = document.createElement("td")
+		var td4 = document.createElement("td")
+		var img = document.createElement("img")
+		var button = document.createElement("button")
+
+		td1.innerHTML = name;
+		td2.innerHTML = price+".99";
+		td3.innerHTML = 1;
+		button.innerHTML = "Delete";
+		td1.setAttribute("class","name")
+		td1.setAttribute("food_id",id)
+		td3.setAttribute("class","amount")
+
+		$(button).attr('price', price)
+
+		td4.appendChild(button);
+		tr.appendChild(td1);
+		tr.appendChild(td2);
+		tr.appendChild(td3);
+		tr.appendChild(td4);
+		$(tr).hide().appendTo($('#order_row')).fadeIn(1000);
+		$(button).click(function(){
+			if ($(td3).text() == 1) {
+				$(tr).fadeOut(1000, complete);
+			}
+			else{
+				old_amount = $(td3).text()
+				$(td3).html(parseInt(old_amount)-1);
+			}
+			
+			total = total-($(this).attr('price'))
+			$('#total').html("Total: $"+total)
+			function complete() {
+				$(tr).empty();
+			}
+		})
+	};
+}
+
+function createMenuBlock(data, column){
+    var row = document.createElement("div")
+    var img = document.createElement("img")
+    var h5 = document.createElement("h5")
+    var h3 = document.createElement("h3")
+    var span = document.createElement("span")
+    var group = document.createElement("div")
+    var buyBtn = document.createElement("a")
+    var aLike = document.createElement("a")
+    var infoBtn = document.createElement("a")
+    var datetime = document.createElement("a")
+    var br = document.createElement("br")
+    var input = document.createElement("input")
+
+    row.setAttribute("class", "thumbnail")
+    group.setAttribute("class", "btn-group2")
+    buyBtn.setAttribute("class", "btn btn-primary btn-block")
+    aLike.setAttribute("class", "btn btn-success btn-block")
+    aLike.setAttribute("name", data['name'])
+    aLike.setAttribute("price", data['price'])
+    aLike.setAttribute("picture", data['picture'])
+    infoBtn.setAttribute("class", "btn btn-block")
+    // infoBtn.setAttribute("data-toggle","modal")
+    // infoBtn.setAttribute("href","#myModal")
+
+    datetime.setAttribute("class", "btn btn-danger btn-block")
+    span.setAttribute("class","label label-warning")
+    row.setAttribute("href", "/restaurant/business/"+data['name'])
+    input.setAttribute("type","number")
+    input.setAttribute("min","1")
+    input.setAttribute("max","99")
+    input.setAttribute("value","1")
+    // $(img).attr('width','100px')
+	// $(img).attr('height','100px')
+
+    $(aLike).css("display","none")
+    $(datetime).css("display","none")
+    // $(h5).css("overflow","hidden")
+    // $(h5).css("white-space","nowrap")
+    // $(h5).css("width","300px")
+
+    $(input).css("display","none")
+    $(input).css("max-width","100px")
+
+    $(img).attr('src',  '{{MEDIA_URL}}imgs/'+data['picture'])
+    // $(img).attr('class','img-circle')
+    // h5.innerHTML = data['name'].substr(0,12);
+    h5.innerHTML = data['name']
+    h3.innerHTML = data['price']+"$"
+    buyBtn.innerHTML = "Buy"
+    aLike.innerHTML = "Confirm"
+    infoBtn.innerHTML = "Info"
+    datetime.innerHTML = "cancel"
+
+    $(group).append(aLike)
+    $(group).append(buyBtn);
+    $(group).append(infoBtn);
+    $(group).append(datetime);
+    $(span).append(h3)
+    $(row).append(img);
+    $(row).append(h5);
+    // $(row).append(span);
+    $(row).append(input)
+    $(row).append(group);
+
+    column.append(row)
+    column.append(br)
+
+    $(row).click(function(e){
+    	// window.location = $(this).attr("href");
+    })
+    $(buyBtn).click(function(){
+		$(input).slideDown("slow")
+		$(aLike).show("slow")
+		$(datetime).show("slow")
+		$(this).hide("slow")
+		$(infoBtn).hide("slow")
+	})
+	$(aLike).click(function(){
+		$(".second").slideDown("slow");
+		createOrderRow($(this).attr('name'), $(this).attr('price'))
+		total = total+($(this).attr('price')* $(input).val())
+		$('#total').html("Total: $"+total)
+		$(input).slideUp("slow")
+		$(buyBtn).show("slow")
+		$(infoBtn).show("slow")
+		$(this).hide("slow")
+		$(datetime).hide("slow")
+		$(input).val("1")
+	})
+	$(infoBtn).click(function(){
+		$('#myModal').modal('toggle')
+		// $("#menu").fadeOut("slow")
+		// $("#info").fadeIn("slow")
+		$("#info-img").attr('src',  '{{MEDIA_URL}}imgs/'+data['picture'])
+		$("#info-img").attr('width','300px')
+		$("#info-img").attr('height','300px')
+		$("#info-name").html(data['name'])
+		$("#info-des").html(data['description'])
+		$("#info-price").html("$"+data['price'])
+		$('#info-confirm').attr("name", data['name'])
+		$('#info-confirm').attr("price", data['price'])
+		$('#info-confirm').attr("picture", data['picture'])
+
+	})
+	$(datetime).click(function(){
+		$(input).slideUp("slow")
+		$(buyBtn).show("slow")
+		$(infoBtn).show("slow")
+		$(this).hide("slow")
+		$(aLike).hide("slow")
+		$(input).val("1")
+	})
+}
+
+function createTable(number, position){
+	var panel = document.createElement("div")
+	var panel_heading = document.createElement("div")
+	var p = document.createElement("p")
+
+	panel.setAttribute("class", "panel select")
+	panel.setAttribute("table_number",number)
+	panel_heading.setAttribute("class","panel-heading")
+	panel_heading.innerHTML = "Table "+ number
+	p.innerHTML = "Panel content"
+
+	panel.appendChild(panel_heading)
+	panel.appendChild(p)
+	position.append(panel)
+	var previous;
+	var selected_table_number;
+	$('.select').mouseover(function(e){
+
+	    $(this).css("border","1px solid #049cdb")
+	    $(this).css("cursor", "pointer")
+
+	})
+
+	$('.select').mouseleave(function(e){
+		var attr = $(e.target).attr("class")
+		if (attr == 'post-img'){
+		    $(e.target).css("border","")
+		    return;
+		} 
+		if (this != previous){
+		  $(this).css("border","1px solid #888888")
+		}
+	})
+
+	$('.select').click(function(e){
+		var attr = $(e.target).attr("class")
+		selected_table_number = $(this).attr("table_number")
+		$('#order_header').text("Table "+selected_table_number+" Order")
+		$('#service').hide("slow")
+		$('#menu').slideDown("slow")
+
+	})
+}
+
+$(document).ready(function(){
+
+	// First status for each content so the won't create existing content twice
+	// important variable
+	var restaurant_id = $('#restaurant_info').attr('restaurant_id')
+	var $selected_table;
+	var table_id;
+	var current_content = 'menu_content'
+	var number_input = ''
+
+	$('.table').hover(function(){
+		$(this).css("cursor","pointer")
+	})
+	$('.table').click(function(){
+		table_id = $(this).attr('table_id')
+		$('#table_content').hide("slow")
+		$('#function_content').show("slow")
+		$('#order_header').text($(this).attr('table_number'))
+		$('#order_header').attr("table_id",table_id)
+		// alert($(this).attr('table_number'))
+		$selected_table = $(this)
+	})
+	$('.menu-thumbnail').click(function(){
+		// alert($(this).attr('food_name'))
+		createOrderRow($(this).attr('food_id'), $(this).attr('food_name'), $(this).attr('food_price'))
+		total = total+($(this).attr('food_price')* 1)
+		$('#total').html("Total: $"+total)
+	})
+	$('#send_order').click(function(){
+		var food_list = new Array();
+		var index = 0;
+		$('#order_row  tr').each(function(){
+			var food = {};
+			food['food_id'] = $(this).find(".name").attr("food_id")
+			food['food_amount'] = $(this).find(".amount").text()
+			food_list[index] = food
+			index++;
+
+		})
+		var jsonText = JSON.stringify(food_list);
+		$.get('/restaurant/send_order', {'restaurant_id':restaurant_id, 'food_list':jsonText, 'table_id':$('#order_header').attr('table_id')}, function(data){
+		})
+		$('#table_content').show("slow")
+		$('#function_content').hide("slow")
+		$("#order_row").empty()
+		$('#total').empty()
+		total = 0
+		$selected_table.attr("class","span2 panel panel-danger table")
+	})
+	$('#back_to_main').click(function(){
+		$('#table_content').show("slow")
+		$('#function_content').hide("slow")
+		$('#function_content').hide("slow")
+		$('#starter_tab').click();
+		$('#starter_tab').attr("class","tab active")
+		$('#orders_tab').attr("class","tab")
+		$("#order_row").children().empty()
+		$('#bill_row').empty();
+		$('#number_input').hide('slow')
+		$('#total').html("")
+	})
+	$('#orders_tab').click(function(){
+		if (current_content != 'order_content') {
+			$('#'+current_content).hide("slow")
+			$('#order_content').show("slow")
+			current_content = 'order_content'
+			var total_price = 0;
+			$.get('/restaurant/get_order', {'table_id':table_id}, function(order){
+				$('#bill_row').empty()
+	      		for (var i = 0; i < order.length; i += 1) {
+	      			for (var j=0; j < order[i].fields.foods.length; j+=1){
+	      				var check_dupicate_row = 0;
+	      				food = order[i].fields.foods[j]
+	      				total_price = total_price + (parseInt(food[1])*parseInt(food[2]))
+	      				// $('#bill_row  tr').each(function(){
+		      			// 	if ($(this).find(".name").text() == food[0]){
+		      			// 		$a = $(this)
+		      			// 		old_amount = $(this).find(".amount").text()
+		      			// 		$(this).find(".amount").html(parseInt(old_amount)+food[2]);
+		      			// 		check_dupicate_row = 1;
+		      			// 	}
+		      			// })<span class="badge badge-info">8</span>
+		      			if (check_dupicate_row ==0) {
+							if (food[3] == 'pending') {
+								$("#bill_row").append("<tr><td class='name'>"+food[0]+"</td>"+
+				          							"<td>"+food[1]+"</td>"+
+				          							"<td class='amount'>"+food[2]+"</td>"+
+				          							"<td><span class='badge badge-info'>"+food[3]+"</span></td>"+
+				          							"<td></td>"+
+				          							"<td><button>Delete</button></td></tr>");
+							}
+							else if (food[3] == 'cooking'){
+								$("#bill_row").append("<tr><td class='name'>"+food[0]+"</td>"+
+				          							"<td>"+food[1]+"</td>"+
+				          							"<td class='amount'>"+food[2]+"</td>"+
+				          							"<td><span class='badge badge-warning'>"+food[3]+"</span></td>"+
+				          							"<td></td>"+
+				          							"<td></td></tr>");
+							}
+							else{
+								$("#bill_row").append("<tr><td class='name'>"+food[0]+"</td>"+
+				          							"<td>"+food[1]+"</td>"+
+				          							"<td class='amount'>"+food[2]+"</td>"+
+				          							"<td><span class='badge badge-success'>"+food[3]+"</span></td>"+
+				          							"<td></td>"+
+				          							"<td></td></tr>");
+							}
+		      			};
+	      			}
+				}
+				$('#bill_total').html(total_price)
+			})
+			$('#print_receipt').attr('table_id', table_id)
+		};
+		
+	})
+	$('#bill_tab').click(function(){
+		if (current_content != 'bill_content') {
+			$('#'+current_content).hide("slow")
+			$('#bill_content').show("slow")
+			current_content = 'bill_content'
+		};
+	})
+	$('#starter_tab').click(function(){
+		if (current_content != 'menu_content') {
+			$('#'+current_content).hide("slow")
+			$('#menu_content').show("slow")
+			current_content = 'menu_content'
+		};
+		
+	})
+	$('#check_bill').click(function(){
+		
+	})
+	
+	$('#print_receipt').click(function(){
+	    
+	    $.get('/restaurant/pending_foods', {'table_id':table_id}, function(order){
+	    	if (order.length == 0) {
+	    		alert("cannot print a receipt because there are pending orders")
+	    	}
+	    	else{
+				$('#receipt_row').empty()
+				var total_price = 0;
+	      		for (var i = 0; i < order.length; i += 1) {
+	      			for (var j=0; j < order[i].fields.foods.length; j+=1){
+	      				var check_dupicate_row = 0;
+	      				food = order[i].fields.foods[j]
+	      				total_price = total_price + (parseInt(food[1])*parseInt(food[2]))
+	      				$('#receipt_row  tr').each(function(){
+		      				if ($(this).find(".name").text() == food[0]){
+		      					$a = $(this)
+		      					old_amount = $(this).find(".amount").text()
+		      					$(this).find(".amount").html(parseInt(old_amount)+food[2]);
+		      					check_dupicate_row = 1;
+		      				}
+		      			})
+		      			if (check_dupicate_row ==0) {
+							$("#receipt_row").append("<tr><td class='name'>"+food[0]+"</td>"+
+			          							"<td>"+food[1]+"</td>"+
+			          							"<td class='amount'>"+food[2]+"</td>"+
+			          							"</tr>");
+							
+							
+		      			};
+	      			}
+				}
+				$('#bill_total').html(total_price)
+	    		$('#receipt').modal('show')
+	    	}
+	    })
+	})
+	$('#pay_function').click(function(){
+		$('#input_number_modal').modal('show')
+	})
+	$('#pay').click(function(){
+		var change = parseInt($('#receive').text()) - parseInt($('#bill_total').text())
+		if ( change >= 0) {
+			$('#change').text(change)
+			$('#input').hide('slow')
+			$('#complete_payment').show('slow')
+		}
+		else{
+			alert("error")
+		}
+	})
+	$('.number_input').click(function(){
+	      number_input += $(this).text()
+		  $('#receive').text(number_input)
+	})
+	$('#complete_payment').click(function(){
+		$.get('/restaurant/pay', {'table_id':table_id}, function(data){
+			if (data == 'yes') {
+				$('#input').show('slow')
+				$('#receive').text("0.00")
+				$('#change').text("0.00")
+				$('#complete_payment').hide('slow')
+				$('#input_number_modal').modal('hide')
+				$('#back_to_main').click()
+				$('#table-'+table_id).attr("class","span2 panel panel-success table")
+			}
+		})
+		
+	})
+	$('#delete').click(function(){
+		number_input = number_input.substring(0, number_input.length - 1)
+		$('#receive').text(number_input)
+	})
+	$('#clear').click(function(){
+		number_input = ""
+		$('#receive').text("")
+	})
+	$('#total_input').click(function(){
+		$('#receive').text($('#bill_total').text())
+	})
+
+})
+
+</script>
+
+{% endblock %}

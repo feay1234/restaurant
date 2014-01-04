@@ -1,0 +1,13 @@
+1. need to create dynamic function such as create_order by using jquery. No need to load a whole page repeatly.
+
+2. During the development, sometimes, I need to add new fields into existing table. A problem is lost of old information. to solve this     problem, I researched in the intenet and found South, migration framework supporting.
+
+3.Cannot modify date retrieved from server in template. For example, data operating, data format convert. Solution is using filter provided by django to create a custom filter(function that can be called in template).
+
+4.Now I developed the web application to be more dynamic by using ajax. The website can send a request,GET, for date from server and retrieve the data back. the problem is we couldn't send a list via HTTPResponse because it convert list to be text. Using JSON solves this problem. Django provides function that convert list and others data struct as well as text to json or xml. JSON lets us access values in object easiler.
+
+5. Evaluate my own quiey method and query method provide by django, which one is faster. why I had to do this, ajax sends GET request,get_food_order used in kitchen feature, to the server every second. If my own method takes higher cost than django's method, I will change to django's method in order to reduce tasks for the server in the future when I have million user using the web.
+	old and new version qeuries can be seen in get_order_kitchen function in view.py include evaluator(start time - stop time)
+	the new one is faster than the old one 10 times. pletty cool ^^. it is worth spending 2 hours for this result.
+
+6. concerning of huge cost from sending GET request in restaurant_kitchen page need to be handle.

@@ -1,0 +1,46 @@
+{% extends 'restaurant/base_foundation.html' %}
+
+{% block content %}
+
+<ul class="inline-list">
+  <li><a href="#">Link 1</a></li>
+  <li><a href="#">Link 2</a></li>
+  <li><a href="#">Link 3</a></li>
+  <li><a href="#">Link 4</a></li>
+  <li><a href="#">Link 5</a></li>
+  <li><a href="#">Link 5</a></li>
+</ul>
+
+
+<div class="large-2 columes">
+<!-- <div class="panel"> -->
+	<div class="section-container accordion" data-section="accordion">
+  <section>
+    <div class="title" >
+    	<!-- <div class="row">
+    		<div class="large-3 columes"> <img src="http://placehold.it/30x30&text=[img]" /> </div>
+    		<div class="large-9 columes"> <a href="#">Jarana Manotumruksa</a></div>
+    	</div> -->
+    	<ul>
+    		<li class="large-3 columes"> <img src="http://placehold.it/30x30&text=[img]" /> </li>
+    		<li class="large-9 columes"> Jarana Manotumruksa</li>
+    	</ul>
+    	
+    </div>
+  </section>
+  <section>
+    <div class="title" data-section-title><img src="http://placehold.it/50x50&text=[img]" /> Jarana Monotumruksa </div>
+    
+  </section>
+</div>
+</div>
+          <div id="container2" style="min-width: 400px; height: 400px; margin: 0 auto"  ></div>
+
+
+
+ <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.8.2/jquery.min.js"></script>
+<script src="{{ STATIC_URL}}css/Highcharts-3.0.2/js/jquery.min.js"></script>
+<script src="{{ STATIC_URL}}css/Highcharts-3.0.2/js/highcharts.js"></script>
+
+
+{% endblock %}

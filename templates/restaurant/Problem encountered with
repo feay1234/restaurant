@@ -1,0 +1,45 @@
+1. need to create dynamic function such as create_order by using jquery. No need to load a whole page repeatly.
+
+2. During the development, sometimes, I need to add new fields into existing table. A problem is lost of old information. to solve this     problem, I researched in the intenet and found South, migration framework supporting.
+
+3.Cannot modify date retrieved from server in template. For example, data operating, data format convert. Solution is using filter provided by django to create a custom filter(function that can be called in template).
+
+4.Now I developed the web application to be more dynamic by using ajax. The website can send a request,GET, for date from server and retrieve the data back. the problem is we couldn't send a list via HTTPResponse because it convert list to be text. Using JSON solves this problem. Django provides function that convert list and others data struct as well as text to json or xml. JSON lets us access values in object easiler.
+
+5. Evaluate my own quiey method and query method provide by django, which one is faster. why I had to do this, ajax sends GET request,get_food_order used in kitchen feature, to the server every second. If my own method takes higher cost than django's method, I will change to django's method in order to reduce tasks for the server in the future when I have million user using the web.
+	old and new version qeuries can be seen in get_order_kitchen function in view.py include evaluator(start time - stop time)
+	the new one is faster than the old one 10 times. pletty cool ^^. it is worth spending 2 hours for this result.
+
+6. concerning of huge cost from sending GET request in restaurant_kitchen page need to be handle.
+	solution keyword: long polling.
+
+	keyword on research
+	1.	5 Ways to Improve Your Ajax Performance.
+	2. sending an AJAX request for every 2 seconds cause a serious overhead on server ? 
+		if so which would be the smarter way in this scenerio
+	3.  this is a good article for ajax application
+		http://jfarcand.wordpress.com/2007/05/15/new-adventures-in-comet-polling-long-polling-or-http-streaming-with-ajax-which-one-to-choose/
+	4. http://stackoverflow.com/questions/15724055/long-polling-really
+
+
+7. First I created nested loop script to sort some input data. I realize that this should not be done by client side because it may affect to a response time so I decided to send raw data and leave the sorting to server.
+	Ex, try to get all data from each row of table. one row contains 4 columns. What i need to do is seperating each row.
+
+
+ 8. specify a specification of fields in order to reduce the space of database.
+
+ 9. try to upload file via Jquery, $ajax() in order to get reponse data to update some content in site without reload a whole site again. Problem: You can't send files via jQuery $.ajax(). it does not support. WTF
+
+ 10. default serializer of django is not support ImageField so I need to create dictionary and dump by json.
+
+ 11. With django defatul form, I don't like it. I have to do custom on it.
+
+ 12. Ajax cannot send file and using external file upload api is going to be hard for me. Solution, use iframe, pretty easy.
+
+ 13. don't use django model feature, it save a ton line of code and produce faster response man.
+
+ 14. need to know whether retrieving an associated Comment in like function by using normal reference method have to use selected_relate() or not.
+
+ 15. need to know request.GET['......'] is more expensive than variable reference. ? (14),(15) see eg, from like function()
+
+ 16. using calendar api is fucking cool and fast. god damn it. lol

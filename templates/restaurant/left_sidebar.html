@@ -1,0 +1,23 @@
+<ul class="nav nav-list well">
+    <li class="nav-header"><h6>User Profiel</h6></li>
+	  	<li class="active"><a href="/restaurant/"><i class="icon-home"></i>Home</a></li>
+	  	<li>
+	  		<a href="#">
+	  			<i class="icon-pencil"></i> 
+	  			Applications 
+	  			<span class="badge badge-warning pull-right">6</span>
+	  		</a>
+	  	</li>
+	  	<li><a href="#"><i class="i"></i> Misc</a></li>
+	<li class="nav-header"><h6>Restaurant</h6></li>	  	
+	  	{% if restaurant_list %}
+	        {% for res in restaurant_list %}
+	        	<li><a href="/restaurant/{{ res.url }}/restaurant_home"><i class="icon-home"></i>{{res.url}}</a></li>
+	        {% endfor %}
+		{% else %}		        
+		{% endif %}
+	<li><a href="#create_business_modal" role="button" class="btn" data-toggle="modal">Create Bussiness</a></li>
+	
+	<li class="nav-header"><h6>Store</h6></li>
+	
+</ul>

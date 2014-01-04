@@ -1,0 +1,15 @@
+{% extends 'restaurant/base.html' %}
+{% block content %}
+<H2>{{category_name}}</H2>
+number of view {{ visit }} 
+<A HREF="/restaurant/page_add/{{category_name_url}}"> Add page </A>
+{% if pages %}
+        <UL>
+        {% for page in pages %}
+                <LI><A HREF="{{page.url}}">{{page.title}}</A></LI>
+        {% endfor %}
+                </UL>
+{% else %}
+        <P>No pages in category.</P>
+{% endif %}
+{% endblock %}

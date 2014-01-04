@@ -1,0 +1,22 @@
+<HTML>
+<HEADER>
+        <TITLE>Restaurant</TITLE>
+        </HEADER>
+<BODY>
+        <FORM id="page_form" method="post"
+                action="/restaurant/page_add/{{category_name_url}}">
+                {% csrf_token %}
+                {% for hidden in form.hidden_fields %}
+                        {{ hidden }}
+                {% endfor %}
+
+                {% for field in form.visible_fields %}
+                        {{ field.errors }}
+                        {{ field.help_text}}
+                        {{ field }}
+                        {% endfor %}
+                <INPUT type="submit" name="submit" value="submit" />
+        </FORM>
+
+</BODY>
+</HTML>

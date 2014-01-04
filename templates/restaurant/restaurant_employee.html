@@ -1,0 +1,175 @@
+{% extends 'restaurant/base_bootstrap_black_edition.html' %}
+{% block sidebar %}
+<ul class="nav nav-list">
+    <li class="nav-header"><h6>User Profiel</h6></li>
+      <li><a href="/restaurant/"><i class="icon-home"></i> Home</a></li>
+      <li>
+        <a href="#">
+          <i class="icon-pencil"></i> 
+          Applications 
+          <span class="badge badge-warning pull-right">6</span>
+        </a>
+      </li>
+      <li><a href="#"><i class="i"></i> Misc</a></li>
+  <li class="nav-header"><h6>Restaurant</h6></li>
+      <!-- <li><a href="#"><i class="icon-home"></i> Home</a></li>
+      <li><a href="/restaurant/restaurant_home/"><i class="icon-book"></i> Restaurant</a></li>
+      <li><a href="#"><i class="icon-pencil"></i> Applications</a></li> -->
+      {% if restaurant_list %}
+            {% for res in restaurant_list %}
+                {% if res.url == restaurant_selected.url %}
+                  <li class="active"><a href="/restaurant/{{ res.url }}/restaurant_home"><i class="icon-home"></i>{{res.url}}</a></li>
+
+                {% else %}
+                  <li><a href="/restaurant/{{ res.url }}/restaurant_home"><i class="icon-home"></i>{{res.url}}</a></li>
+                {% endif %}
+            {% endfor %}
+    {% else %}
+            
+    {% endif %}
+
+
+      <li><a type="button" data-toggle="collapse" data-target="#demo"><i class="icon-plus-sign"></i>Create restaurant2</a></li>
+
+    <div id="demo" class="collapse">
+      <form id="create_restaurant" method="post" action="/restaurant/create_restaurant/">
+        {% csrf_token %}
+        <fieldset>
+          <label>Restaurant Name</label>
+          <input type="text" placeholder="Type something…" name="restaurant_name" id="restaurant_name">
+          <button type="submit" class="btn">Submit</button>
+        </fieldset>
+      </form>
+
+    </div>  
+    <!-- <li><a href="#create_restaurant" role="button" class="btn" data-toggle="modal"><i class="icon-plus-sign"></i>Create restaurant</a></li> -->
+ 
+      <!-- role="button" class="btn" data-toggle="modal" -->
+  <li class="nav-header"><h6>Store</h6></li>
+      
+
+
+</ul>
+
+
+<!-- Create Restaurant Modal-->
+<div id="create_restaurant" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-body">
+    <form>
+        <fieldset>
+          <label>Restaurant Name</label>
+          <input type="text" placeholder="Type something…">
+          <button type="submit" class="btn">Submit</button>
+        </fieldset>
+      </form>
+  </div>
+  <div class="modal-footer">
+    <button class="btn btn-primary" type="submit">Create</button>
+    <button class="btn" data-dismiss="modal" aria-hidden="true">Close</button>
+  </div>
+</div>
+
+
+{% endblock %}
+{% block content3 %}0
+	<div class="masthead">
+    <ul class="nav nav-pills pull-right">
+      <li><a href="/restaurant/{{ restaurant_selected.url }}/restaurant_home">Home</a></li>
+      <li><a href="/restaurant/{{ restaurant_selected.url }}/restaurant_services/">Services</a></li>
+      <li><a href="/restaurant/{{ restaurant_selected.url }}/restaurant_kitchen/">Kitchen</a></li>
+      <li><a href="/restaurant/{{ restaurant_selected.url }}/restaurant_stock/">Stock</a></li>
+      <li class="active"><a href="/restaurant/{{ restaurant_selected.url }}/restaurant_employee">Employee</a></li>
+      <li><a href="/restaurant/{{ restaurant_selected.url }}/restaurant_statistic">Statistic</a></li>
+    </ul>
+    <h3 class="muted">{{ restaurant_selected.url }}</h3>
+  </div>
+  <hr>
+
+
+
+  <div class="row-fluid">
+    <div class="span3">
+      <!-- <div class="well sidebar-nav">
+            <li class="nav-header">List header</li>
+            <li class="active"><a href="#">Home</a></li>
+            <li><a href="#">Library</a></li>
+      </div> -->
+      <ul class="well nav nav-list">
+        <li class="nav-header">List header</li>
+        <li class="active"><a href="#">Home</a></li>
+        <li><a href="#">Library</a></li>
+        ...
+      </ul>
+    </div><!--/span-->
+    <div class="span9">
+        <div class="row-fluid">
+        <div class="span3">
+          <div class="thumbnail">
+            <img src="http://www.orchidhousedenbydale.co.uk/wp-content/uploads/2012/11/thai-green-curry.jpg" />
+            <h3>Red Curry</h3>
+             a popular Thai dish consisting of curry paste to which coconut milk is added.
+            <button class="btn btn-inverse" type="button">Large button</button>
+          </div>
+      </div>
+      <div class="span3">
+          <div class="thumbnail">
+            <img src="http://www.templeofthai.com/images/recipes/red-curry-chicken-550x560.jpg" />
+            <h3>Red Curry</h3>
+             a popular Thai dish consisting of curry paste to which coconut milk is added.
+          </div>
+      </div>
+      <div class="span3">
+          <div class="thumbnail">
+            <img src="https://encrypted-tbn3.gstatic.com/images?q=tbn:ANd9GcS6YncYJsrCreYg0W3XC4WSV9fj7CTn7zsRJ9ePnKbKx7OAfnxK" />
+            <h3>Red Curry</h3>
+             a popular Thai dish consisting of curry paste to which coconut milk is added.
+          </div>
+      </div>
+      <div class="span3">
+          <div class="thumbnail">
+            <img src="http://placehold.it/150x150&text=[img]" />
+            <h3>Red Curry</h3>
+             a popular Thai dish consisting of curry paste to which coconut milk is added.
+          </div>
+      </div>
+    </div>
+    <br>
+    <div class="row-fluid">
+        <div class="span3">
+          <div class="thumbnail">
+            <img src="http://www.orchidhousedenbydale.co.uk/wp-content/uploads/2012/11/thai-green-curry.jpg" />
+            <h3>Red Curry</h3>
+             a popular Thai dish consisting of curry paste to which coconut milk is added.
+            <button class="btn btn-inverse" type="button">Large button</button>
+          </div>
+      </div>
+      <div class="span3">
+          <div class="thumbnail">
+            <img src="http://www.templeofthai.com/images/recipes/red-curry-chicken-550x560.jpg" />
+            <h3>Red Curry</h3>
+             a popular Thai dish consisting of curry paste to which coconut milk is added.
+          </div>
+      </div>
+      <div class="span3">
+          <div class="thumbnail">
+            <img src="https://encrypted-tbn3.gstatic.com/images?q=tbn:ANd9GcS6YncYJsrCreYg0W3XC4WSV9fj7CTn7zsRJ9ePnKbKx7OAfnxK" />
+            <h3>Red Curry</h3>
+             a popular Thai dish consisting of curry paste to which coconut milk is added.
+          </div>
+      </div>
+      <div class="span3">
+          <div class="thumbnail">
+            <img src="http://placehold.it/150x150&text=[img]" />
+            <h3>Red Curry</h3>
+             a popular Thai dish consisting of curry paste to which coconut milk is added.
+          </div>
+      </div>
+    </div>
+    <br>
+    </div><!--/span-->
+  </div><!--/row-->
+
+{% endblock %}
+{% block content2 %}
+
+{% endblock %}

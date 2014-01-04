@@ -1,0 +1,37 @@
+from django import template
+from datetime import date, timedelta
+
+register = template.Library()
+
+
+@register.filter    
+def to_int(value):
+    return int(value)-1
+
+@register.filter
+def lookup(d, key):
+    return d[key]
+
+@register.filter
+def lookup_food_des(d, key):
+    return d[key].description
+
+@register.filter
+def lookup_food_price(d, key):
+    return d[key].price
+
+@register.filter
+def mod(d, key):
+    return d%key
+
+@register.filter
+def lookup_ingredient_name(d, key):
+    return d[key].name
+
+@register.filter
+def lookup_ingredient_amount(d, key):
+    return d[key].amount
+
+@register.filter
+def is_true(arg): 
+    return arg is True

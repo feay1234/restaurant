@@ -1,0 +1,67 @@
+{% extends 'restaurant/base_bootstrap_black_edition.html' %}
+{% block content3 %}
+	<div class="container2" style="margin: 0 auto; padding-top:20px; max-width:900px;">
+		<div style="background-color:white;">   
+     		<img src="https://fbcdn-sphotos-d-a.akamaihd.net/hphotos-ak-ash3/556334_10151559830962014_2068011705_n.jpg" style="width:100%; height:300px">
+ 			<div class="media">
+     		  <a class="pull-left" href="#">
+     		    <img class="media-object" src="{{MEDIA_URL}}{{restaurant.picture}}" style="height:150px; width:150px">
+     		  </a> 		  
+     		  <div class="media-body">
+     		  	<div class="span8">
+     		  				<h1 id="title" restaurant_id="{{restaurant.id}}" type="{{type}}">{{restaurant.name}}</h1>
+     		    			<p>{{restaurant.description}}</p>
+			    		  	{% if restaurant.user != userProfile %}
+					  	  		{% if restaurant in userProfile.follower.all %}
+					  	  			<button id="followBtn" class="btn btn-primary" follow="true" onclick="follow(this)">Following</button>
+					  	  		{% else %}
+					  	  			<button id="followBtn" class="btn btn-primary " follow="false" onclick="follow(this)">Follow</button>
+					  	  		{% endif %}
+			    		  	  	
+			    		  	{% endif %}
+			    		  	
+     		  	</div>
+  	     		<div class="span4">
+ 		  		  	<ul class="inline" style="text-align:center;">
+ 		  				<li><h3>{{restaurant.visiting}}</h3><p>visiting</p></li>
+ 		  				<li><h3>{{restaurant.visitor}}</h3><p>visitor</p></li>
+ 		  				<li><h3>{{restaurant.follow}}</h3><p>Follower</p></li>
+ 		  			</ul>
+ 		  			<ul class="nav nav-pills ">
+			          <li ><a href="/restaurant/business/{{restaurant.name}}">Home</a></li>
+			          <li class="active"><a href="#f">Hungry</a></li>
+			          <li><a href="/restaurant/business/{{restaurant.name}}/follower">Follower</a></li>
+			          <li><a href="/restaurant/business/{{restaurant.name}}/about">About</a></li>
+			        </ul>
+  	     	  	</div>
+     		  </div>
+ 			</div>
+ 		</div>
+ 		<br>
+ 		<!-- functions -->
+ 		<div id="function" class='container-fluid' style="background-color:white;padding:20px 0px; text-align:center">
+ 			<div class="span4 thumbnail">
+				<img src="http://images1.friendseat.com/2011/05/Ordering.jpg"  style="width:140px; height:140px">
+ 				<h4><a href="/restaurant/{{restaurant.name}}/service">Service</a></h4>
+ 				<p>Quisque dignissim et cursus leo libero in nisi. Donec sit amet ipsum velit, a faucibus purus</p>
+			</div>
+ 			<div class="span4 thumbnail">
+ 				<img src="http://farm7.staticflickr.com/6043/6373812747_c57291a2e6.jpg" style="width:140px; height:140px">
+ 				<h4><a href="/restaurant/{{restaurant.name}}/kitchen">Kitchen</a></h4>
+ 				<p>Quisque dignissim et cursus leo libero in nisi. Donec sit amet ipsum velit, a faucibus purus</p>
+			</div>
+			<div class="span4 thumbnail">
+				<img src="{{ MEDIA_URL }}imgs/reservation.jpg" style="width:140px; height:140px">
+ 				<h4><a href="/restaurant/{{restaurant.name}}/kitchen">Reservation</a></h4>
+ 				<p>Quisque dignissim et cursus leo libero in nisi. Donec sit amet ipsum velit, a faucibus purus</p>
+			</div>
+ 		</div>
+ 		
+ 		
+ 		
+ 	</div>
+ 	<script type="text/javascript">
+ 		
+
+ 	</script>
+{% endblock %}

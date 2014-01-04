@@ -1,0 +1,109 @@
+{% extends 'restaurant/base_bootstrap_black_edition.html' %}
+{% load poll_extras %}
+{% block content3 %}
+	<div style="max-width:900px; margin: 0 auto;" id="restaurant_info" restaurant_id="{{restaurant.id}}">
+		<legend>Kitchen</legend>
+		{% for i in orders %}
+			<div class="panel container-fluid" order_id="{{i.id}}">
+				<h4>Table {{i.table.number}}</h4>
+				{% for j in i.foods.all|length|get_range %}
+					{% with  j|to_int as check %}
+						{% if check|mod:4 == 1%}
+							<div class="container-fluid">
+						{% endif %}
+								<div class="panel span3" style="text-align:center;">
+									<img src="{{MEDIA_URL}}{{i.foods.all|get_food_picture:j}}">
+									<h5>{{i.foods.all|get_food_name:j}}</h5>
+									<hr>
+									<div class="row_fluid">
+										<div class="span6 first_column" style="border-right: 1px solid #ccc;">
+											<p>Order</p>
+											<h3 class="amount">{{i.foods.all|get_amount:j}}</h3>
+											
+										</div>
+										<div class="span6 second_column">
+											<button class="btn btn-primary" onclick="cook(this)" order_food_id="{{i.foods.all|get_order_food_id:j}}"><i class="icon-fire icon-white"></i><p>Cook Food</p></button>
+											<button class="btn btn-danger finishBtn" onclick="finish(this)" style="display:none" order_food_id="{{i.foods.all|get_order_food_id:j}}"><i class="icon-ok icon-white"></i><p>Finish All</p></button>
+										</div>
+										
+									</div>
+									
+
+								</div>
+						{% if check == i.foods.all|length or check|mod:4 == 0%}
+							</div>
+						{% endif %}
+					{% endwith %}
+				{% endfor %}
+				</div>
+			<!-- </div>	 -->
+			
+		{% endfor %}
+
+	</div>
+	<script type="text/javascript">
+		function cook(e){
+			$(e).hide("slow")
+			$(e).parent().find(".finishBtn").slideDown("slow")
+			$.get('/restaurant/set_cooking', {'order_food_id':$(e).attr("order_food_id")}, function(data){
+			})
+		}
+		function finish(e){
+			$.get('/restaurant/set_finish', {'order_food_id':$(e).attr("order_food_id")}, function(data){
+			})
+			if ($(e).parent().parent().parent().parent().parent().children().children().length == 1){
+				$(e).parent().parent().parent().parent().parent().hide("slow", function(){
+					$.get('/restaurant/set_order_finish', {'order_id':$(this).attr('order_id')}, function(data){
+						$(this).remove()
+					})
+				})
+			}
+			else{
+				$(e).parent().parent().parent().hide("slow", function(){
+					$(this).remove()
+				})
+			}
+		}
+		$(document).ready(function(){
+			var restaurant_id = $('#restaurant_info').attr("restaurant_id")
+
+			setTimeout(function(){
+				$.get('/restaurant/get_order_kitchen2', {'restaurant_id':restaurant_id}, function(data){
+					for (var i =  0; i < data.length; i++) {
+						var body = "<div class='panel container-fluid' order_id='"+data[i].pk+"'>"+
+									"<h4>Table "+data[i].fields.table[0]+"</h4>"
+						for (var j = 0; j < data[i].fields.foods.length; j++) {
+							if((j+1)%4 == 1){
+								body = body+"<div class='container-fluid'>"
+							}
+							body = body + "<div class='panel span3' style='text-align:center;'>"+
+											"<img src='{{MEDIA_URL}}"+data[i].fields.foods[j][4]+"'>"+
+											"<h5>"+data[i].fields.foods[j][0]+"</h5><hr>"+
+											"<div class='row_fluid'>"+
+												"<div class='span6' style='border-right: 1px solid #ccc;'>"+
+													"<p>Order</p><h3 class='amount'>"+data[i].fields.foods[j][2]+"</h3>"+
+												"</div>"+
+												"<div class='span6'>"+
+													"<button onclick='cook(this)' class='btn btn-primary cookBtn3' order_food_id='"+data[i].fields.foods[j][5]+"'><i class='icon-fire icon-white'></i><p>Cook Food</p></button>"+
+													"<button onclick='finish(this)' class='btn btn-danger finishBtn' style='display:none' order_food_id='"+data[i].fields.foods[j][5]+"'><i class='icon-ok icon-white'></i><p>Finish All</p></button>"+
+												"</div>"+
+											"</div>"+
+										   "</div>"
+							if(j == data[i].fields.foods.length || (j+1)%4 == 0){
+								body = body+"</div>"
+							}
+						};
+						body = body + "</div>"
+						// $('#restaurant_info').append(body).hide().show('slow')
+
+						$(body).hide().appendTo($('#restaurant_info')).show('slow');
+
+					};
+				})
+
+			},2000);
+			
+		})
+	</script>
+
+{% endblock %}

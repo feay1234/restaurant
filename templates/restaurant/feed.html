@@ -1,0 +1,646 @@
+{% extends 'restaurant/base_bootstrap_black_edition.html' %}
+{% block content3 %}
+
+
+
+
+<!-- <button type="button" class="btn btn-primary" data-loading-text="Loading...">Loading state</button> -->
+<!-- <div class="span9" style="padding-right:20px; padding-left:20px; border-right: 1px solid #ccc; border-left: 1px solid #ccc;"> -->
+<!-- <div class="span1"></div> -->
+
+<!-- nav bar and -->
+<div class="span6"
+  <div class="row-fluid">
+    <div class="span2">
+
+      หกดหกด
+
+    </div>
+    <div class="span10" >
+    <form id="post_form" action="/restaurant/feed/" method ="POST" enctype="multipart/form-data">   
+        {% csrf_token %}   
+        {{ postForm.as_p }}
+        <button id="postBtn">Post</button>
+    </form>
+    {% for p in post %}
+            <div class="row-fluid thumbnail" post_id="{{p.id}}" user_id="{{p.user.id}}">
+                <div class="span2">
+                  <img src="{{MEDIA_URL}}{{ p.user.picture }}" height:"30px" width:"30px"> 
+                </div>
+                <div class="span10">
+                    <h4 class="media-heading"><a class="post-name">
+                    {{ p.user.name }}</a></h4>
+                    <p class="post-text">{{ p.text }}</p>
+                </div>                 
+                {% if p.picture %}
+                  <img src="{{MEDIA_URL}}{{ p.picture }}" class="post-img">
+                {% endif %}
+                <hr>
+                <p class="pull-left">like: {{ p.likes }}</p>
+                <p class="pull-right">{{ p.datetime }}</p>  
+            </div>
+            <br>      
+    {% endfor %}
+    </div>
+  </div>
+</div>
+
+
+<!-- board and chat feature -->
+<div class="span6">
+  <div class="row-fluid">
+    <!-- magic board -->
+    <div class="span3 manual magic_board" style="position:fixed;padding:20px;">
+          
+    </div>
+
+     <div class="span3 manual" style="position:fixed; right:0; padding:10px;">
+        <div class="row-fluid">
+          <div class="span8" > 
+            <div class="chat-title">
+              <div class="row-fluid">
+                  <div class="span2">
+                    <img class="img-title" src="{{MEDIA_URL}}">
+                  </div>
+                  <div class="span10">
+                      <h5 class="name-title"></h5>
+                  </div>                                                  
+                </div>
+            </div>
+            <div class="accordion-inner" id="scroll">
+                <div id="ChatTabContent" class="tab-content">
+                    
+                </div> 
+            </div>
+            <br>
+            <textarea rows="3" class="msgInput" type="text" placeholder="Type something…"style="max-width:170px"></textarea>
+            <hr>
+          </div>
+          <div class="span4" style="max-width:100px"> 
+              <div class="comment">
+                   <ul class="nav nav-pills nav-stacked" id="myTab">
+                  {% for friend in myFriend %}
+                    {% if friend.user.user == user %}
+                        <li class="selectChat" receiver="{{ friend.friend }}" name="{{friend.friend.name}}">
+                          <a href="#chat-{{ friend.friend }}" data-toggle="tab">
+                            <img src="{{MEDIA_URL}}{{friend.friend.picture}}" height="40px" width="40px">
+                            {{ friend.friend.name }}
+                            <span id="msg_notify-{{friend.friend}}"class="badge badge-important pull-right"></span>                
+                          </a>
+                    {% else %}
+                        <li class="selectChat" receiver="{{ friend.user }}" name="{{friend.user.name}}">
+                          <a href="#chat-{{ friend.user }}" data-toggle="tab">
+                            <img src="{{MEDIA_URL}}{{friend.user.picture}}" height="40px" width="40px">
+                            {{ friend.user.name }}
+                            <span id="msg_notify-{{friend.user}}"class="badge badge-important pull-right"></span>
+                          </a>
+                          
+                        </li>
+                    {% endif %}        
+                  {% endfor %}
+                   </ul>
+              </div> 
+          </div>
+        </div>
+    </div>
+  </div>
+</div>
+
+
+<div id="popover_content_wrapper" style="display: none" class="row-fluid">
+  {% for p in post %}
+      <div class="thumbnails" >
+          <div class="row-fluid thumbnail">
+              <div class="span2">
+                <img src="{{MEDIA_URL}}{{ p.user.picture }}">
+              </div>
+              <div class="span10">
+                  <h4 class="media-heading"><a href="/restaurant/profile/{{ p.user }}">
+                  {{ p.user.name }}</a></h4>
+                  <br>
+              </div>
+              <p>{{ p.text }}</p>
+              <p class="pull-right">{{ p.datetime }}</p>
+              <p class="pull-left">like: {{ p.likes }}</p>
+              {% if p.picture %}
+                <img src="{{MEDIA_URL}}{{ p.picture }}" >
+              {% endif %}
+          </div>
+        </li>
+      </div>
+      <hr>
+  {% endfor %}
+</div>
+
+<div id="mb-comments">       
+    <div class="comment-block">
+  
+    </div>
+    <br>
+    <textarea rows="3" class="commentInput" type="text" placeholder="Type something…" post_id=""></textarea>
+  
+</div>
+
+<div id="mb-profile" style="text-align: center;">
+     <img id="profile_picture" height="150px" width="150px" >
+     <legend id="profile_name"></legend>
+
+
+</div>
+
+
+
+<script type="text/javascript">
+/*! Copyright (c) 2011 Piotr Rochala (http://rocha.la)
+ * Dual licensed under the MIT (http://www.opensource.org/licenses/mit-license.php)
+ * and GPL (http://www.opensource.org/licenses/gpl-license.php) licenses.
+ *
+ * Version: 0.2.5
+ * 
+ */
+(function($) {
+
+    jQuery.fn.extend({
+        slimScroll: function(o) {
+
+            var ops = o;
+            //do it for every element that matches selector
+            this.each(function(){
+
+            var isOverPanel, isOverBar, isDragg, queueHide, barHeight,
+                divS = '<div></div>',
+                minBarHeight = 30,
+                wheelStep = 30,
+                o = ops || {},
+                cwidth = o.width || 'auto',
+                cheight = o.height || '250px',
+                size = o.size || '7px',
+                color = o.color || '#000',
+                position = o.position || 'right',
+                opacity = o.opacity || .4,
+                alwaysVisible = o.alwaysVisible === true;
+            
+                //used in event handlers and for better minification
+                var me = $(this);
+
+                //wrap content
+                var wrapper = $(divS).css({
+                    position: 'relative',
+                    overflow: 'hidden',
+                    width: cwidth,
+                    height: cheight
+                }).attr({ 'class': 'slimScrollDiv' });
+
+                //update style for the div
+                me.css({
+                    overflow: 'hidden',
+                    width: cwidth,
+                    height: cheight
+                });
+
+                //create scrollbar rail
+                var rail  = $(divS).css({
+                    width: '15px',
+                    height: '100%',
+                    position: 'absolute',
+                    top: 0
+                });
+
+                //create scrollbar
+                var bar = $(divS).attr({ 
+                    'class': 'slimScrollBar ', 
+                    style: 'border-radius: ' + size 
+                    }).css({
+                        background: color,
+                        width: size,
+                        position: 'absolute',
+                        top: 0,
+                        opacity: opacity,
+                        display: alwaysVisible ? 'block' : 'none',
+                        BorderRadius: size,
+                        MozBorderRadius: size,
+                        WebkitBorderRadius: size,
+                        zIndex: 99
+                });
+
+                //set position
+                var posCss = (position == 'right') ? { right: '1px' } : { left: '1px' };
+                rail.css(posCss);
+                bar.css(posCss);
+
+                //wrap it
+                me.wrap(wrapper);
+
+                //append to parent div
+                me.parent().append(bar);
+                me.parent().append(rail);
+
+                //make it draggable
+                bar.draggable({ 
+                    axis: 'y', 
+                    containment: 'parent',
+                    start: function() { isDragg = true; },
+                    stop: function() { isDragg = false; hideBar(); },
+                    drag: function(e) 
+                    { 
+                        //scroll content
+                        scrollContent(0, $(this).position().top, false);
+                    }
+                });
+
+                //on rail over
+                rail.hover(function(){
+                    showBar();
+                }, function(){
+                    hideBar();
+                });
+
+                //on bar over
+                bar.hover(function(){
+                    isOverBar = true;
+                }, function(){
+                    isOverBar = false;
+                });
+
+                //show on parent mouseover
+                me.hover(function(){
+                    isOverPanel = true;
+                    showBar();
+                    hideBar();
+                }, function(){
+                    isOverPanel = false;
+                    hideBar();
+                });
+
+                var _onWheel = function(e)
+                {
+                    //use mouse wheel only when mouse is over
+                    if (!isOverPanel) { return; }
+
+                    var e = e || window.event;
+
+                    var delta = 0;
+                    if (e.wheelDelta) { delta = -e.wheelDelta/600; }
+                    if (e.detail) { delta = e.detail / 10; }
+
+                    //scroll content
+                    scrollContent(0, delta, true);
+
+                    //stop window scroll
+                    if (e.preventDefault) { e.preventDefault(); }
+                    e.returnValue = false;
+                }
+
+                var scrollContent = function(x, y, isWheel)
+                {
+                    var delta = y;
+
+                    if (isWheel)
+                    {
+                        //move bar with mouse wheel
+                        delta = bar.position().top + y * wheelStep;
+
+                        //move bar, make sure it doesn't go out
+                        delta = Math.max(delta, 0);
+                        var maxTop = me.outerHeight() - bar.outerHeight();
+                        delta = Math.min(delta, maxTop);
+
+                        //scroll the scrollbar
+                        bar.css({ top: delta + 'px' });
+                    }
+
+                    //calculate actual scroll amount
+                    percentScroll = parseInt(bar.position().top) / (me.outerHeight() - bar.outerHeight());
+                    delta = percentScroll * (me[0].scrollHeight - me.outerHeight());
+
+                    //scroll content
+                    me.scrollTop(delta);
+
+                    //ensure bar is visible
+                    showBar();
+                }
+
+                var attachWheel = function()
+                {
+                    if (window.addEventListener)
+                    {
+                        this.addEventListener('DOMMouseScroll', _onWheel, false );
+                        this.addEventListener('mousewheel', _onWheel, false );
+                    } 
+                    else
+                    {
+                        document.attachEvent("onmousewheel", _onWheel)
+                    }
+                }
+
+                //attach scroll events
+                attachWheel();
+
+                var getBarHeight = function()
+                {
+                    //calculate scrollbar height and make sure it is not too small
+                    barHeight = Math.max((me.outerHeight() / me[0].scrollHeight) * me.outerHeight(), minBarHeight);
+                    bar.css({ height: barHeight + 'px' });
+                }
+
+                //set up initial height
+                getBarHeight();
+
+                var showBar = function()
+                {
+                    //recalculate bar height
+                    getBarHeight();
+                    clearTimeout(queueHide);
+                    
+                    //show only when required
+                    if(barHeight >= me.outerHeight()) {
+                        return;
+                    }
+                    bar.fadeIn('fast');
+                }
+
+                var hideBar = function()
+                {
+                    //only hide when options allow it
+                    if (!alwaysVisible)
+                    {
+                        queueHide = setTimeout(function(){
+                            if (!isOverBar && !isDragg) { bar.fadeOut('slow'); }
+                        }, 1000);
+                    }
+                }
+
+            });
+            
+            //maintain chainability
+            return this;
+        }
+    });
+
+    jQuery.fn.extend({
+        slimscroll: jQuery.fn.slimScroll
+    });
+})(jQuery);
+//invalid name call
+              $('.chatlist').slimscroll({
+                  // color: '#00f',
+                  // size: '10px',
+                  height: '250px'                  
+              });
+
+
+  function GetElementInsideContainer(containerID, childID) {
+    var elm = document.getElementById(childID);
+    var parent = elm ? elm.parentNode : {};
+    return (parent.id && parent.id === containerID) ? elm : {};
+  }
+  function createChatRow(sender_name, sender_img, text){
+      var row = document.createElement("div")
+      var span2 = document.createElement("div")
+      var span10 = document.createElement("div")
+      var img = document.createElement("img")
+      var a = document.createElement("a")
+      var h6 = document.createElement("h6")
+      var p = document.createElement("p")
+
+      row.setAttribute("class", "row-fluid")
+      span2.setAttribute("class", "span2")
+      span10.setAttribute("class", "span10")
+      h6.setAttribute("class","media-heading")
+
+      
+      $(img).attr('src', sender_img);
+      h6.innerHTML = sender_name;
+      p.innerHTML = text;
+
+      span2.appendChild(img);
+      a.appendChild(h6)
+      span10.appendChild(a);
+      span10.appendChild(p);
+
+      row.appendChild(span2);
+      row.appendChild(span10);
+
+
+      
+      $('#chat-'+receiver).append(row)
+      $('#scroll').scrollTop($('#scroll')[0].scrollHeight);
+
+  }
+  function createCommentRow(data){
+
+    var row = document.createElement("div")
+    var span2 = document.createElement("div")
+    var span10 = document.createElement("div")
+    var img = document.createElement("img")
+    var a = document.createElement("a")
+    var h6 = document.createElement("h5")
+    var p = document.createElement("p")
+    var pl = document.createElement("p")
+    var pr = document.createElement("p")
+    var hr = document.createElement("hr")
+
+    row.setAttribute("class", "row-fluid")
+    span2.setAttribute("class", "span2")
+    span10.setAttribute("class", "span10")
+    h6.setAttribute("class", "media-heading")
+    pl.setAttribute("class", "pull-left")
+    pr.setAttribute("class", "pull-right")
+
+    
+    $(img).attr('src',  '{{MEDIA_URL}}imgs/'+data['picture'])
+    // img.src = data['picture']
+    h6.innerHTML = data['name'];
+    p.innerHTML = data['text'];
+    pl.innerHTML = "Like: "+data['like'];
+    pr.innerHTML = data['datetime'];
+
+    span2.appendChild(img);
+    a.appendChild(h6)
+    span10.appendChild(a);
+    span10.appendChild(p);
+
+    row.appendChild(span2);
+    row.appendChild(span10);
+    row.appendChild(pr);
+    row.appendChild(pl);
+    // row.appendChild(hr);
+    $('.comment-block').append(row)
+    $('.comment-block').append(hr)
+    // $('#comment-block').scrollTop($('#comment-block')[0].scrollHeight);
+
+      
+
+
+  }
+
+  // --------------------------------------------------very important don't delete fuck you.
+  // var first_time = 0;
+  // (function poll(){
+  //   $.ajax({
+  //       type: 'GET',
+  //       url: '/restaurant/get_msg_notification',
+  //       data: {'first_time':first_time},
+  //       success: function(data){       
+  //           for (var i =0; i<data.length; i++){
+  //             title = $('.name-title').text()
+  //             if ( title == "" || title != data[i].fields.sender ){
+  //                 notify = document.getElementById("msg_notify-"+data[i].fields.sender)
+  //                 $(notify).html(data[i].fields.unread_num)
+  //             }
+  //             else{
+  //               $.get('/restaurant/get_new_message', {'sender':data[i].fields.sender}, function(data){
+  //                   for (var i=0;i<data.length;i++){
+  //                       sender_name = $('.name-title').text()
+  //                       sender_img = sender_img = $(".img-title").attr('src');
+  //                       createChatRow(sender_name, sender_img, data[i].fields.text);
+  //                   }
+  //               })
+
+  //             }
+  //           }
+  //       },
+  //       dataType: "json",
+  //       complete: poll,
+  //       timeout: 30000
+  //   })
+  //   first_time = 1;
+  // })();
+
+
+  $('.selectChat').click(function(){
+    receiver = $(this).attr('receiver');
+    receiver_name = $(this).attr('name')
+    img = jQuery("img", this).attr('src');
+
+    $('.img-title').attr('src',img);
+    $('.name-title').text(receiver);
+    $('#msg_notify-'+receiver).html("")
+    var element = document.getElementById("chat-"+receiver)
+    if (typeof(element) != 'undefined' && element != null) {
+      // update new msg to element
+    }
+    else{
+
+      var chat = document.createElement("div");
+      chatlist = document.createElement("div")
+      chat.setAttribute("class", "tab-pane fade");
+      chat.setAttribute("id","chat-"+receiver)
+      chatlist.setAttribute("class", "chatlist")
+      chatlist.setAttribute("id","chatlist-"+receiver)
+      chat.appendChild(chatlist)
+      $('#ChatTabContent').append(chat);
+
+      $.get('/restaurant/get_old_message', {'receiver':receiver}, function(data){
+        for (var i=0;i<data.length;i++){
+          
+          sender_name = data[i].fields.sender;
+          if (sender_name == receiver_name){
+
+              sender_img = $(".img-title").attr('src')
+
+          }
+          else{
+              sender_img = $("#user_img").attr('src');
+          }
+          createChatRow(sender_name, sender_img, data[i].fields.text);
+        }
+      })
+    }
+  })
+
+
+  $(".msgInput").keyup(function (e) {
+    // have to show text before save text to database if not success show re-send button to user.
+    // at this postition, you can tell receiver that sender is typing. should do.
+    text = $(this).val();
+    if (e.keyCode == 13 && text.length > 0) {
+      receiver = $('.name-title').text()
+      sender_name = $("#user_name").text()
+      sender_img = $("#user_img").attr('src');
+      
+      $.get('/restaurant/send_message',{'receiver':receiver, 'text':text}, function(){
+
+      })
+
+      createChatRow(sender_name, sender_img, text)
+      $(this).val("")
+
+      
+    }
+  });
+  $(".commentInput").keyup(function (e){
+      text = $(this).val();
+      if (e.keyCode == 13 && text.length > 0){
+        post_id = $(this).attr("post_id");
+        $.get('/restaurant/send_comment', {'post_id':post_id, 'text':text}, function(data){
+              createCommentRow(data)
+        })       
+        $(this).val("")
+      }
+    })
+
+  $('.post-img').css( 'cursor', 'pointer' );
+  $('.post-name').css( 'cursor', 'pointer' );
+  $("#mb-comments").hide()
+  $("#mb-profile").hide()
+  var previous;
+  $('.thumbnail').mouseover(function(e){
+
+    $(this).css("border","3px solid #049cdb")
+
+  })
+  $('.thumbnail').mouseleave(function(e){
+    var attr = $(e.target).attr("class")
+    if (attr == 'post-img'){
+        $(e.target).css("border","")
+        return;
+    } 
+    if (this != previous){
+      $(this).css("border","1px solid #888888")
+    }
+  })
+
+  $('.thumbnail').click(function(e){
+    if (this != previous){
+      $(previous).css("border","1px solid #888888")
+      previous = this
+    }
+    var attr = $(e.target).attr("class")
+    if (attr == 'post-img'){
+        
+        return;
+    } 
+    else if (attr == 'post-name'){
+        var user_id = $(this).attr("user_id")
+        $.get("/restaurant/get_userprofile", {'user_id':user_id}, function(data){
+            $('#profile_name').text(data['name'])
+            $('#profile_picture').attr('src',  '{{MEDIA_URL}}imgs/'+data['picture'])
+        })
+        $(".magic_board > div").hide();
+        $("#mb-profile").css("display","")
+        $(".magic_board").append($("#mb-profile"))
+        return;
+    }
+    else{
+        $(".magic_board > div").hide()
+        // add comment into magic board.
+        var post_id = $(this).attr("post_id")
+        $.get('/restaurant/get_old_comment', {'post_id':post_id}, function(data){
+          $('.comment-block').html('');
+          for (var i =0; i<data.length; i++){
+            createCommentRow(data[i]);
+          }
+        })
+        $("#mb-comments").css("display","")
+        $(".magic_board").append($("#mb-comments"))
+        $(".commentInput").attr("post_id", post_id)
+    }    
+    
+
+})
+
+</script>
+
+
+{% endblock %}

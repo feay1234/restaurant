@@ -1,0 +1,333 @@
+{% extends 'restaurant/base_bootstrap_black_edition.html' %}
+{% block sidebar %}
+<ul class="nav nav-list">
+    <li class="nav-header"><h6>User Profiel</h6></li>
+      <li><a href="/restaurant/"><i class="icon-home"></i> Home</a></li>
+      <li>
+        <a href="#">
+          <i class="icon-pencil"></i> 
+          Applications 
+          <span class="badge badge-warning pull-right">6</span>
+        </a>
+      </li>
+      <li><a href="#"><i class="i"></i> Misc</a></li>
+  <li class="nav-header"><h6>Restaurant</h6></li>
+      <!-- <li><a href="#"><i class="icon-home"></i> Home</a></li>
+      <li><a href="/restaurant/restaurant_home/"><i class="icon-book"></i> Restaurant</a></li>
+      <li><a href="#"><i class="icon-pencil"></i> Applications</a></li> -->
+      {% if restaurant_list %}
+            {% for res in restaurant_list %}
+                {% if res.url == restaurant_selected.url %}
+                  <li class="active"><a href="/restaurant/{{ res.url }}/restaurant_home"><i class="icon-home"></i>{{res.url}}</a></li>
+
+                {% else %}
+                  <li><a href="/restaurant/{{ res.url }}/restaurant_home"><i class="icon-home"></i>{{res.url}}</a></li>
+                {% endif %}
+            {% endfor %}
+    {% else %}
+            
+    {% endif %}
+
+
+      <li><a type="button" data-toggle="collapse" data-target="#demo"><i class="icon-plus-sign"></i>Create restaurant2</a></li>
+
+    <div id="demo" class="collapse">
+      <form id="create_restaurant" method="post" action="/restaurant/create_restaurant/">
+        {% csrf_token %}
+        <fieldset>
+          <label>Restaurant Name</label>
+          <input type="text" placeholder="Type something…" name="restaurant_name" id="restaurant_name">
+          <button type="submit" class="btn">Submit</button>
+        </fieldset>
+      </form>
+
+    </div>  
+    <!-- <li><a href="#create_restaurant" role="button" class="btn" data-toggle="modal"><i class="icon-plus-sign"></i>Create restaurant</a></li> -->
+ 
+      <!-- role="button" class="btn" data-toggle="modal" -->
+  <li class="nav-header"><h6>Store</h6></li>
+      
+
+
+</ul>
+
+
+<!-- Create Restaurant Modal-->
+<div id="create_restaurant" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-body">
+    <form>
+        <fieldset>
+          <label>Restaurant Name</label>
+          <input type="text" placeholder="Type something…">
+          <button type="submit" class="btn">Submit</button>
+        </fieldset>
+      </form>
+  </div>
+  <div class="modal-footer">
+    <button class="btn btn-primary" type="submit">Create</button>
+    <button class="btn" data-dismiss="modal" aria-hidden="true">Close</button>
+  </div>
+</div>
+
+
+{% endblock %}
+{% block content3 %}
+	<div class="masthead">
+    <ul class="nav nav-pills pull-right">
+      <li><a href="/restaurant/{{ restaurant_selected.url }}/restaurant_home">Home</a></li>
+      <li><a href="/restaurant/{{ restaurant_selected.url }}/restaurant_services/">Services</a></li>
+      <li><a href="/restaurant/{{ restaurant_selected.url }}/restaurant_kitchen/">Kitchen</a></li>
+      <li><a href="/restaurant/{{ restaurant_selected.url }}/restaurant_stock/">Stock</a></li>
+      <li><a href="/restaurant/{{ restaurant_selected.url }}/restaurant_employee">Employee</a></li>
+      <li class="active"><a href="/restaurant/{{ restaurant_selected.url }}/restaurant_statistic">Statistic</a></li>
+    </ul>
+    <h3 class="muted">{{ restaurant_selected.url }}</h3>
+  </div>
+  <hr>
+
+    <div class="row-fluid">
+      <div class="span3">
+        <ul class="well nav nav-list">
+          <li class="nav-header">List header</li>
+          <li class="active"><a href="#">Home</a></li>
+          <li><a href="#">Library</a></li>
+          ...
+        </ul>
+      </div><!--/span-->
+      <div class="span9">
+        <table class="table table-hover">
+              <thead>
+                <tr>
+                  <th>#</th>
+                  <th>Food Name</th>
+                  <th>Time</th>
+                  <th>Status</th>
+                  <th>Action</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>1</td>
+                  <td>Mark</td>
+                  <td>Otto</td>
+                  <td><span class="label label-success">Finish</span></td>
+                  <td><button>Cancle</button></td>
+                </tr>
+                <tr>
+                  <td>2</td>
+                  <td>Jacob</td>
+                  <td>Thornton</td>
+                  <td><span class="label label-warning">Cooking</span></td>
+                  <td><button>Cancle</button></td>
+                </tr>
+                <tr>
+                  <td>3</td>
+                  <td colspan="2">Larry the Bird</td>
+                  <td><span class="label label-important">Cancle</span></td>
+                  <td><button>Cancle</button></td>
+                </tr>
+                <tr>
+                  <td>4</td>
+                  <td>Jacob</td>
+                  <td>Thornton</td>
+                  <td><span class="label label-warning">Cooking</span></td>
+                  <td><button>Cancle</button></td>
+                </tr>
+                <tr>
+                  <td>5</td>
+                  <td>Jacob</td>
+                  <td>Thornton</td>
+                  <td><span class="label label-info">Pending</span></td>
+                  <td><button class="btn btn-danger btn-small">Cancle</button></td>
+                </tr>
+              </tbody>
+            </table>
+
+
+      </div>
+
+
+
+
+      <div id="info_modal" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+<!--         <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+          <h3 id="myModalLabel">Modal header</h3>
+        </div> -->
+        <div class="modal-body">
+          <p id="table">{{food_list.name}}</p>
+          <div class="row-fluid">
+            <table class="table table-hover">
+              <thead>
+                <tr>
+                  <th>#</th>
+                  <th>Food Name</th>
+                  <th>Time</th>
+                  <th>Status</th>
+                  <th>Action</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>1</td>
+                  <td>Mark</td>
+                  <td>Otto</td>
+                  <td><span class="label label-success">Finish</span></td>
+                  <td><button>Cancle</button></td>
+                </tr>
+                <tr>
+                  <td>2</td>
+                  <td>Jacob</td>
+                  <td>Thornton</td>
+                  <td><span class="label label-warning">Cooking</span></td>
+                  <td><button>Cancle</button></td>
+                </tr>
+                <tr>
+                  <td>3</td>
+                  <td colspan="2">Larry the Bird</td>
+                  <td><span class="label label-important">Cancle</span></td>
+                  <td><button>Cancle</button></td>
+                </tr>
+                <tr>
+                  <td>4</td>
+                  <td>Jacob</td>
+                  <td>Thornton</td>
+                  <td><span class="label label-warning">Cooking</span></td>
+                  <td><button>Cancle</button></td>
+                </tr>
+                <tr>
+                  <td>5</td>
+                  <td>Jacob</td>
+                  <td>Thornton</td>
+                  <td><span class="label label-info">Pending</span></td>
+                  <td><button class="btn btn-danger btn-small">Cancle</button></td>
+                </tr>
+              </tbody>
+            </table>
+  
+
+
+
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button class="btn" data-dismiss="modal" aria-hidden="true">Close</button>
+          <button class="btn btn-primary">Save changes</button>
+        </div>
+      </div>
+
+
+      <button onclick="show_info(1)">click</button>
+      <button onclick="show_info(2)">click</button>
+      <script> 
+      function show_info(id){
+          // $('#info_modal').modal('toggle');
+          $.get('/restaurant/1234/get_food_menu', {table_number: id}, function(data){
+                     // $('#table').html(data);
+                     alert(data)
+                     
+                 });
+          
+       }
+      </script>
+
+    
+
+      
+
+{% endblock %}
+
+
+
+
+
+
+
+
+
+
+
+{% block content2 %}
+  <script type="text/javascript">
+$(function () {
+        $('#container').highcharts({
+            chart: {
+                type: 'area'
+            },
+            title: {
+                text: 'US and USSR nuclear stockpiles'
+            },
+            subtitle: {
+                text: 'Source: <a href="http://thebulletin.metapress.com/content/c4120650912x74k7/fulltext.pdf">'+
+                    'thebulletin.metapress.com</a>'
+            },
+            xAxis: {
+                labels: {
+                    formatter: function() {
+                        return this.value; // clean, unformatted number for year
+                    }
+                }
+            },
+            yAxis: {
+                title: {
+                    text: 'Nuclear weapon states'
+                },
+                labels: {
+                    formatter: function() {
+                        return this.value / 1000 +'k';
+                    }
+                }
+            },
+            tooltip: {
+                pointFormat: '{series.name} produced <b>{point.y:,.0f}</b><br/>warheads in {point.x}'
+            },
+            plotOptions: {
+                area: {
+                    pointStart: 1940,
+                    marker: {
+                        enabled: false,
+                        symbol: 'circle',
+                        radius: 2,
+                        states: {
+                            hover: {
+                                enabled: true
+                            }
+                        }
+                    }
+                }
+            },
+            series: [{
+                name: 'USA',
+                data: [null, null, null, null, null, 6 , 11, 32, 110, 235, 369, 640,
+                    1005, 1436, 2063, 3057, 4618, 6444, 9822, 15468, 20434, 24126,
+                    27387, 29459, 31056, 31982, 32040, 31233, 29224, 27342, 26662,
+                    26956, 27912, 28999, 28965, 27826, 25579, 25722, 24826, 24605,
+                    24304, 23464, 23708, 24099, 24357, 24237, 24401, 24344, 23586,
+                    22380, 21004, 17287, 14747, 13076, 12555, 12144, 11009, 10950,
+                    10871, 10824, 10577, 10527, 10475, 10421, 10358, 10295, 10104 ]
+            }, {
+                name: 'USSR/Russia',
+                data: [null, null, null, null, null, null, null , null , null ,null,
+                5, 25, 50, 120, 150, 200, 426, 660, 869, 1060, 1605, 2471, 3322,
+                4238, 5221, 6129, 7089, 8339, 9399, 10538, 11643, 13092, 14478,
+                15915, 17385, 19055, 21205, 23044, 25393, 27935, 30062, 32049,
+                33952, 35804, 37431, 39197, 45000, 43000, 41000, 39000, 37000,
+                35000, 33000, 31000, 29000, 27000, 25000, 24000, 23000, 22000,
+                21000, 20000, 19000, 18000, 18000, 17000, 16000]
+            }]
+        });
+    });
+    
+
+    </script>
+
+<script src="{{ STATIC_URL}}css/Highcharts-3.0.2/js/highcharts.js"></script>
+<script src="{{ STATIC_URL}}css/Highcharts-3.0.2/js/modules/exporting.js"></script>
+
+<div id="container" ></div>
+
+
+
+
+
+{% endblock %}

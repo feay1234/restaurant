@@ -1,0 +1,218 @@
+{% extends 'restaurant/base_bootstrap_black_edition.html' %}
+{% block content3 %}
+	<p id='title' business_id="{{business.id}}"></p>
+	<div class="container" style="margin: 0 auto; padding-top:60px;">
+		
+		<div class="span2">
+			<ul class="nav nav-list">
+			  <li class="nav-header">List header</li>
+			  <li class="active"><a href="#">Home</a></li>
+			  <li><a href="#">Library</a></li>
+			  ...
+			</ul>
+		</div>
+		<div class="span6">
+	        <div class="row-fluid">
+				<div class="span3" id="block-column1">
+				</div>
+				<div class="span3" id="block-column2">
+				</div>
+				<div class="span3" id="block-column3">
+				</div>
+				<div class="span3" id="block-column4">
+				</div>
+			</div>
+		</div>
+ 		<div class="span4">
+ 			<div class="panel container-fluid">
+ 				<h4 id="order_header"></h4>
+ 				<table class="table" >
+	              <thead>
+	                <tr>
+	                  <th>#</th>
+	                  <th>Name</th>
+	                  <th>price</th>
+	                  <th>Amount</th>
+	                  <th>Action</th>
+	                </tr>
+	              </thead>
+	              <tbody id="order_row">
+                      
+	              </tbody>
+	            </table>
+	            <div class="pull-right">
+	            	<h4 id="total"></h4>
+	            	<a id="complete" class="btn btn-primary ">Complete</a>
+	            	<a id="back" class="btn btn-primary ">Back</a>
+	            </div>
+	        </div>
+ 		</div>
+	</div>
+
+	<script type="text/javascript">
+		function createMenuBlock(data, column){
+		    var row = document.createElement("div")
+		    var img = document.createElement("img")
+		    var h5 = document.createElement("h4")
+		    var h3 = document.createElement("h3")
+		    var span = document.createElement("span")
+		    var group = document.createElement("div")
+		    var aUserImg = document.createElement("a")
+		    var aLike = document.createElement("a")
+		    var aLikeNum = document.createElement("a")
+		    var datetime = document.createElement("a")
+		    var br = document.createElement("br")
+		    var input = document.createElement("input")
+
+		    row.setAttribute("class", "thumbnail")
+		    group.setAttribute("class", "btn-group2")
+		    aUserImg.setAttribute("class", "btn btn-primary btn-block")
+		    aLike.setAttribute("class", "btn btn-success btn-block")
+		    aLike.setAttribute("name", data['name'])
+		    aLike.setAttribute("price", data['price'])
+		    aLike.setAttribute("picture", data['picture'])
+		    aLikeNum.setAttribute("class", "btn btn-block")
+		    datetime.setAttribute("class", "btn btn-danger btn-block")
+		    span.setAttribute("class","label label-warning")
+		    row.setAttribute("href", "/restaurant/business/"+data['name'])
+		    input.setAttribute("type","number")
+		    input.setAttribute("min","1")
+		    input.setAttribute("max","99")
+		    input.setAttribute("value","1")
+		    // $(img).attr('width','100px')
+			// $(img).attr('height','100px')
+
+		    $(aLike).css("display","none")
+		    $(datetime).css("display","none")
+		    // $(h5).css("overflow","hidden")
+		    // $(h5).css("white-space","nowrap")
+		    // $(h5).css("width","300px")
+
+		    $(input).css("display","none")
+		    $(input).css("max-width","100px")
+
+		    $(img).attr('src',  '{{MEDIA_URL}}imgs/'+data['picture'])
+		    // $(img).attr('class','img-circle')
+		    // h5.innerHTML = data['name'].substr(0,12);
+		    h5.innerHTML = data['name']
+		    h3.innerHTML = data['price']+"$"
+		    aUserImg.innerHTML = "Buy"
+		    aLike.innerHTML = "Confirm"
+		    aLikeNum.innerHTML = "Info"
+		    datetime.innerHTML = "cancel"
+
+		    $(group).append(aLike)
+		    $(group).append(aUserImg);
+		    $(group).append(aLikeNum);
+		    $(group).append(datetime);
+		    $(span).append(h3)
+		    $(row).append(img);
+		    $(row).append(h5);
+		    // $(row).append(span);
+		    $(row).append(input)
+		    $(row).append(group);
+
+		    column.append(row)
+		    column.append(br)
+
+		    $(row).click(function(e){
+		    	// window.location = $(this).attr("href");
+		    })
+		    $(aUserImg).click(function(){
+				$(input).slideDown("slow")
+				$(aLike).show("slow")
+				$(datetime).show("slow")
+				$(this).hide("slow")
+				$(aLikeNum).hide("slow")
+			})
+			$(aLike).click(function(){
+				$(".second").slideDown("slow");
+				createOrderRow($(this).attr('name'), $(this).attr('price'), $(input).val(), $(this).attr('picture'))
+				total = total+($(this).attr('price')* $(input).val())
+				$('#total').html("Total: $"+total)
+				$(input).slideUp("slow")
+				$(aUserImg).show("slow")
+				$(aLikeNum).show("slow")
+				$(this).hide("slow")
+				$(datetime).hide("slow")
+				$(input).val("1")
+			})
+			$(aLikeNum).click(function(){
+				$("#menu").fadeOut("slow")
+				$("#info").fadeIn("slow")
+				$("#info-img").attr('src',  '{{MEDIA_URL}}imgs/'+data['picture'])
+				$("#info-name").html(data['name'])
+				$("#info-des").html(data['description'])
+				$("#info-price").html("$"+data['price'])
+				$('#info-confirm').attr("name", data['name'])
+				$('#info-confirm').attr("price", data['price'])
+				$('#info-confirm').attr("picture", data['picture'])
+
+			})
+			$(datetime).click(function(){
+				$(input).slideUp("slow")
+				$(aUserImg).show("slow")
+				$(aLikeNum).show("slow")
+				$(this).hide("slow")
+				$(aLike).hide("slow")
+				$(input).val("1")
+			})
+		}
+		function createOrderRow(name, price, amount, picture){
+			var tr = document.createElement("tr")
+			var td0 = document.createElement("td")
+			var td1 = document.createElement("td")
+			var td2 = document.createElement("td")
+			var td3 = document.createElement("td")
+			var td4 = document.createElement("td")
+			var img = document.createElement("img")
+			var button = document.createElement("button")
+
+			td1.innerHTML = name;
+			td2.innerHTML = price+"$";
+			td3.innerHTML = amount;
+			button.innerHTML = "Delete";
+			$(img).attr('src',  '{{MEDIA_URL}}imgs/'+picture)
+			$(img).attr('width','60px')
+			$(img).attr('height','60px')
+			$(button).attr('price', price)
+			$(button).attr('amount', amount)
+
+			td0.appendChild(img);
+			td4.appendChild(button);
+			tr.appendChild(td0);
+			tr.appendChild(td1);
+			tr.appendChild(td2);
+			tr.appendChild(td3);
+			tr.appendChild(td4);
+			$(tr).hide().appendTo($('#order_row')).fadeIn(1000);
+			$(button).click(function(){
+				$(tr).fadeOut(1000, complete);
+				total = total-($(this).attr('price')* $(this).attr("amount"))
+				$('#total').html("Total: $"+total)
+				function complete() {
+					$(tr).empty();
+				}
+			})
+
+		}
+		var business_id = $('#title').attr('business_id')
+		$.get('/restaurant/get_menu', {"business_id":business_id}, function(data){
+			for (var i=0;i<data.length; i++){
+				if((i+1)%4 == 1){
+					createMenuBlock(data[i],$('#block-column1'))
+				}
+				else if((i+1)%4 == 2){
+					createMenuBlock(data[i],$('#block-column2'))
+				}
+				else if((i+1)%4 == 3){
+					createMenuBlock(data[i],$('#block-column3'))
+				}
+				else{
+					createMenuBlock(data[i],$('#block-column4'))
+				}	
+			}
+		});
+		$('#nav').affix()
+	</script>
+{% endblock %}

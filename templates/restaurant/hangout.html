@@ -1,0 +1,72 @@
+{% extends 'restaurant/base_bootstrap_black_edition.html' %}
+{% block content3 %}
+<!-- background-color: rgba(255, 255, 255, 0.9) -->
+	<div class="container-fluid" style="margin: 0 auto; max-width: 1000px; padding-top:60px;background-color:white">
+		<div class="well">
+	        	<img alt="fpo" src="http://placehold.it/1000x440">
+		</div>
+		<div class="row-fluid">
+
+			<div class="span3" id="block-column1">
+			</div>
+			<div class="span3" id="block-column2">
+			</div>
+		</div>
+	</div>
+<script type="text/javascript">
+function createMenuBlock(data, column){
+    var row = document.createElement("div")
+    var img = document.createElement("img")
+    var h5 = document.createElement("h5")
+    var p1 = document.createElement("p")
+    var p2 = document.createElement("p")
+    var p3 = document.createElement("p")
+    var p4 = document.createElement("p")
+    var p5 = document.createElement("p")
+    var br = document.createElement("br")
+
+    row.setAttribute("class", "business-block")
+    row.setAttribute("href", "/restaurant/hangout/"+data['name'])
+    $(row).click(function(e){
+    	window.location = $(this).attr("href");
+    })
+
+    $(img).attr('src',  '{{MEDIA_URL}}imgs/'+data['picture'])
+    $(img).attr('height',  '100px')
+    $(img).attr('width',  '100px')
+    h5.innerHTML = data['name'];
+    // p1.innerHTML = data['address'];
+    // p2.innerHTML = data['city'];
+    // p3.innerHTML = data['country'];
+    // p4.innerHTML = data['zip_code'];
+    // p5.innerHTML = data['telephone'];
+    // p1.innerHTML = data['address'];
+    $(row).append(img)
+    $(row).append(h5)
+    // $(row).append(p1)
+    // $(row).append(p2)
+    // $(row).append(p3)
+    // $(row).append(p4)
+    // $(row).append(p5)
+
+    column.append(row)
+    column.append(br)
+}
+$.get('/restaurant/get_restaurant', {}, function(data){
+	for (var i=0;i<data.length; i++){
+		if((i+1)%4 == 1){
+			createMenuBlock(data[i],$('#block-column1'))
+		}
+		else if((i+1)%4 == 2){
+			createMenuBlock(data[i],$('#block-column2'))
+		}
+		else if((i+1)%4 == 3){
+			createMenuBlock(data[i],$('#block-column3'))
+		}
+		else{
+			createMenuBlock(data[i],$('#block-column4'))
+		}	
+	}
+});
+</script>
+{% endblock%}

@@ -1,0 +1,377 @@
+{% extends 'restaurant/base_bootstrap_black_edition.html' %}
+
+
+
+{% block content3 %}
+      <div class="masthead" style="padding-top:60px">
+        <ul class="nav nav-pills pull-right">
+          <li class="active"><a href="/restaurant/{{ restaurant_selected.url }}/restaurant_home">Home</a></li>
+          <li><a href="/restaurant/{{ restaurant_selected.url }}/restaurant_services/">Services</a></li>
+          <li><a href="/restaurant/{{ restaurant_selected.url }}/restaurant_kitchen/">Kitchen</a></li>
+          <li><a href="/restaurant/{{ restaurant_selected.url }}/restaurant_stock/">Stock</a></li>
+          <li><a href="/restaurant/{{ restaurant_selected.url }}/restaurant_employee">Employee</a></li>
+          <li><a href="/restaurant/{{ restaurant_selected.url }}/restaurant_statistic">Statistic</a></li>
+          <li class="dropdown">
+            <a class="dropdown-toggle" data-toggle="dropdown" href="#">
+                <i class="icon-wrench"></i> 
+                <b class="caret"></b>
+              </a>
+            <ul class="dropdown-menu pull-right">
+              <li><a href="/restaurant/{{ restaurant_selected.url }}/delete_restaurant">Delete Restaurant</a></li>
+            </ul>
+          </li>
+        </ul>
+        <h3 class="muted">{{ restaurant_selected.url }}</h3>
+      </div>
+      <hr>
+
+
+      {% block content4 %}
+      <div class="unit-hero">
+        <h1>HOME PAGE OF RESTAURANT</h1>
+
+      </div>
+      <hr>
+
+
+
+      
+
+
+
+
+
+
+
+
+
+
+
+      <!-- Example row of columns -->
+      <div class="row-fluid">
+        <div class="span4">
+          <h2>Create menu</h2>
+          <p>Donec id elit non mi porta gravida at eget metus. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus. Etiam porta sem malesuada magna mollis euismod. Donec sed odio dui. </p>
+          <p><a href="#create_menu_modal" role="button" class="btn" data-toggle="modal">Create Menu</a></p>
+
+          <!-- -----------------------------------------------------------------------------------Modal -->
+          <div id="create_menu_modal" class="modal-service hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+            <div class="modal-header">
+              <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+              <h3 id="myModalLabel">Create New Menu</h3>
+                    
+            </div>
+            <div class="modal-body">
+                    
+              <div class="row-fluid">
+                <!-- <div class="container"> -->
+                  <div class="tab-content">
+                      <ul id="myTab" class="nav nav-tabs nav-fixed-top">
+                        <li class="active"><a href="#home" data-toggle="tab">Home</a></li>
+                        <li><a href="#profile" data-toggle="pill">Profile</a></li>
+                        <li><a href="#messages" data-toggle="tab">Messages</a></li>
+                        <li><a href="#settings" data-toggle="tab">Settings</a></li>
+                      </ul>
+                     
+                      <div class="tab-pane in active" id="home">
+                        <div class="row-fluid">
+                          <div class="span3">
+                              <div class="thumbnail" style="background-color: #dff0d8">                   
+                                        <label><strong>Name</strong></label>
+                                        <input type="text" id="name"/>
+                                        <label><strong>Description</strong></label>
+                                        <textarea rows="3" id="description"></textarea>
+                                        <label><strong>Price</strong></label>
+                                        <input type="text" id="price"/>
+                                        <label><strong>Picture</strong></label>
+                                        <input type='file' name='picture' >
+                                        <!-- <button class="btn btn-large btn-block btn-primary" id="add" type="button" >
+                                          Add</button>  -->     
+                                          <input type="text" value="email@abc.com" name="Email" id="Email"
+                                           onblur="if (this.value == '') {this.value = 'email@abc.com';}"
+                                           onfocus="if (this.value == 'email@abc.com') {this.value = '';}" />
+                                        <hr>
+                                        <button id ="add" class="btn btn-large btn-block btn-primary" type="button" restaurant-name="{{restaurant_selected.url}}">Add</button>
+
+                                        
+                                        
+                              </div>
+                          </div>
+
+                          <div class="span9" id="container-food">
+                            <div class="row-fluid" name="food_container">
+                            {% load poll_extras %}
+                            {% if food_list %}
+                                {% for i in loop_food %}
+                                  {% with  i|to_int as a %}
+                                  <div class="span4">
+                                    <div class="thumbnail">
+
+                                        <img src="http://placehold.it/150x150&text=[img]" class="center"/>                
+                                        <label><strong>Name</strong></label>
+                                        <input type="text" id="name" value="{{ food_list|lookup:a }}"/>
+                                        <label><strong>Description</strong></label>
+                                        <textarea rows="3" id="description" value="{{ food_list|lookup_food_des:a }}">{{ food_list|lookup_food_des:a }}</textarea>
+                                        <label><strong>Price</strong></label>
+                                        <input type="text" id="price" value="{{ food_list|lookup_food_price:a }}"/>                                     
+                                        <button id ="add" class="btn btn-large btn-block btn-warning" type="button" restaurant-name="{{restaurant_selected.url}}">Edit</button>     
+                                    </div>
+                                  </div> 
+                                  {% with a|add:"1" as a %}
+                                  {% if a|divisibleby:"3" %}
+                                    </div>
+                                    </br>
+                                    <div class="row-fluid" name="food_container">
+                                  {% endif %} 
+                                  {% endwith %}
+
+                                  {% endwith %}                                
+                                {% endfor %}
+                                </div>
+                            {% else %}
+                            </div>
+                            {% endif %}
+                                  
+                                    
+                          </div>  
+                                
+                          
+
+
+
+
+                          <script>
+
+
+
+
+
+                            $('#add').click(function(){
+
+                            // var restaurant_name = $(this).attr("restaurant-name");
+                            var name = $('#name').val();
+                            var description = $('#description').val();
+                            var price = $('#price').val();
+                            var restaurant_selected = $(this).attr("restaurant-name");
+                            
+
+                             $.get('/restaurant/create_new_menu/', {"food_name": name, "food_description": description, "price": price ,"restaurant_selected":restaurant_selected}, function(data){
+                                       // $('#like_count').html(data);
+                                       $('#name').val("");
+                                       $('#description').val("");
+                                       $('#price').val("");
+                                       var food_container = document.getElementsByName("food_container");
+                                       food_container = food_container[food_container.length-1]
+                                       var num = food_container.getElementsByClassName("span4").length
+
+                                                                        
+
+
+                                       var span4 = document.createElement("div");
+                                       var thumbnail = document.createElement("div");
+                                       var img = document.createElement("img");
+                                       var label1 = document.createElement("label");
+                                       var label2 = document.createElement("label");
+                                       var label3 = document.createElement("label");
+                                       var input1 = document.createElement("input");
+                                       var input2 = document.createElement("input");
+                                       var textarea = document.createElement("textarea");
+                                       var strong1 = document.createElement("strong");
+                                       var strong2 = document.createElement("strong");
+                                       var strong3 = document.createElement("strong");
+                                       var button = document.createElement("button");
+
+                                       span4.setAttribute("class", "span4");
+                                       thumbnail.setAttribute("class", "thumbnail");
+
+
+                                       img.setAttribute("src", "http://placehold.it/150x150&text=[img]");
+                                       img.setAttribute("class", "center");
+
+                                       strong1.innerHTML = "Name";
+                                       strong2.innerHTML = "Description";
+                                       strong3.innerHTML = "Price";
+
+                                       label1.appendChild(strong1);
+                                       label2.appendChild(strong2);
+                                       label3.appendChild(strong3);
+
+                                       input1.setAttribute("type", "text");
+                                       input1.setAttribute("id", "name");
+                                       input1.setAttribute("value", name);
+                                       input2.setAttribute("type", "text");
+                                       input2.setAttribute("id", "price");
+                                       input2.setAttribute("value", price);
+
+                                       textarea.rows =3;
+                                       textarea.setAttribute("id", "description");
+                                       textarea.setAttribute("value", description);
+                                       textarea.innerHTML = description;
+
+                                       
+
+
+                                       button.setAttribute("id","add")
+                                       button.setAttribute("class","btn btn-large btn-block btn-warning")
+                                       button.setAttribute("type","button")
+                                       button.setAttribute("restaurant-name",restaurant_selected)
+                                       button.innerHTML = "Edit"
+
+                                       thumbnail.appendChild(img);
+                                       thumbnail.appendChild(label1);
+                                       thumbnail.appendChild(input1);
+                                       thumbnail.appendChild(label2);
+                                       thumbnail.appendChild(textarea);
+                                       thumbnail.appendChild(label3);
+                                       thumbnail.appendChild(input2);
+                                       thumbnail.appendChild(button);
+
+                                       span4.appendChild(thumbnail);
+
+
+                                       
+
+                                       if (num < 3 || num == 0){
+
+                                        food_container.appendChild(span4);
+
+                                       }
+                                       else{
+                                        // create new food_container and append new food menu,span4
+                                        var row = document.createElement("div");
+                                        row.setAttribute("class", "row-fluid");
+                                        row.setAttribute("name", "food_container");
+                                        row.appendChild(span4);
+                                        var container = document.getElementById("container-food");
+                                        var br = document.createElement("br");
+                                        container.appendChild(br);
+                                        container.appendChild(row);
+                                        
+
+                                       }
+
+
+                                   });
+                        });
+                          </script>
+                                  
+                          
+                                
+                         
+            
+                              
+
+                              
+                        
+
+                        </div>
+                      </div>
+                      <div class="tab-pane" id="profile">dfdf</div>
+                  </div>
+                              
+                
+            </div> 
+
+            </div>
+            <div class="modal-footer">
+              <!-- <button class="btn btn-primary" onclick="send_order({{i.number}})">Send Order</button> -->
+              <!-- <button id="close_modal" class="btn" data-dismiss="modal" aria-hidden="true">Close</button> -->
+            </div>
+          </div>
+
+          <!-- -----------------------------------------------------------------------------------Modal -->
+
+
+
+
+          
+
+          
+
+        </div>
+        <div class="span4">
+          <h2>Heading</h2>
+          <p>Donec id elit non mi porta gravida at eget metus. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus. Etiam porta sem malesuada magna mollis euismod. Donec sed odio dui. </p>
+          <p><a class="btn" href="#">View details &raquo;</a></p>
+       </div>
+        <div class="span4">
+          <h2>Heading</h2>
+          <p>Donec sed odio dui. Cras justo odio, dapibus ac facilisis in, egestas eget quam. Vestibulum id ligula porta felis euismod semper. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa.</p>
+          <p><a class="btn" href="#">View details &raquo;</a></p>
+        </div>
+
+
+
+                  <script type="text/javascript">
+
+                    $(document).ready(function() {
+                        $('#YOUR_FORM').submit(function() { // catch the form's submit event
+                            $.ajax({ // create an AJAX call...
+                                data: $(this).serialize(), // get the form data
+                                type: $(this).attr('method'), // GET or POST
+                                url: $(this).attr('action'), // the file to call
+                                success: function(response) { // on success..
+                                    $('#DIV_CONTAINING_FORM').html(response); // update the DIV
+                                }
+                            });
+                            return false;
+                        });
+                    });
+
+
+                      function change_color()
+                      {
+                        var thumbnail = document.getElementById("new_button");
+                        thumbnail.style.backgroundColor = ' #d9edf7';
+                      }
+                      function change_color_back()
+                      {
+                        var thumbnail = document.getElementById("new_button");
+                        thumbnail.style.backgroundColor = '';
+                      }
+
+                      function new_food_thumbnail()
+                      {
+                        var food_thumbnail = document.getElementById("new_button");
+                        food_thumbnail.setAttribute("id","food_thumbnail");
+                        food_thumbnail.setAttribute("onclick","");
+                        food_thumbnail.setAttribute("onmouseover", "");
+                        food_thumbnail.setAttribute("onmouseout", "");
+                        food_thumbnail.style.backgroundColor = '';
+                        // set thumbnail to be food_thumbnail
+                        // create form
+                        // var form = document.createElement("form");
+
+
+                        //create new_button
+                        var span4 = document.createElement("div");
+                        var new_button = document.createElement("div");
+                        span4.setAttribute("class", "span4");
+                        new_button.setAttribute("class", "thumbnail");
+                        new_button.setAttribute("id", "new_button");
+                        new_button.onclick = function(){new_food_thumbnail()};
+                        new_button.onmouseover = function(){change_color()};
+                        new_button.onmouseout = function(){change_color_back()};
+                        // new_button.setAttribute("onclick", "new_food_thumbnail");
+                        // new_button.setAttribute("onmouseover", "change_color");
+                        // new_button.setAttribute("onmouseout", "change_color_back()");
+
+                        var container = document.getElementById("food_container");                                
+                        var text = document.createElement("h3");
+                        text.innerHTML="Click here to add new food";
+                        var img = document.createElement("img");
+                        img.setAttribute("src","http://placehold.it/150x150&text=[img]");
+
+
+                        new_button.appendChild(img);
+                        new_button.appendChild(text);                      
+                        span4.appendChild(new_button);
+                        container.appendChild(span4);
+                      }
+
+
+                    </script>
+      </div>
+      {% endblock %}
+
+{% endblock %}

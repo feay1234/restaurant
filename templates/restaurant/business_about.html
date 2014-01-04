@@ -1,0 +1,101 @@
+{% extends 'restaurant/base_bootstrap_black_edition.html' %}
+{% block content3 %}
+	<div class="container2" style="margin: 0 auto; padding-top:20px; max-width:900px;">
+		<div style="background-color:white;">   
+     		<!-- <img src="https://fbcdn-sphotos-d-a.akamaihd.net/hphotos-ak-ash3/556334_10151559830962014_2068011705_n.jpg" style="width:100%; height:300px"> -->
+     		<div id="myCarousel" class="carousel slide row-fluid">
+	 		<ol class="carousel-indicators">
+	 		    <li data-target="#myCarousel" data-slide-to="0" class="active"></li>
+	 		    <li data-target="#myCarousel" data-slide-to="1"></li>
+	 		    <li data-target="#myCarousel" data-slide-to="2"></li>
+	 		</ol>
+	 		<div class="carousel-inner">
+		 		<div class="item active">
+		 			<img src="https://fbcdn-sphotos-d-a.akamaihd.net/hphotos-ak-ash3/556334_10151559830962014_2068011705_n.jpg" alt="Image" style="width:100%; height:300px"/>
+		 		</div>
+		 		<div class="item">
+		 			<img src="http://www.kettlecuisine.com/assets/images/home/slideshow/2.jpg"  style="width:100%; height:300px"/>
+		 		</div>
+		 		<div class="item">
+		 			<img src="http://rumbaonpike.com/images/hero_tacos.jpg" style="width:100%; height:300px" alt="Image"/>
+		 		</div>
+	 		</div>
+	 		 
+ 		</div>
+ 		<div class="media">
+     		  <a class="pull-left" href="#">
+     		    <img class="media-object" src="{{MEDIA_URL}}{{restaurant.picture}}" style="height:150px; width:150px">
+     		  </a> 		  
+     		  <div class="media-body">
+     		  	<div class="span8">
+     		  				<h1 id="title" restaurant_id="{{restaurant.id}}" type="{{type}}">{{restaurant.name}}</h1>
+     		    			<p>{{restaurant.description}}</p>
+			    		  	{% if restaurant.user != userProfile %}
+					  	  		{% if restaurant in userProfile.follower.all %}
+					  	  			<button id="followBtn" class="btn btn-primary" follow="true" onclick="follow(this)">Following</button>
+					  	  		{% else %}
+					  	  			<button id="followBtn" class="btn btn-primary " follow="false" onclick="follow(this)">Follow</button>
+					  	  		{% endif %}
+			    		  	  	
+			    		  	{% endif %}
+			    		  	
+     		  	</div>
+  	     		<div class="span4">
+ 		  		  	<ul class="inline" style="text-align:center;">
+ 		  				<li>
+ 		  					<!-- <span class="label label-important" style="text-align:center;"> -->
+     		  					<h3>{{restaurant.visiting}}</h3>
+     		  					<p>visiting</p>
+     		  				<!-- </span> -->
+ 		  				</li>
+ 		  				<li>
+ 		  					<!-- <span class="label label-warning"> -->
+     		  					<h3>{{restaurant.visitor}}</h3>
+ 		  						<p>visitor</p>
+ 		  					<!-- </span> -->
+ 		  				</li>
+ 		  				<li>
+ 		  					<!-- <span class="label label-success"> -->
+ 		  						<h3>{{restaurant.follow}}</h3>
+ 		  						<p>Follower</p>
+ 		  					<!-- </span> -->
+ 		  				</li>
+ 		  			</ul>
+ 		  			<ul class="nav nav-pills ">
+			          <li><a href="/restaurant/business/{{restaurant.name}}">Home</a></li>
+			          <li><a href="#">Follower</a></li>
+			          <li class="active"><a href="#">About</a></li>
+			        </ul>
+  	     	  	</div>
+     		  </div>
+ 		</div>
+ 		<br>
+ 		<div class="row-fluid content">
+ 			<br>
+ 			<iframe width="900" height="350" frameborder="0" scrolling="no" marginheight="0" marginwidth="0" src="https://maps.google.co.uk/maps?q=mcdonalds+maryhill&amp;aq=0&amp;ie=UTF8&amp;hl=en&amp;hq=mcdonalds&amp;hnear=Maryhill,+Glasgow+City,+United+Kingdom&amp;t=m&amp;ll=55.88718,-4.284637&amp;spn=0.024187,0.040088&amp;output=embed"></iframe><br /><small><a href="https://maps.google.co.uk/maps?q=mcdonalds+maryhill&amp;aq=0&amp;ie=UTF8&amp;hl=en&amp;hq=mcdonalds&amp;hnear=Maryhill,+Glasgow+City,+United+Kingdom&amp;t=m&amp;ll=55.88718,-4.284637&amp;spn=0.024187,0.040088&amp;source=embed" style="color:#0000FF;text-align:left">View Larger Map</a></small>
+ 		</div>
+ 		<div id="profile" class='container-fluid'>
+					<div id="" class="span6">
+						<dl class="dl-horizontal">
+		 					<dt><i class="icon-info-sign"></i> Info</dt>
+							<dd>{{business.description}}</dd>
+			 				<dt><i class="icon-map-marker"></i> Address</dt>
+							<dd>{{business.address}},{{business.city}},{{business.country}},{{business.zip_code}}</dd>
+							<dt><i class="icon-globe"></i> Website</dt>
+							<dd><a href="www.google.com"> www.google.com</a></dd>
+						</dl>
+					
+		 			</div>
+		 			<div id="" class="span6">
+		 				<dl class="dl-horizontal">
+		 					<dt><i class="icon-time"></i> Hours</dt>
+							<dd>{{business.opening}}</dd>
+			 				<dt><i class="icon-certificate"></i>Price</dt>
+							<dd>$4.99 - $20.99</dd>
+							<dt><i class="icon-signal"></i> Telephone</dt>
+							<dd>{{business.telephone}}</dd>
+						</dl>
+		 			</div>
+			 	</div>
+ 	</div>
+{% endblock %}

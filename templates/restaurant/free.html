@@ -1,0 +1,759 @@
+{% extends 'restaurant/base_bootstrap_black_edition.html' %}
+<style type="text/css">
+body{
+	background-color: black;
+}
+a.darken {
+    display: inline-block;
+    background: black;
+    padding: 0;
+}
+
+a.darken img {
+    display: block;
+}
+
+</style>
+{% block content3 %}
+
+<form id="form1" runat="server">
+    <input type='file' id="imgInp" />
+    <img id="blah" src="#" alt="your image" height="100" width="100"/>
+</form>
+<script type="text/javascript">
+function readURL(input) {
+
+    if (input.files && input.files[0]) {
+        var reader = new FileReader();
+
+        reader.onload = function (e) {
+            $('#blah').attr('src', e.target.result);
+        }
+
+        reader.readAsDataURL(input.files[0]);
+    }
+    
+$("#imgInp").change(function(){
+    readURL(this);
+});
+
+$("#bg").click(function(){
+        $('.bgform').slideToggle();
+});
+</script>
+<!-- <ul id="myTab" class="nav nav-tabs"> -->
+              <li class="active"><a href="#home" data-toggle="tab">Home</a></li>
+              <li><a href="#profile" data-toggle="tab">Profile</a></li>
+              <li class="dropdown">
+                <a href="#" class="dropdown-toggle" data-toggle="dropdown">Dropdown <b class="caret"></b></a>
+                <ul class="dropdown-menu">
+                  <li><a href="#dropdown1" data-toggle="tab">@fat</a></li>
+                  <li><a href="#dropdown2" data-toggle="tab">@mdo</a></li>
+                </ul>
+              </li>
+            <!-- </ul> -->
+            <div id="myTabContent" class="tab-content">
+              <div class="tab-pane fade in active" id="home">
+                <p>Raw denim you probably haven't heard of them jean shorts Austin. Nesciunt tofu stumptown aliqua, retro synth master cleanse. Mustache cliche tempor, williamsburg carles vegan helvetica. Reprehenderit butcher retro keffiyeh dreamcatcher synth. Cosby sweater eu banh mi, qui irure terry richardson ex squid. Aliquip placeat salvia cillum iphone. Seitan aliquip quis cardigan american apparel, butcher voluptate nisi qui.</p>
+              </div>
+              <div class="tab-pane fade" id="profile">
+                <p>Food truck fixie locavore, accusamus mcsweeney's marfa nulla single-origin coffee squid. Exercitation +1 labore velit, blog sartorial PBR leggings next level wes anderson artisan four loko farm-to-table craft beer twee. Qui photo booth letterpress, commodo enim craft beer mlkshk aliquip jean shorts ullamco ad vinyl cillum PBR. Homo nostrud organic, assumenda labore aesthetic magna delectus mollit. Keytar helvetica VHS salvia yr, vero magna velit sapiente labore stumptown. Vegan fanny pack odio cillum wes anderson 8-bit, sustainable jean shorts beard ut DIY ethical culpa terry richardson biodiesel. Art party scenester stumptown, tumblr butcher vero sint qui sapiente accusamus tattooed echo park.</p>
+              </div>
+              <div class="tab-pane fade" id="dropdown1">
+                <p>Etsy mixtape wayfarers, ethical wes anderson tofu before they sold out mcsweeney's organic lomo retro fanny pack lo-fi farm-to-table readymade. Messenger bag gentrify pitchfork tattooed craft beer, iphone skateboard locavore carles etsy salvia banksy hoodie helvetica. DIY synth PBR banksy irony. Leggings gentrify squid 8-bit cred pitchfork. Williamsburg banh mi whatever gluten-free, carles pitchfork biodiesel fixie etsy retro mlkshk vice blog. Scenester cred you probably haven't heard of them, vinyl craft beer blog stumptown. Pitchfork sustainable tofu synth chambray yr.</p>
+              </div>
+              <div class="tab-pane fade" id="dropdown2">
+                <p>Trust fund seitan letterpress, keytar raw denim keffiyeh etsy art party before they sold out master cleanse gluten-free squid scenester freegan cosby sweater. Fanny pack portland seitan DIY, art party locavore wolf cliche high life echo park Austin. Cred vinyl keffiyeh DIY salvia PBR, banh mi before they sold out farm-to-table VHS viral locavore cosby sweater. Lomo wolf viral, mustache readymade thundercats keffiyeh craft beer marfa ethical. Wolf salvia freegan, sartorial keffiyeh echo park vegan.</p>
+              </div>
+            </div>
+<p>Tags: 
+    	<a href="#"><span class="label label-info">Snipp</span></a> 
+    	<a href="#"><span class="label label-info">Bootstrap</span></a> 
+    	<a href="#"><span class="label label-info">UI</span></a> 
+    	<a href="#"><span class="label label-info">growth</span></a>
+    	| <i class="icon-user"></i> <a href="#">Admin</a> 
+    	| <i class="icon-calendar"></i> Sept 16th, 2012 at 4:20 pm
+     	| <i class="icon-comment"></i> <a href="#">3 Comments</a>
+       	| <i class="icon-share"></i> <a href="#">39 Shares</a>
+</p>
+        
+
+
+
+
+<a class='danger' data-placement='above' title="Popover Title" href='#'>Click</a>
+<a href="#" id="test" class="btn btn-danger" data-toggle="popover">comments</a>
+<div id="popover_content_wrapper" style="display: none" class="row-fluid">
+  {% for p in post %}
+      <div class="thumbnails" >
+          <div class="row-fluid thumbnail">
+              <div class="span2">
+                <img src="{{MEDIA_URL}}{{ p.user.picture }}">
+              </div>
+              <div class="span10">
+                  <h4 class="media-heading"><a href="/restaurant/profile/{{ p.user }}">
+                  {{ p.user.name }}</a></h4>
+                  <br>
+              </div>
+              <p>{{ p.text }}</p>
+              <p class="pull-right">{{ p.datetime }}</p>
+              <p class="pull-left">like: {{ p.likes }}</p>
+              {% if p.picture %}
+                <img src="{{MEDIA_URL}}{{ p.picture }}" >
+              {% endif %}
+          </div>
+        </li>
+      </div>
+      <hr>
+  {% endfor %}
+</div>
+
+<div class="row">
+	<div class="span4">  
+	    <div class="accordion-group">
+	      	<div id="collapseThree" class="accordion-body collapse in">
+	          <img src="http://wp.color-theme.com/pravda/wp-content/uploads/2013/03/woman-sitting-on-the-ledge-of-the-pool-770x514.jpg" alt=""/>
+
+	      	</div>
+	      	<div class="accordion-heading">
+	      		<div class="span3" style="padding:10px">
+	      			<img src="http://wp.color-theme.com/pravda/wp-content/uploads/2013/03/woman-sitting-on-the-ledge-of-the-pool-770x514.jpg" alt=""/>
+	      		</div>
+		        <div style="background-color:#222222;">
+		          <h4 style="padding-left:10px;color:white; margin: 0px 0;"class="accordion-toggle" data-toggle="collapse" data-parent="#accordion2" href="#collapseThree">Here in Thailand.
+		            
+		          </h4>
+		          <p style="padding:10px;color:white">I am so tired coding on my web app. just relax on this weekend with my friends.</p>
+		      </div> 
+		    </div>
+		    
+		</div>
+		<br>
+		<div class="accordion-group">
+	      	<!-- <div id="collapseThree" class="accordion-body collapse in">
+	          <img src="http://wp.color-theme.com/pravda/wp-content/uploads/2013/03/woman-sitting-on-the-ledge-of-the-pool-770x514.jpg" alt=""/>
+
+	      	</div> -->
+	      	<div class="accordion-heading">
+	      		<div class="span3" style="padding:10px">
+	      			<img src="http://wp.color-theme.com/pravda/wp-content/uploads/2013/03/woman-sitting-on-the-ledge-of-the-pool-770x514.jpg" alt=""/>
+	      		</div>
+		        <div >
+		          <h4 style="padding-left:10px; margin: 0px 0;"class="accordion-toggle" data-toggle="collapse" data-parent="#accordion2" href="#collapseThree">Here in Thailand.
+		            
+		          </h4>
+		          <p style="padding:10px;">I am so tired coding on my web app. just relax on this weekend with my friends.</p>
+		      </div> 
+		    </div>
+		    
+		</div>
+
+	</div>
+	<div class="span4">  
+	    <div class="accordion-group">
+	      	<div id="collapseThree" class="accordion-body collapse in">
+	          <img src="http://wp.color-theme.com/pravda/wp-content/uploads/2013/03/woman-sitting-on-the-ledge-of-the-pool-770x514.jpg" alt=""/>
+
+	      	</div>
+	      	<div class="accordion-heading">
+	      		<div class="span3" style="padding:10px">
+	      			<img src="http://wp.color-theme.com/pravda/wp-content/uploads/2013/03/woman-sitting-on-the-ledge-of-the-pool-770x514.jpg" alt=""/>
+	      		</div>
+		        <div >
+		          <h4 style="padding-left:10px; margin: 0px 0;"class="accordion-toggle" data-toggle="collapse" data-parent="#accordion2" href="#collapseThree">Here in Thailand.
+		            
+		          </h4>
+		          <p style="padding:10px;">I am so tired coding on my web app. just relax on this weekend with my friends.</p>
+		      </div> 
+		    </div>
+		    
+		</div>
+		<br>
+		<div class="accordion-group">
+	      	<div id="collapseThree" class="accordion-body collapse in">
+	          <img src="http://wp.color-theme.com/pravda-light/wp-content/uploads/2013/04/Tiny-lobster-366x488.jpg" alt=""/>
+
+	      	</div>
+	      	<div class="accordion-heading">
+	      		<div class="span3" style="padding:10px">
+	      			<img src="http://wp.color-theme.com/pravda/wp-content/uploads/2013/03/woman-sitting-on-the-ledge-of-the-pool-770x514.jpg" alt=""/>
+	      		</div>
+		        <div >
+		          <h4 style="padding-left:10px; margin: 0px 0;"class="accordion-toggle" data-toggle="collapse" data-parent="#accordion2" href="#collapseThree">Here in Thailand.
+		            
+		          </h4>
+		          <p style="padding:10px;">I am so tired coding on my web app. just relax on this weekend with my friends.</p>
+		      </div> 
+		    </div>
+		    
+		</div>
+
+	</div>
+	<div class="span4">  
+	    <div class="accordion-group">
+	      	<div id="collapseThree" class="accordion-body collapse in">
+	          <img src="http://wp.color-theme.com/pravda-light/wp-content/uploads/2013/04/photodune-4233964-honey-m-366x497.jpg" alt=""/>
+
+	      	</div>
+	      	<div class="accordion-heading">
+	      		<div class="span3" style="padding:10px">
+	      			<img src="http://wp.color-theme.com/pravda/wp-content/uploads/2013/03/woman-sitting-on-the-ledge-of-the-pool-770x514.jpg" alt=""/>
+	      		</div>
+		        <div >
+		          <h4 style="padding-left:10px; margin: 0px 0;"class="accordion-toggle" data-toggle="collapse" data-parent="#accordion2" href="#collapseThree">Here in Thailand.
+		            
+		          </h4>
+		          <p style="padding:10px;">I am so tired coding on my web app. just relax on this weekend with my friends.</p>
+		      </div> 
+		    </div>
+		    
+		</div>
+
+	</div>
+</div>
+
+
+<ul class="thumbnails">
+  <li class="span8">
+    <div class="thumbnail">
+      <img data-src="holder.js/300x200" alt="">
+      <h3>Thumbnail label</h3>
+      <p>Thumbnail caption...</p>
+    </div>
+  </li>
+  <li class="span4">
+    <div class="thumbnail">
+      <img data-src="holder.js/300x200" alt="">
+      <h3>Thumbnail label</h3>
+      <p>Thumbnail caption...</p>
+    </div>
+  </li>
+</ul>
+
+
+
+
+<div class='row'>
+		<div style='position: relative;'>
+			<a href="#" class="darken">
+      		<img src="http://wp.color-theme.com/ultrafire/wp-content/uploads/2013/06/its-small-but-it-brings-you-from-a-to-b-770x514.jpg" alt=""/></a>
+      
+      <h2 style='position: absolute; 
+   top: 400px; 
+   left: 0; 
+   width: 100%; '><span style='color: white; 
+   font: bold 24px/45px Helvetica, Sans-Serif; 
+   letter-spacing: -1px;padding: 10px;'>A Movie in the Park:<br />Kung Fu Panda</span2></h2>
+
+
+
+</div>
+</div>
+<div class="row" id="content">
+
+	<form class="form-horizontal span6">
+	<fieldset>
+		<legend>Payment</legend>
+ 
+		<div class="control-group">
+			<label class="control-label">Card Holder's Name</label>
+			<div class="controls">
+				<input type="text" class="input-block-level" pattern="\w+ \w+.*" title="Fill your first and last name" required>
+			</div>
+		</div>
+ 
+		<div class="control-group">
+			<label class="control-label">Card Number</label>
+			<div class="controls">
+				<div class="row-fluid">
+					<div class="span3">
+						<input type="text" class="input-block-level" autocomplete="off" maxlength="4" pattern="\d{4}" title="First four digits" required>
+					</div>
+					<div class="span3">
+						<input type="text" class="input-block-level" autocomplete="off" maxlength="4" pattern="\d{4}" title="Second four digits" required>
+					</div>
+					<div class="span3">
+						<input type="text" class="input-block-level" autocomplete="off" maxlength="4" pattern="\d{4}" title="Third four digits" required>
+					</div>
+					<div class="span3">
+						<input type="text" class="input-block-level" autocomplete="off" maxlength="4" pattern="\d{4}" title="Fourth four digits" required>
+					</div>
+				</div>
+			</div>
+		</div>
+ 
+		<div class="control-group">
+			<label class="control-label">Card Expiry Date</label>
+			<div class="controls">
+				<div class="row-fluid">
+					<div class="span9">
+						<select class="input-block-level">
+							<option>January</option>
+							<option>...</option>
+							<option>December</option>
+						</select>
+					</div>
+					<div class="span3">
+						<select class="input-block-level">
+							<option>2013</option>
+							<option>...</option>
+							<option>2015</option>
+						</select>
+					</div>
+				</div>
+			</div>
+		</div>
+ 
+		<div class="control-group">
+			<label class="control-label">Card CVV</label>
+			<div class="controls">
+				<div class="row-fluid">
+					<div class="span3">
+						<input type="text" class="input-block-level" autocomplete="off" maxlength="3" pattern="\d{3}" title="Three digits at back of your card" required>
+					</div>
+					<div class="span8">
+						<!-- screenshot may be here -->
+					</div>
+				</div>
+			</div>
+		</div>
+ 
+		<div class="form-actions">
+			<button type="submit" class="btn btn-primary">Submit</button>
+			<button type="button" class="btn">Cancel</button>
+		</div>
+	</fieldset>
+</form>
+
+	<div class="input-prepend input-append">
+  <span class="add-on">$</span><input class="span1" id="appendedPrependedInput" size="16" type="text"><span class="add-on">.00</span>
+</div>
+ 
+<div class="input-append">
+	<input class="span2" id="appendedInput2" size="16" type="text"><span class="add-on">.00</span>
+</div>
+ 
+<div class="input-append">
+  <input class="span3" id="appendedInput3" size="16" type="text"><span class="add-on">Feet</span>
+</div>
+</div>
+
+<div class="row">
+	<div class="sidebar-nav">
+	<div class="well" style="width:300px; padding: 8px 0;">
+		<ul class="nav nav-list"> 
+		  <li class="nav-header">Main</li>        
+		  <li class="active"><a href="index"><i class="icon-home"></i> Dashboard</a></li>
+		  <li><a href="#"><i class="icon-edit"></i> Add Blog Post</a></li>
+          <li><a href="#"><i class="icon-calendar"></i> Calendar</a></li>
+		  <li><a href="#"><i class="icon-user"></i> Members</a></li>
+		  <li><a href="#"><i class="icon-comment"></i> Comments</a></li>
+		  <li><a href="#"><i class="icon-picture"></i> Gallery</a></li>
+		</ul>
+	</div>
+	</div>
+<div class="container">
+        	<div class="row-fluid">
+            	<div class="span12">
+                	<div class="span6">
+                    	<div class="area">
+                            <form class="form-horizontal">
+                                <div class="heading">
+                                    <h4 class="form-heading">Sign In</h4>
+                                </div>
+                                <div class="control-group">
+                                    <label class="control-label" for="inputCompanyName">Company Name</label>
+                                    <div class="controls">
+                                        <input type="text" id="inputCompanyName" placeholder="E.g. Some Software Pvt. Ltd.">
+                                    </div>
+                                </div>
+                                <div class="control-group">
+                                    <label class="control-label" for="inputUsername">Username</label>
+                                    <div class="controls">
+                                        <input type="text" id="inputUsername" placeholder="E.g. ashwinhegde">
+                                    </div>
+                                </div>
+                                <div class="control-group">
+                                    <label class="control-label" for="inputPassword">Password</label>
+                                    <div class="controls">
+                                        <input type="password" id="inputPassword" placeholder="Min. 8 Characters">
+                                    </div>
+                                </div>
+                                <div class="control-group">
+                                    <div class="controls">
+                                        <label class="checkbox">
+                                            <input type="checkbox"> Keep me signed in   ¦
+                                            <a href="#" class="btn btn-link">Forgot my password</a>
+                                        </label>
+                                        <button type="submit" class="btn btn-success">Sign In</button>
+                                        <button type="button" class="btn">Help</button>
+                                    </div>
+                                </div>	
+                                <div class="alert alert-error">
+                                    <button type="button" class="close" data-dismiss="alert">×</button>
+                                    <strong>Access Denied!</strong> Please provide valid authorization.
+                                </div>
+                            </form>	
+						</div>                           
+                    </div>
+                    <div class="span6">
+                    	<div class="area">
+                            <form class="form-horizontal">
+                                <div class="heading">
+                                    <h4 class="form-heading">Sign Up</h4>
+                                </div>
+                                <div class="control-group">
+                                    <label class="control-label" for="inputCompanyName">Company Name</label>
+                                    <div class="controls">
+                                        <input type="text" id="inputCompanyName" placeholder="E.g. Some Software Pvt. Ltd.">
+                                    </div>
+                                </div>
+                                <div class="control-group">
+                                    <label class="control-label" for="inputFirst">First Name</label>
+                                    <div class="controls">
+                                        <input type="text" id="inputFirst" placeholder="E.g. Ashwin">
+                                    </div>
+                                </div>
+                                <div class="control-group">
+                                    <label class="control-label" for="inputLast">Last Name</label>
+                                    <div class="controls">
+                                        <input type="text" id="inputLast" placeholder="E.g. Hegde">
+                                    </div>
+                                </div>
+                                <div class="control-group">
+                                    <label class="control-label" for="inputEmail">Email</label>
+                                    <div class="controls">
+                                        <input type="text" id="inputEmail" placeholder="E.g. ashwinh@cybage.com">
+                                    </div>
+                                </div>
+                                <div class="control-group">
+                                    <label class="control-label" for="inputUser">Username</label>
+                                    <div class="controls">
+                                        <input type="text" id="inputUser" placeholder="E.g. ashwinhegde">
+                                    </div>
+                                </div>
+                                <div class="control-group">
+                                    <label class="control-label" for="inputPassword">Password</label>
+                                    <div class="controls">
+                                        <input type="password" id="inputPassword" placeholder="Min. 8 Characters">
+                                    </div>
+                                </div>
+                                <div class="control-group">
+                                    <div class="controls">
+                                        <label class="checkbox">
+                                            <input type="checkbox"> I agree all your <a href="#">Terms of Services</a>
+                                        </label>
+                                        <button type="submit" class="btn btn-success">Sign Up</button>
+                                        <button type="button" class="btn">Help</button>
+                                    </div>
+                                </div>	
+                                <div class="alert alert-info">
+                                    <button type="button" class="close" data-dismiss="alert">×</button>
+                                    <strong>Confirmation: </strong> A confirmation email has been sent to your email.<br>
+                                    Thank you for your registration.
+                                </div>
+                            </form>	
+						</div>                            
+                    </div>
+                </div>
+            	
+            </div>
+        </div>
+</div>
+<div class="row">
+	<div class="well">
+ 
+<div id="myCarousel" class="carousel slide">
+ 
+<ol class="carousel-indicators">
+    <li data-target="#myCarousel" data-slide-to="0" class="active"></li>
+    <li data-target="#myCarousel" data-slide-to="1"></li>
+    <li data-target="#myCarousel" data-slide-to="2"></li>
+</ol>
+ 
+<!-- Carousel items -->
+<div class="carousel-inner">
+	
+<div class="item active">
+	<div class="row-fluid">
+	  <div class="span3"><a href="#x" class="thumbnail"><img src="http://placehold.it/250x250" alt="Image" style="max-width:100%;" /></a></div>
+	  <div class="span3"><a href="#x" class="thumbnail"><img src="http://placehold.it/250x250" alt="Image" style="max-width:100%;" /></a></div>
+	  <div class="span3"><a href="#x" class="thumbnail"><img src="http://placehold.it/250x250" alt="Image" style="max-width:100%;" /></a></div>
+	  <div class="span3"><a href="#x" class="thumbnail"><img src="http://placehold.it/250x250" alt="Image" style="max-width:100%;" /></a></div>
+	</div><!--/row-fluid-->
+</div><!--/item-->
+ 
+<div class="item">
+	<div class="row-fluid">
+		<div class="span3"><a href="#x" class="thumbnail"><img src="http://placehold.it/250x250" alt="Image" style="max-width:100%;" /></a></div>
+		<div class="span3"><a href="#x" class="thumbnail"><img src="http://placehold.it/250x250" alt="Image" style="max-width:100%;" /></a></div>
+		<div class="span3"><a href="#x" class="thumbnail"><img src="http://placehold.it/250x250" alt="Image" style="max-width:100%;" /></a></div>
+		<div class="span3"><a href="#x" class="thumbnail"><img src="http://placehold.it/250x250" alt="Image" style="max-width:100%;" /></a></div>
+	</div><!--/row-fluid-->
+</div><!--/item-->
+ 
+<div class="item">
+	<div class="row-fluid">
+		<div class="span3"><a href="#x" class="thumbnail"><img src="http://placehold.it/250x250" alt="Image" style="max-width:100%;" /></a></div>
+		<div class="span3"><a href="#x" class="thumbnail"><img src="http://placehold.it/250x250" alt="Image" style="max-width:100%;" /></a></div>
+		<div class="span3"><a href="#x" class="thumbnail"><img src="http://placehold.it/250x250" alt="Image" style="max-width:100%;" /></a></div>
+		<div class="span3"><a href="#x" class="thumbnail"><img src="http://placehold.it/250x250" alt="Image" style="max-width:100%;" /></a></div>
+	</div><!--/row-fluid-->
+</div><!--/item-->
+ 
+</div><!--/carousel-inner-->
+ 
+<a class="left carousel-control" href="#myCarousel" data-slide="prev">‹</a>
+<a class="right carousel-control" href="#myCarousel" data-slide="next">›</a>
+</div><!--/myCarousel-->
+ 
+</div><!--/well-->
+ 
+<!-- This is just a little bit of custom CSS code to enhance things. Feel free to place this in your main CSS file. I've commented to say what each bit does. --> 
+
+ 
+<!-- Call jQuery 1.9, call bootstrap.js and run the carousel when the DOM is ready. Slide every 10 seconds. -->
+<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js"></script>
+<script type="text/javascript" src="js/bootstrap.min.js"></script>
+<script type="text/javascript">
+$(document).ready(function() {
+	$('#myCarousel').carousel({
+	interval: 10000
+	})
+});
+</script>
+</div>
+
+<script type="text/javascript">
+	$('.darken').hover(function() {
+	    $(this).find('img').fadeTo("slow", 1);
+	}, function() {
+	    
+	    $(this).find('img').fadeTo("fast", 0.9);
+	});
+	var value=0;
+	
+
+	
+	
+
+</script>
+<div class="row">
+	<div class="span8">
+		<form action="billing" method="post" class="form-horizontal" id="billingform" accept-charset="utf-8">
+			<div class="control-group">
+				<label for="email" class="control-label">	
+					Billing E-Mail 
+				</label>
+				<div class="controls">
+					<input name="email" type="email" value="" id="email">
+					<span class="help-inline">  Where should we send invoices?</span>
+				</div>
+			</div>
+ 
+			<div class="control-group">
+				<label for="address" class="control-label">	
+					Street Address
+				</label>
+				<div class="controls"><input name="address" placeholder="W 123 Street" type="text" value="" id="address"><span class="help-inline">  Street Name and/or apartment number</span>
+				</div>
+			</div>
+ 
+			<div class="control-group">
+				<label for="zip" class="control-label">	
+					Zip Code
+				</label>
+				<div class="controls"><input name="zip" type="text" value="" id="zip">
+				</div>
+			</div>
+ 
+			<div class="control-group">
+				<label for="city" class="control-label">	
+					City
+				</label>
+				<div class="controls"><input name="city" type="text" value="" id="city">
+				</div>
+			</div>
+			
+			<div class="control-group">
+				<label for="country" class="control-label">	
+					Country
+				</label>
+				<div class="controls">
+					<select name="country" id="country">
+						<option value=""></option>
+						<option value="AR">Argentina</option>
+						<option value="AU">Australia</option>
+						<option value="AT">Austria</option>
+						<option value="BY">Belarus</option>
+						<option value="BE">Belgium</option>
+						<option value="BA">Bosnia and Herzegovina</option>
+						<option value="BR">Brazil</option>
+						<option value="BG">Bulgaria</option>
+						<option value="CA">Canada</option>
+						<option value="CL">Chile</option>
+						<option value="CN">China</option>
+						<option value="CO">Colombia</option>
+						<option value="CR">Costa Rica</option>
+						<option value="HR">Croatia</option>
+						<option value="CU">Cuba</option>
+						<option value="CY">Cyprus</option>
+						<option value="CZ">Czech Republic</option>
+						<option value="DK">Denmark</option>
+						<option value="DO">Dominican Republic</option>
+						<option value="EG">Egypt</option>
+						<option value="EE">Estonia</option>
+						<option value="FI">Finland</option>
+						<option value="FR">France</option>
+						<option value="GE">Georgia</option>
+						<option value="DE">Germany</option>
+						<option value="GI">Gibraltar</option>
+						<option value="GR">Greece</option>
+						<option value="HK">Hong Kong S.A.R., China</option>
+						<option value="HU">Hungary</option>
+						<option value="IS">Iceland</option>
+						<option value="IN">India</option>
+						<option value="ID">Indonesia</option>
+						<option value="IR">Iran</option>
+						<option value="IQ">Iraq</option>
+						<option value="IE">Ireland</option>
+						<option value="IL">Israel</option>
+						<option value="IT">Italy</option>
+						<option value="JM">Jamaica</option>
+						<option value="JP">Japan</option>
+						<option value="KZ">Kazakhstan</option>
+						<option value="KW">Kuwait</option>
+						<option value="KG">Kyrgyzstan</option>
+						<option value="LA">Laos</option>
+						<option value="LV">Latvia</option>
+						<option value="LB">Lebanon</option>
+						<option value="LT">Lithuania</option>
+						<option value="LU">Luxembourg</option>
+						<option value="MK">Macedonia</option>
+						<option value="MY">Malaysia</option>
+						<option value="MT">Malta</option>
+						<option value="MX">Mexico</option>
+						<option value="MD">Moldova</option>
+						<option value="MC">Monaco</option>
+						<option value="ME">Montenegro</option>
+						<option value="MA">Morocco</option>
+						<option value="NL">Netherlands</option>
+						<option value="NZ">New Zealand</option>
+						<option value="NI">Nicaragua</option>
+						<option value="KP">North Korea</option>
+						<option value="NO">Norway</option>
+						<option value="PK">Pakistan</option>
+						<option value="PS">Palestinian Territory</option>
+						<option value="PE">Peru</option>
+						<option value="PH">Philippines</option>
+						<option value="PL">Poland</option>
+						<option value="PT">Portugal</option>
+						<option value="PR">Puerto Rico</option>
+						<option value="QA">Qatar</option>
+						<option value="RO">Romania</option>
+						<option value="RU">Russia</option>
+						<option value="SA">Saudi Arabia</option>
+						<option value="RS">Serbia</option>
+						<option value="SG">Singapore</option>
+						<option value="SK">Slovakia</option>
+						<option value="SI">Slovenia</option>
+						<option value="ZA">South Africa</option>
+						<option value="KR">South Korea</option>
+						<option value="ES">Spain</option>
+						<option value="LK">Sri Lanka</option>
+						<option value="SE">Sweden</option>
+						<option value="CH">Switzerland</option>
+						<option value="TW">Taiwan</option>
+						<option value="TH">Thailand</option>
+						<option value="TN">Tunisia</option>
+						<option value="TR">Turkey</option>
+						<option value="UA">Ukraine</option>
+						<option value="AE">United Arab Emirates</option>
+						<option value="GB">United Kingdom</option>
+						<option value="US">USA</option>
+						<option value="UZ">Uzbekistan</option>
+						<option value="VN">Vietnam</option>
+					</select>
+				</div>
+			</div>
+ 
+			<div class="form-actions">
+				<button type="submit" class="btn btn-large btn-primary">Save Billing Address</button>
+			</div>
+		</form>
+	</div> <!-- .span8 -->
+</div>
+<div class="row-fluid">
+    <div class="span8">
+        <div class="thumbnail2" >
+          <div class="span2">
+            <img src="{{STATIC_URL}}fashion-beauty-portrait-770x514.jpg">
+          </div>
+          <div class="span10">
+              <h4 class="media-heading">Bill Cheung</h4>
+              <p>how about my new profile picture? I know you like it</p>
+              <p class="pull-right">18-10-20012</p>
+              <p class="pull-left">like:19</p>
+          </div>
+          <img src="{{STATIC_URL}}fashion-beauty-portrait-770x514.jpg">         
+
+        </div>     
+    </div>
+    <div class="span4">
+      <div class="thumbnail2">
+        <div class="media-body">
+          <div class="span2">
+            <img src="{{STATIC_URL}}woman-with-yogurt-366x364.jpg">
+          </div>
+          <div class="span10">
+              <h5 class="media-heading">Jarana Manotumruksa</h5>
+              <p>I am so proud of you man.</p>
+              <p class="pull-right">18-10-20012</p>
+              <p class="pull-left">like:19</p>
+          </div>
+        </div>
+        
+      </div>
+    </div>
+  </div>
+
+
+
+
+<script type="text/javascript">
+
+
+$(function() {
+    $('.content-area').jScrollPane({
+    horizontalGutter:5,
+    verticalGutter:5,
+    'showArrows': false
+});
+    $('.jspDrag').hide();
+$('.jspScrollable').mouseenter(function(){
+    $(this).find('.jspDrag').stop(true, true).fadeIn('slow');
+});
+$('.jspScrollable').mouseleave(function(){
+    $(this).find('.jspDrag').stop(true, true).fadeOut('slow');
+});
+});
+
+$('#test').popover({
+  html: true,
+  content: function(){
+    return $('#popover_content_wrapper').html();
+  }
+})
+	$(document).ready(function(){
+	  $('.danger').popover({ 
+	    html : true,
+	    content: function() {
+	      return $('#popover_content_wrapper').html();
+	    }
+	  });
+	});
+
+</script>
+
+
+{% endblock %}

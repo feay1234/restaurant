@@ -1,0 +1,29 @@
+{% extends 'restaurant/base_bootstrap_black_edition.html' %}
+{% block content3 %}
+<H2>{{category_name}}</H2>
+<A HREF="/restaurant/page_add/{{category_name_url}}"> Add page </A>
+{% if pages %}
+		<div>
+		<b id="like_count">{{ likes}}</b> people like this category
+		<button id ="likes" data-catid="{{category_id}}" class="btn btn-mini btn-primary" type="button">Like</button>
+		</div>
+        <UL>
+        {% for page in pages %}
+                <LI><A HREF="{{page.url}}">{{page.title}}</A></LI>
+        {% endfor %}
+                </UL>
+        <script>
+        	$('#likes').click(function(){
+			    var catid;
+			    catid = $(this).attr("data-catid");
+			     $.get('/restaurant/cat_like/', {category_id: catid}, function(data){
+			               $('#like_count').html(data);
+			               $('#likes').hide();
+			           });
+			});
+        </script>
+{% else %}
+        <P>No pages in category.</P>
+        
+{% endif %}
+{% endblock %}

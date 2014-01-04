@@ -1,0 +1,11 @@
+					<UL class="nav nav-list">
+					        <LI class="nav-header">Category List</LI>
+					        {% if cat_list %}
+					                {% for cat in cat_list %}
+					                        <LI><A HREF="/restaurant/cat/{{ cat.url }}">{{ cat.name }}</A></LI>
+					                {% endfor %}
+					        {% else %}
+					                <LI>No categories at present.</LI>
+					        {% endif %}
+					        <LI><A HREF="/restaurant/cat_add"> Add category</A></LI>
+					</UL>

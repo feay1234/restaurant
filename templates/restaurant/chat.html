@@ -1,0 +1,144 @@
+{% extends 'restaurant/base_bootstrap_black_edition.html' %}
+
+
+{% block content3 %}
+<div class="container-fluid" style="margin: 0 auto; max-width: 900px;">
+	<div class="span8 manual">
+		<div style="text-align:center;padding-top:5px" class="row-fluid">   
+			<img class="img-title" src="{{MEDIA_URL}}" width="40px;" height="40px"/>
+     		<legend class="name-title"></legend>
+     	</div>
+
+
+        <div class="accordion-inner" id="scroll" style="height:380px;">
+            <div id="ChatTabContent" class="tab-content">
+                
+            </div> 
+        </div>
+        <br>
+        <textarea rows="2" class="msgInput" type="text" placeholder="Type something…"></textarea>
+	</div>
+	<div class='span4 manual'>
+	    <ul class="nav nav-pills nav-stacked" id="myTab">
+	      {% for friend in myFriend %}
+	        {% if friend.user.user == user %}
+	            <li class="selectChat" receiver="{{ friend.friend }}" name="{{friend.friend.name}}">
+	              <a href="#chat-{{ friend.friend }}" data-toggle="tab">
+	                <img src="{{MEDIA_URL}}{{friend.friend.picture}}" height="40px" width="40px">
+	                {{ friend.friend.name }}
+	                <span id="msg_notify-{{friend.friend}}"class="badge badge-important pull-right"></span>                
+	              </a>
+	        {% else %}
+	            <li class="selectChat" receiver="{{ friend.user }}" name="{{friend.user.name}}">
+	              <a href="#chat-{{ friend.user }}" data-toggle="tab">
+	                <img src="{{MEDIA_URL}}{{friend.user.picture}}" height="40px" width="40px">
+	                {{ friend.user.name }}
+	                <span id="msg_notify-{{friend.user}}"class="badge badge-important pull-right"></span>
+	              </a>
+	              
+	            </li>
+	        {% endif %}        
+	      {% endfor %}
+	    </ul>
+    </div> 
+</div>
+<script type="text/javascript">
+function createChatRow(sender_name, sender_img, text){
+      var row = document.createElement("div")
+      var span2 = document.createElement("div")
+      var span10 = document.createElement("div")
+      var img = document.createElement("img")
+      var a = document.createElement("a")
+      var h6 = document.createElement("h6")
+      var p = document.createElement("p")
+
+      row.setAttribute("class", "row-fluid")
+      span2.setAttribute("class", "span1")
+      span10.setAttribute("class", "span11")
+      h6.setAttribute("class","media-heading")
+
+      
+      $(img).attr('src', sender_img);
+      // $(img).attr('height', "40px");
+      // $(img).attr('width', "40px");
+      h6.innerHTML = sender_name;
+      p.innerHTML = text;
+
+      span2.appendChild(img);
+      a.appendChild(h6)
+      span10.appendChild(a);
+      span10.appendChild(p);
+
+      row.appendChild(span2);
+      row.appendChild(span10);
+
+
+      
+      $('#chat-'+receiver).append(row)
+      $('#scroll').scrollTop($('#scroll')[0].scrollHeight);
+
+}
+
+$('.selectChat').click(function(){
+receiver = $(this).attr('receiver');
+receiver_name = $(this).attr('name')
+img = jQuery("img", this).attr('src');
+
+$('.img-title').attr('src',img);
+$('.name-title').text(receiver);
+$('#msg_notify-'+receiver).html("")
+var element = document.getElementById("chat-"+receiver)
+if (typeof(element) != 'undefined' && element != null) {
+  // update new msg to element
+}
+else{
+
+  var chat = document.createElement("div");
+  chatlist = document.createElement("div")
+  chat.setAttribute("class", "tab-pane fade");
+  chat.setAttribute("id","chat-"+receiver)
+  chatlist.setAttribute("class", "chatlist")
+  chatlist.setAttribute("id","chatlist-"+receiver)
+  chat.appendChild(chatlist)
+  $('#ChatTabContent').append(chat);
+
+  $.get('/restaurant/get_old_message', {'receiver':receiver}, function(data){
+    for (var i=0;i<data.length;i++){
+      
+      sender_name = data[i].fields.sender;
+      if (sender_name == receiver_name){
+
+          sender_img = $(".img-title").attr('src')
+
+      }
+      else{
+          sender_img = $("#user_img").attr('src');
+      }
+      createChatRow(data[i].fields.sender, sender_img, data[i].fields.text);
+    }
+  })
+}
+})
+
+
+$(".msgInput").keyup(function (e) {
+// have to show text before save text to database if not success show re-send button to user.
+// at this postition, you can tell receiver that sender is typing. should do.
+text = $(this).val();
+if (e.keyCode == 13 && text.length > 0) {
+  receiver = $('.name-title').text()
+  sender_name = $("#user_name").text()
+  sender_img = $("#user_img").attr('src');
+  
+  $.get('/restaurant/send_message',{'receiver':receiver, 'text':text}, function(){
+
+  })
+
+  createChatRow(sender_name, sender_img, text)
+  $(this).val("")
+
+  
+}
+});
+</script>
+{% endblock %}

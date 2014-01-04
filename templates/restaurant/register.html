@@ -1,0 +1,16 @@
+{% extends 'restaurant/base_bootstrap_black_edition.html' %}
+
+{% block form %}
+
+	{% if registered %}
+	        <A href="/Restaurant/">Restaurant</A> says: thank you for registering.
+	{% else %}
+	        register here!
+	        <FORM id="user_form" enctype="multipart/form-data" method="post" action="/restaurant/register/">
+	                {% csrf_token %}
+	                {{ uform.as_p }}
+	                {{ pform.as_p }}
+                <INPUT type="submit" name="submit" value="submit" />
+	        </FORM>
+	{% endif %}
+{% endblock %}

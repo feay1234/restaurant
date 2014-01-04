@@ -1,0 +1,352 @@
+{% extends 'restaurant/base_bootstrap_black_edition.html' %}
+{% block content3 %}
+{% load poll_extras %}
+<div class="container-fluid" style="margin: 0 auto; max-width: 1000px;">
+	<!-- user's profile -->
+	<div class="row-fluid">
+		<h3 id="header">Feed</h3>
+		<!-- <h3 id="selected_tab">Profile</h3> -->
+	</div>
+	<!-- <div class="span7">
+		
+		<div id="profile-content" style="display: none">  
+				<div class="thumbnail">
+			      	<img src="http://wp.color-theme.com/pravda/wp-content/uploads/2013/03/woman-sitting-on-the-ledge-of-the-pool-770x514.jpg" alt=""/>
+			      	<div style="padding:20px; background-color:white;o">
+			      		<h3>Renuka Ji and Amritsar</h3>
+			      		<p>It was 4 days continues off, I was planning for it since long, Renuka Ji, Himachal Pradesh which is approximately 280 KM from Delhi was the destination, we have started on 15 Aug and reached there same day, scenic beauty was all around and it was raining all the time.</p>
+			      	</div>
+			      	
+			    </div>
+			      
+		</div>
+		<div id="picture-content" class="row_fluid" style="display: none">
+				<div class="span3">
+					<img src="{{MEDIA_URL}}imgs/girl_5.jpg">
+					<br>
+					<br>
+					<img src="{{MEDIA_URL}}imgs/images.jpg">
+				</div>
+				<div class="span3">
+					<img src="{{MEDIA_URL}}imgs/images.jpg">
+					<br>
+					<br>
+					<img src="{{MEDIA_URL}}imgs/images_1.jpg">
+				</div>
+				<div class="span3">
+					<img src="{{MEDIA_URL}}imgs/girl_5.jpg">
+					<br>
+					<br>
+					<img src="{{MEDIA_URL}}imgs/images_2.jpg">
+				</div>
+				<div class="span3">
+					<img src="{{MEDIA_URL}}imgs/girl_5.jpg">
+					<br>
+					<br>
+					<img src="{{MEDIA_URL}}imgs/images_2.jpg">
+				</div>   
+		</div>
+		<div id="friends-content" class="row_fluid" style="display: none">   
+			<div id="friend-column1" class="span3">
+			</div>
+			<div id="friend-column2" class="span3">
+				
+			</div>
+			<div id="friend-column3" class="span3">
+				
+			</div>
+			<div id="friend-column4" class="span3">
+				
+			</div>
+		</div>
+		<div id="timeline-content" style="display: none">  
+			<div style="border: 1px solid #ccc; text-align:center;padding-top:5px" class="row-fluid">   
+				<img src="{{ MEDIA_URL }}{{userProfile.picture}}" width="40px;" height="40px"/>
+	     		<legend id="profile_name">{{userProfile.name}}</legend>
+	     		<p>Cras justo odio, dapibus ac facilisis in, egestas eget quam. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus.</p>
+	     		<p class="pull-left" style="padding-left:5px">like: 45</p>
+                <p class="pull-right" style="padding-right:5px">12/2/2012</p> 
+	     	</div>
+	     	<br>
+	     	<div style="border: 1px solid #ccc; text-align:center;padding-top:5px" class="row-fluid">   
+				<img src="{{ MEDIA_URL }}{{userProfile.picture}}" width="40px;" height="40px"/>
+	     		<legend id="profile_name">{{userProfile.name}}</legend>
+	     		<p>Cras justo odio, dapibus ac facilisis in, egestas eget quam. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus.</p>
+	     		<img src="{{ MEDIA_URL }}imgs/HowAboutTheBoys_2.jpg"/>
+	     		<br>
+	     		<p class="pull-left" style="padding-left:5px">like: 45</p>
+                <p class="pull-right" style="padding-right:5px">12/2/2012</p> 
+	     	</div>
+	     	<br>		     	
+		</div>
+		<div id="dashboard-content" class="row_fluid" style="display: none">       
+		</div>
+		<div id="settings-content" class="row_fluid" style="display: none">       
+		</div>
+	</div>
+	<div class='span4 offset1' style="text-align: center;">
+		{% if visited_userProfile %}
+
+			<img src="{{ MEDIA_URL }}{{visited_userProfile.picture}}" />
+			<h1>{{visited_userProfile.user}}</h1>
+			<h3>Your are visiting other profile page</h3> 
+
+	        {% if visited_friend_request and visited_friend_request.approve %}
+	        	<a href="friendBtn" class="btn btn-primary" status="delete" friend="{{ visited_userProfile.user}}"><span><strong>Delete</a>		        		
+	       	{% elif visited_friend_request %}
+
+	       		{% if visited_friend_request.receiver == user %}
+	       			<button id="relationshipBtn" class='btn-primary ' sender="{{visited_friend_request.sender.user}}" approve="{{visited_friend_request.approve}}"> accept request </button>
+	       		{% else %}
+	       			<a href="friendBtn" class="btn btn-primary" status="sent" friend="{{visited_userProfile.user}}"><span><strong>sent request</a>
+	       		{% endif %}     
+
+			{% else %}
+				<a id="friendBtn" class="btn btn-primary" status="add" friend="{{ visited_userProfile.user}}"><span><strong>Add friend</a>
+			{% endif %}
+		    		
+	    {% else %}
+	     	<legend id="profile_name" user_id="{{userProfile.id}}"></legend>
+
+	     	<ul class="nav nav-tabs nav-stacked">
+			  <li class="tab active"><a href="#" data-toggle="tab">Profile</a></li>
+			  <li class="tab"><a href="#" data-toggle="tab">Picture</a></li>
+			  <li class="tab"><a href="#" data-toggle="tab">Friends</a></li>
+			  <li class="tab"><a href="#" data-toggle="tab">Timeline</a></li>
+			  <li class="tab"><a href="#" data-toggle="tab">Dashboard</a></li>
+			  <li class="tab"><a href="#" data-toggle="tab">Business</a></li>
+			  <li class="tab"><a href="#" data-toggle="tab">Settings</a></li>
+			  <li class="tab"><a href="#" data-toggle="tab">..</a></li>
+
+			</ul>
+	    
+		{% endif %}
+	</div> -->
+	<div class='row-fluid'>
+		<div class="span8">
+		<div id="myTabContent" class="tab-content">
+		  	<div class="tab-pane fade in active" id="home">
+		  		{% for i in post %}
+  			    	<div class="thumbnail">
+  				      	<img src="{{MEDIA_URL}}{{i.picture}}">
+  				      	<div style="padding:20px; background-color:white;o">
+  				      		<a href="/restaurant/business/{{i.name}}" class='lead'>{{i.text}}</a>
+	 						<p>{{i.business.name}}</p>
+  				      	</div>
+  				    </div>
+  				    <br>
+		  		{% endfor %}
+		    	
+		  	</div>
+		  	<div class="tab-pane fade" id="following">
+		  		<div id="fol_column1" class="span4">
+
+		  		</div>
+		  		<div id="fol_column2" class="span4">
+
+		  		</div>
+		  		<div id="fol_column3" class="span4">
+
+		  		</div>
+		  	</div>
+		  	<div class="tab-pane fade" id="recommend">
+		  		<!-- {% for i in restaurant2 %}
+	                {% with  i|to_int as check %}
+	                    {% if check|mod:3 == 1%}
+	                        <div class="container-fluid">
+	                    {% endif %}
+	                            <div class="span4 thumbnail">
+	                                <img src="{{MEDIA_URL}}{{restaurant|get_restaurant_picture:i}}">
+	                                {{restaurant|get_restaurant_name:i}}
+	                            </div>
+	                    {% if check == restaurant|length or check|mod:3 == 0%}
+	                        </div>
+	                    {% endif %}
+	                {% endwith %}
+	            {% endfor %} -->
+		    	<div id="rec_column1" class="span4">
+
+		    	</div>
+		    	<div id="rec_column2" class="span4">
+
+		    	</div>
+		    	<div id="rec_column3" class="span4">
+
+		    	</div>
+		  	</div>
+		</div>
+		</div>
+		<div class="span4">
+			<ul id="myTab" class="nav nav-pills nav-stacked">
+              <li class="active"><a href="#home" data-toggle="tab" onclick="changeHeader('Restaurant I Follow')">Feed</a></li>
+              <li><a href="#following" data-toggle="tab" onclick="changeHeader('Restaurant I Follow')">Restaurant I Follow</a></li>
+              <li><a href="#recommend" data-toggle="tab" onclick="changeHeader('Recommended Restaurants')">Recommended Restaurants</a></li>
+              
+            </ul>
+		</div>
+	</div>		
+            
+<!-- user friend request -->
+<!-- <div class="span4">
+	{% if visited_userProfile %}
+	{% else %}
+	<h5>Your Friend requests</h5>
+		{% for friend in friend_request %}
+			<div class="thumbnail">
+				<img src="{{ MEDIA_URL }}{{ friend.sender.picture }}" width="200px;" height="200px"/>
+				<h5>{{friend.senderProfile.user}}</h5>
+				<button id="relationshipBtn" class='btn-primary btn-block' sender="{{friend.sender.user}}" approve="{{friend.approve}}">
+				{% if friend.approve %}
+					deleter friend	
+				{% else %}
+					accept 
+				{% endif %}
+				</button>
+
+			</div>
+		{% endfor %}
+	{% endif %}
+</div> -->
+
+<!-- user friends -->
+<!-- <div class="span4">
+	<h5> Friends </h5>
+	{% if visited_userProfile %}
+
+	{% else %}
+		{% if myFriend %}
+			{% for friend in myFriend %}
+				<div class="thumbnail">
+					
+					{% if friend.user.user == user %}
+						<img src="{{MEDIA_URL}}{{friend.friend.picture}}" width="100px;" height="100px"/>
+						<h5> {{ friend.friend.user }} </h5>
+					{% else %}
+						<img src="{{MEDIA_URL}}{{friend.user.picture}}" width="100px;" height="100px"/>
+						<h5> {{ friend.user }} </h5>
+					{% endif %}
+				</div>
+			{% endfor %}
+		{% else %}
+			<div class="thumbnail">
+				<h5>No friends</h5>
+			</div>
+		{% endif %}
+
+
+	{% endif %}
+</div> -->
+
+
+
+
+<script type="text/javascript">
+
+function changeHeader(text){
+	$('#header').text(text)
+}
+function createFriendThumbnail(data, column){
+    var row = document.createElement("div")
+    var img = document.createElement("img")
+    var h6 = document.createElement("h5")
+    var br = document.createElement("br")
+    row.setAttribute("class", "friend-thumbnail")
+
+    $(img).attr('src',  '{{MEDIA_URL}}imgs/'+data['picture'])
+    $(img).attr('height',  '150px')
+    h6.innerHTML = data['name'];
+
+    $(row).append(img)
+    $(row).append(h6)
+    column.append(row)
+    column.append(br)
+}
+function createRestaurantBlock(data, column){
+	column.append("<div class='thumbnail'>"+
+						"<img src='{{MEDIA_URL}}imgs/"+data['picture']+"' style='height: 150px;'/>"+
+						"<div style='padding:5px; background-color:white;'>"+
+							"<h4><a href=/restaurant/business/"+data['name']+">"+data['name']+"</a></h4>"+
+							"<p>"+data['description']+"</p>"+
+						"</div>"+
+					"</div>")
+}
+
+$('#friendBtn').click(function(){
+	var status = $(this).attr("status")
+	var friend = $(this).attr("friend")
+	switch (status)
+	{
+	  case "add":
+	  	alert("add")
+	    $(this).attr("status", "waiting")
+		$(this).text("sent request")
+		$.get('/restaurant/add_friend',{'friend':friend}, function(data){
+			
+		});	
+	    break;
+	  case "sent":
+	    $(this).attr("status", "add")
+		$(this).text("Add Friend")
+	    break;
+	  case "delete":
+	    $(this).attr("status", "add")
+		$(this).text("sent request")
+	    break;
+	}	
+})
+$('#relationshipBtn').click(function(){
+	sender = $(this).attr('sender')
+	if ( $(this).attr('approve') == "True" ? true : false ) {
+		alert("wanna cancle relationship ")
+	}
+	else{
+		$.get("/restaurant/accept_friend",{'sender':sender}, function(data){
+		
+		})
+	}
+})
+$('a[data-toggle="tab"]').on('shown', function (e) {
+  var href = $(e.target).attr('href')
+  if (href == "#recommend") {
+  	$('#rec_column1').empty()
+  	$('#rec_column2').empty()
+  	$('#rec_column3').empty()
+  	$.get('/restaurant/get_restaurant2',{}, function(data){
+  		for (var i=0;i<data.length; i++){
+  			if((i+1)%4 == 1){
+  				createRestaurantBlock(data[i],$('#rec_column1'))
+  			}
+  			else if((i+1)%4 == 2){
+  				createRestaurantBlock(data[i],$('#rec_column2'))
+  			}
+  			else{
+  				createRestaurantBlock(data[i],$('#rec_column3'))
+  			}	
+  		}
+  	})
+  }
+  else if (href == "#following")  {
+  	$('#fol_column1').empty()
+  	$('#fol_column2').empty()
+  	$('#fol_column3').empty()
+  	$.get('/restaurant/get_following_restaurant',{}, function(data){
+  		for (var i=0;i<data.length; i++){
+  			if((i+1)%4 == 1){
+  				createRestaurantBlock(data[i],$('#fol_column1'))
+  			}
+  			else if((i+1)%4 == 2){
+  				createRestaurantBlock(data[i],$('#fol_column2'))
+  			}
+  			else{
+  				createRestaurantBlock(data[i],$('#fol_column3'))
+  			}	
+  		}
+  	})
+
+  }
+})
+</script>
+
+		          
+{% endblock %}
+

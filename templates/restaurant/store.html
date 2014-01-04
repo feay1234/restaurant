@@ -1,0 +1,74 @@
+{% extends 'restaurant/base_foundation.html' %}
+
+{% block content %}
+	<!-- <div class="row"> -->
+	<!-- Side Bar -->
+
+        <div class="large-3 columns">
+
+          <img src="{{STATIC_URL}}IMG_3900.JPG">
+
+          <div class="hide-for-small panel">
+            <h3>Header</h3>
+            <h5 class="subheader">Risus ligula, aliquam nec fermentum vitae, sollicitudin eget urna. Donec dignissim nibh fermentum odio ornare sagittis.
+            </h5>
+            <a href="#" class="button">test</a>
+          </div>
+
+          <a href="#">
+          <div class="panel callout radius" align="center">
+            <h6>99&nbsp; items in your cart</h6>
+          </div>
+          </a>
+
+        </div>
+
+    <!-- End Side Bar -->
+
+
+    <!-- Thumbnails -->
+
+        <div class="large-9 columns">
+          <div class="row">
+
+            <div class="large-3 columns">
+              <a class="th" href="{{ STATIC_URL }}IMG_3900.JPG">
+                <img src="{{ STATIC_URL }}IMG_3900.JPG">
+              </a>    
+              <div class="panel">
+                <h5>Item Name</h5>
+                <h6 class="subheader">$000.00</h6>
+              </div>
+            </div>
+
+            <div class="large-3 columns">
+              <img src="{{ STATIC_URL}}IMG_3900.JPG">
+
+              <div class="panel">
+                <h5>Item Name</h5>
+                <h6 class="subheader">$000.00</h6>
+              </div>
+            </div>
+
+            <div class="large-3 columns">
+              <img src="{{ STATIC_URL}}IMG_3900.JPG">
+
+              <div class="panel">
+                <h5>Item Name</h5>
+                <h6 class="subheader">$000.00</h6>
+              </div>
+            </div>
+
+
+            
+
+        </div>
+
+
+            
+
+    <!-- End Thumbnails -->
+
+
+
+{% endblock %}

@@ -1,0 +1,14 @@
+{% extends 'restaurant/base_bootstrap_black_edition.html' %}
+
+{% block form %}
+    <FORM id="login_form" method="post" action="/restaurant/login/">
+    {% csrf_token %}
+            Username:
+            <input type="text" name="username" value="" id="username" size="50" />
+            <br />
+                Password: 
+                <input type="password" name="password" value="" id="password" size="50" />
+            <br />
+        <INPUT type="submit" name="submit" value="submit" />
+    </FORM>
+{% endblock %}

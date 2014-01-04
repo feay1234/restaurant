@@ -1,0 +1,301 @@
+{% extends 'restaurant/base_bootstrap_black_edition.html' %}
+{% block content3 %}
+{% load poll_extras %}	
+<div style="padding-top:30px;">
+	<div class="span3">
+		<h1 id="title" restaurant_id="{{restaurant.id}}" type="{{type}}">{{restaurant.name}}</h1>
+		<br>
+		<ul id="myTab" class="nav nav-pills nav-stacked">
+          <li class="active"><a href="#dashboard" data-toggle="tab">Dashboard</a></li>
+          <li><a href="#menu" data-toggle="tab" >Menu</a></li>
+          <li><a href="#post" data-toggle="tab" >Post</a></li>
+        </ul>
+        <div id="frame_content">
+
+        </div>
+        
+        <!-- <iframe id="post-frame" name='upload_to' src="/restaurant/upload_post/{{restaurant.name}}" frameborder="0" onLoad="calcHeight('post-frame');" style="display:none;"></iframe> -->
+
+        <!-- <div class="flex-video2 widescreen2"><iframe id="post-frame" name='upload_to' src="/restaurant/upload_post/{{restaurant.name}}" frameborder="0" style="display:none;" onLoad="calcHeight('post-frame');"></iframe></div> -->
+	</div>
+	<div class="span9">
+		<div class="tab-content">
+		  	<div class="tab-pane fade in active" id="dashboard">
+		  		<div id="container" style="min-width: 400px; height: 400px; margin: 0 auto"></div>
+		  		<br>
+		  		<div class="row-fluid">
+		  			<div class="span6" style="background-color:white">
+		  				sdf
+		  			</div>
+		  			<div class="span6" style="background-color:white">
+		  				sdfsdfsdf
+		  			</div>
+		  		</div>
+		  	</div>
+		  	<div class="tab-pane fade" id="menu" style="background-color:white;">
+  				<div class="well">
+  			        	<h1>Create new menu for your restaurant</h1>
+  			        	<p>Welcome back, feay1234. By filling out the form below, you can add another blog to your account. There is no limit to the number of blogs you can have, so create to your heart’s content, but blog responsibly. If you’re not going to use a great blog domain, leave it for a new user. Now have at it! Get started with WordPress.com by filling out this simple form:</p>
+  					   	<br>
+  					   	<a class="btn btn-large btn-primary" onclick="displayFrame('{{restaurant.name}}')">Create New Food</a>
+
+  				</div>
+ 				<div id="food-list">
+	 				<table id="table" class="table table-hover" >
+		              <thead>
+		                <tr>
+		                	<th>Picture</th>
+		                  	<th>Name</th>
+		                  	<th>Description</th>
+		                  	<th>Price</th>
+		                  	<th>Like</th>
+		                  	<th>Action</th>
+		                </tr>
+		              </thead>
+		              <tbody id="food_row">
+		              	{% for i in food%}
+		              	<tr food_id="{{i.id}}" name="{{i.name}}" description="{{i.description}}" price="{{i.price}}">
+		              		<td>
+		              			<img src="{{MEDIA_URL}}{{i.picture}}" style="width:50px;height:50px"/>
+		              		</td>
+		              		<td>{{i.name}}</td>
+		              		<td>{{i.description}}</td>
+		              		<td>{{i.price}}</td>
+		              		<td>{{i.like}}</td>
+		              		<td>
+		              			<button class="btn btn-success" onclick='showEditModal()'>Edit</button>
+		              			
+		              		</td>
+		              		<td><button class="btn btn-danger" onclick='deleteFood({{i.id}}, this)'>Delete</button></td>
+		              	</tr>
+		              	{% endfor %}
+		              </tbody>
+		            </table>
+ 				</div>
+		  	</div>
+		  	<div class="tab-pane fade" id="post" style="background-color:white;">
+  				<div class="well">
+  			        	<h1>Update news and information for your restaurant</h1>
+  			        	<p>Welcome back, feay1234. By filling out the form below, you can add another blog to your account. There is no limit to the number of blogs you can have, so create to your heart’s content, but blog responsibly. If you’re not going to use a great blog domain, leave it for a new user. Now have at it! Get started with WordPress.com by filling out this simple form:</p>
+  					   	<br>
+  					   	<a class="btn btn-large btn-primary" onclick="displayPostFrame('{{restaurant.name}}')">Create New Post</a>
+
+  				</div>
+ 				<div id="post-list">
+	 				<table id="table" class="table table-hover" >
+		              <thead>
+		                <tr>
+		                	<th>Picture</th>
+		                  	<th>Text</th>
+		                  	<th>Likes</th>
+		                  	<th>Comments</th>
+		                  	<th>Date-time</th>
+		                  	<th>Action</th>
+		                </tr>
+		              </thead>
+		              <tbody id="post_row">
+		              	{% for i in post%}
+		              	<tr post_id="{{i.id}}" title="{{i.title}}" like="{{i.like}}" comment_num="{{i.comment_num}}" datetime="{{i.datetime}}">
+		              		<td>
+		              			<img src="{{MEDIA_URL}}{{i.picture}}" style="width:50px;height:50px"/>
+		              		</td>
+		              		<td>{{i.text}}</td>
+		              		<td>{{i.like}}</td>
+		              		<td>{{i.comment_num}}</td>
+		              		<td>{{i.datetime}}</td>
+		              		<td>
+		              			<button class="btn btn-success" onclick='showEditModal()'>Edit</button>
+		              			
+		              		</td>
+		              		<td><button class="btn btn-danger" onclick='deletePost({{i.id}}, this)'>Delete</button></td>
+		              	</tr>
+		              	{% endfor %}
+		              </tbody>
+		            </table>
+ 				</div>
+		  	</div>
+		</div>
+	</div>
+</div>
+
+<div id="editModal" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" >
+	<div class="modal-body" >
+		<div class="well" >
+			<h4>Name</h4>
+			<input id="edit_name" class="input-block-level" type="text" placeholder="Enter food's name here">
+			<h4>Description</h4>
+			<textarea id="edit_description" class="input-block-level" rows="2" placeholder="Enter food's description here"></textarea>
+			<h4>Price</h4>
+			<input id="edit_price" class="input-block-level" type="text" placeholder="Enter food's price here">
+			<h4>Picture</h4>
+			<input type="file" title="Search for a file to add">
+			<br>	
+			<button id="editBtn" class="btn btn-primary btn-block">Save</button>
+		</div>
+	</div>
+</div>
+
+<script src="{{STATIC_URL}}css/Highcharts-3.0.2/js/highcharts.js"></script>
+<script src="{{STATIC_URL}}css/Highcharts-3.0.2/js/modules/exporting.js"></script>
+<script type="text/javascript">
+var restaurant_id = $('#title').attr('restaurant_id')
+function displayFrame(restaurant){
+	$('#frame_content').empty()
+	$('#frame_content').append("<iframe id='add_frame' src='/restaurant/upload/"+restaurant+"'"+
+								"onLoad=calcHeight('add_frame') frameborder='0'></iframe>")
+	$('#add_frame').load(function(){
+		if ($(this).contents().find("#success").attr('status')== "true"){
+			// reset inputs value
+			$(this).contents().find("#id_name").val("")
+			$(this).contents().find("#id_description").val("")
+			$(this).contents().find("#id_price").val("0")
+			$.get('/restaurant/get_new_menu',{"business_id":restaurant_id}, function(data){
+				data = data[0]
+				$("<tr>"+
+	              		"<td>"+
+	              			"<img src='{{MEDIA_URL}}imgs/"+data['picture']+
+	              			"' style='width:50px;height:50px'/>"+
+	              		"</td>"+
+	              		"<td>"+data['name']+"</td>"+
+	              		"<td>"+data['description']+"</td>"+
+	              		"<td>"+data['price']+"</td>"+
+	              		"<td>"+data['like']+"</td>"+
+	              		"<td><button class='btn btn-success' onclick='showEditModal()'>Edit</button></td>"+
+	              		"<td><button class='btn btn-danger' onclick='deleteFood("+data['id']+",this)'>Delete</button></td>"+
+              		"</tr>").hide().prependTo($('#food_row')).fadeIn(1000);
+			
+			})
+		}
+	});
+}
+function displayPostFrame(restaurant) {
+	$('#frame_content').empty()
+	$('#frame_content').append("<iframe id='post_frame' src='/restaurant/upload_post/"+restaurant+"'"+
+								"onLoad=calcHeight('post_frame') frameborder='0'></iframe>")
+	$('#post_frame').load(function(){
+		if ($(this).contents().find("#post_success").attr('status')== "true"){
+			$(this).contents().find("#id_text").val("")
+
+			$.get('/restaurant/get_new_business_post', {"business_id":restaurant_id}, function(data){
+				data = data[0]
+				$("<tr>"+
+	              		"<td>"+
+	              			"<img src='{{MEDIA_URL}}imgs/"+data['picture']+
+	              			"' style='width:50px;height:50px'/>"+
+	              		"</td>"+
+	              		"<td>"+data['text']+"</td>"+
+	              		"<td>"+data['like']+"</td>"+
+	              		"<td>"+data['comment_num']+"</td>"+
+	              		"<td>"+data['datetime']+"</td>"+
+	              		"<td><button class='btn btn-success' onclick='showEditModal()'>Edit</button></td>"+
+	              		"<td><button class='btn btn-danger' onclick='deletePost("+data['id']+",this)'>Delete</button></td>"+
+              		"</tr>").hide().prependTo($('#post_row')).fadeIn(1000);
+			})
+
+		}
+	});
+}
+function calcHeight(id){
+ 	var iFrameID = document.getElementById(id);
+ 	iFrameID.height = "";
+    iFrameID.height = iFrameID.contentWindow.document.body.scrollHeight;
+}
+function deleteFood(food_id, e){
+	$.get('/restaurant/delete_food', {'food_id':food_id}, function(data){
+		$(e).parent().parent().fadeOut(1000, complete);
+		function complete() {
+			$(e).parent().parent().empty();
+		}
+	})
+}
+function deletePost(post_id, e){
+	$.get('/restaurant/delete_post', {'post_id':post_id}, function(data){
+		$(e).parent().parent().fadeOut(1000, complete);
+		function complete() {
+			$(e).parent().parent().empty();
+		}
+	})
+}
+$(document).ready(function(){
+	var restaurant_id = $('#title').attr('restaurant_id')
+	$('#addBtn').click(function(){
+	})
+	$('#editBtn').click(function(){
+	})
+	
+
+})
+function showEditModal(){
+	$('#editModal').modal('show')
+}
+$(function () {
+        $('#container').highcharts({
+            chart: {
+                type: 'area'
+            },
+            title: {
+                text: 'US and USSR nuclear stockpiles'
+            },
+            subtitle: {
+                text: 'Source: <a href="http://thebulletin.metapress.com/content/c4120650912x74k7/fulltext.pdf">'+
+                    'thebulletin.metapress.com</a>'
+            },
+            xAxis: {
+                labels: {
+                    formatter: function() {
+                        return this.value; // clean, unformatted number for year
+                    }
+                }
+            },
+            yAxis: {
+                title: {
+                    text: 'Nuclear weapon states'
+                },
+                labels: {
+                    formatter: function() {
+                        return this.value / 1000 +'k';
+                    }
+                }
+            },
+            tooltip: {
+                pointFormat: '{series.name} produced <b>{point.y:,.0f}</b><br/>warheads in {point.x}'
+            },
+            plotOptions: {
+                area: {
+                    pointStart: 1940,
+                    marker: {
+                        enabled: false,
+                        symbol: 'circle',
+                        radius: 2,
+                        states: {
+                            hover: {
+                                enabled: true
+                            }
+                        }
+                    }
+                }
+            },
+            series: [{
+                name: 'USA',
+                data: [null, null, null, null, null, 6 , 11, 32, 110, 235, 369, 640,
+                    1005, 1436, 2063, 3057, 4618, 6444, 9822, 15468, 20434, 24126,
+                    27387, 29459, 31056, 31982, 32040, 31233, 29224, 27342, 26662,
+                    26956, 27912, 28999, 28965, 27826, 25579, 25722, 24826, 24605,
+                    24304, 23464, 23708, 24099, 24357, 24237, 24401, 24344, 23586,
+                    22380, 21004, 17287, 14747, 13076, 12555, 12144, 11009, 10950,
+                    10871, 10824, 10577, 10527, 10475, 10421, 10358, 10295, 10104 ]
+            }, {
+                name: 'USSR/Russia',
+                data: [null, null, null, null, null, null, null , null , null ,null,
+                5, 25, 50, 120, 150, 200, 426, 660, 869, 1060, 1605, 2471, 3322,
+                4238, 5221, 6129, 7089, 8339, 9399, 10538, 11643, 13092, 14478,
+                15915, 17385, 19055, 21205, 23044, 25393, 27935, 30062, 32049,
+                33952, 35804, 37431, 39197, 45000, 43000, 41000, 39000, 37000,
+                35000, 33000, 31000, 29000, 27000, 25000, 24000, 23000, 22000,
+                21000, 20000, 19000, 18000, 18000, 17000, 16000]
+            }]
+        });
+    });
+
+</script>
+{% endblock %}

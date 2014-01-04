@@ -1,0 +1,467 @@
+{% extends 'restaurant/base_bootstrap_black_edition.html' %}
+{% block content3 %}
+	
+	<div class="container2" style="margin: 0 auto; padding-top:20px; max-width:900px;">
+		<div style="background-color:white;">   
+     		<!-- <img src="https://fbcdn-sphotos-d-a.akamaihd.net/hphotos-ak-ash3/556334_10151559830962014_2068011705_n.jpg" style="width:100%; height:300px"> -->
+     		<img src="https://fbcdn-sphotos-d-a.akamaihd.net/hphotos-ak-ash3/556334_10151559830962014_2068011705_n.jpg" alt="Image" style="width:100%; height:300px"/>	
+ 			<div class="media">
+     		  <a class="pull-left" href="#">
+     		    <img class="media-object" src="{{MEDIA_URL}}{{restaurant.picture}}" style="height:150px; width:150px">
+     		  </a> 		  
+     		  <div class="media-body">
+     		  	<div class="span8">
+     		  				<h1 id="title" restaurant_id="{{restaurant.id}}" type="{{type}}">{{restaurant.name}}</h1>
+     		    			<p>{{restaurant.description}}</p>
+			    		  	{% if restaurant.user != userProfile %}
+					  	  		{% if restaurant in userProfile.follower.all %}
+					  	  			<button id="followBtn" class="btn btn-primary" follow="true" onclick="follow(this)">Following</button>
+					  	  		{% else %}
+					  	  			<button id="followBtn" class="btn btn-primary " follow="false" onclick="follow(this)">Follow</button>
+					  	  		{% endif %}
+			    		  	  	
+			    		  	{% endif %}
+     		  	</div>
+  	     		<div class="span4">
+ 		  		  	<ul class="inline" style="text-align:center;">
+ 		  				<li><h3>{{restaurant.visiting}}</h3><p>visiting</p></li>
+ 		  				<li><h3>{{restaurant.visitor}}</h3><p>visitor</p></li>
+ 		  				<li><h3>{{restaurant.follow}}</h3><p>Follower</p></li>
+ 		  			</ul>
+ 		  			<ul class="nav nav-pills ">
+			          <li class="active"><a href="#f">Home</a></li>
+			          <li><a href="/restaurant/business/{{restaurant.name}}/checkin">Check In</a></li>
+			          <li><a href="/restaurant/business/{{restaurant.name}}/hungry">Hungry</a></li>
+			          <li><a href="/restaurant/business/{{restaurant.name}}/follower">Follower</a></li>
+			          <li><a href="/restaurant/business/{{restaurant.name}}/about">About</a></li>
+			        </ul>
+  	     	  	</div>
+     		  </div>
+ 			</div>
+ 		</div>
+ 		<br>
+
+ 		<div id="food" class="row-fluid" style="background-color:white;">
+ 				<div class="span12" >
+ 			 		<div id="myCarousel" class="carousel slide row-fluid">
+ 			 		 
+ 				 		<ol class="carousel-indicators">
+ 				 		    <li data-target="#myCarousel" data-slide-to="0" class="active"></li>
+ 				 		    <li data-target="#myCarousel" data-slide-to="1"></li>
+ 				 		    <li data-target="#myCarousel" data-slide-to="2"></li>
+ 				 		</ol>
+ 				 		<div class="carousel-inner">
+ 				 			
+ 					 		<div class="item active">
+ 					 			<img src="http://www.hyderabadi.info/warehouse/biryani.jpg" alt="Image" />
+ 					 		</div>
+ 					 		 
+ 					 		<div class="item">
+ 					 			<img src="http://www.kettlecuisine.com/assets/images/home/slideshow/2.jpg"  />
+ 					 		</div>
+ 					 		 
+ 					 		<div class="item">
+ 					 			<img src="http://rumbaonpike.com/images/hero_tacos.jpg" alt="Image"/>
+ 					 		</div>
+ 				 		 
+ 				 		</div>
+ 				 		<a class="left carousel-control" href="#myCarousel" data-slide="prev">‹</a>
+ 				 		<a class="right carousel-control" href="#myCarousel" data-slide="next">›</a>
+ 			 		</div>
+ 					<!-- <ul class="inline"> -->
+ 					<legend>Popular Food</legend>
+ 					<div class="row-fluid">
+ 					{% for i in food %}
+ 			  			<!-- <li> -->
+ 			  				<div class="span2">
+ 			  					<img src="{{MEDIA_URL}}{{i.picture}}" style="height:150px;">
+ 			  					<h4><a href="#f" onclick='displayFoodModal("{{i.id}}","{{i.picture}}","{{i.name}}","{{i.price}}","{{i.description}}","{{i.like}}")'>{{i.name}}</a></h4>
+ 			  				</div>
+ 			  			<!-- </li> -->
+ 					{% endfor %}
+ 					</div>
+ 					<!-- </ul> -->
+ 				</div>
+ 		</div>
+ 		<div id="foodModal" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="width: 960px; margin-left: -480px;">
+ 			<div class="modal-body" >
+ 				<div class="row-fluid">
+ 					<div class="span4">
+		 				<div class="">
+	 						<img id="pictureFM" style="padding-bottom:10px;">
+ 							<h2 id="nameFM"></h2>
+ 							<p id="descriptionFM"></p>
+ 							<ul class="inline">
+		 		  				<li><p>Like</p><p class="lead">10000</p></li>
+		 		  				<li><p>Like</p><p class="lead">10000</p></li>
+		 		  				<li><p>Like</p><p class="lead">10000</p></li>
+		 		  			</ul>
+		 				</div>
+		 				<hr>
+ 				 		<div id="myCarousel2" class="carousel slide row-fluid">
+		 				 		 
+		 					 		<ol class="carousel-indicators">
+		 					 		    <li data-target="#myCarousel2" data-slide-to="0" class="active"></li>
+		 					 		    <li data-target="#myCarousel2" data-slide-to="1"></li>
+		 					 		    <li data-target="#myCarousel2" data-slide-to="2"></li>
+		 					 		</ol>
+		 					 		
+		 					 		<div class="carousel-inner">
+		 					 			
+		 						 		<div class="item active">
+		 						 			<img src="http://www.hyderabadi.info/warehouse/biryani.jpg" alt="Image" style="height:150px;" />
+		 						 		</div>
+		 						 		 
+		 						 		<div class="item">
+		 						 			<img src="http://www.kettlecuisine.com/assets/images/home/slideshow/2.jpg" style="height:150px;" />
+		 						 		</div>
+		 						 		 
+		 						 		<div class="item">
+		 						 			<img src="http://rumbaonpike.com/images/hero_tacos.jpg" alt="Image" style="height:150px;" />
+		 						 		</div>
+		 					 		 
+		 					 		</div>
+		 					 		 
+		 					 		<a class="left carousel-control" href="#myCarousel2" data-slide="prev">‹</a>
+		 					 		<a class="right carousel-control" href="#myCarousel2" data-slide="next">›</a>
+ 				 		</div>
+		 			</div>
+		 			<div class="span8 well">
+		 				<ul class="inline">
+		 					<li><h1>Reviews</h1></li>
+		 					<li><button id="review" class="pull-right btn btn-primary" onclick="displayReviewInput()">Write a Review</button></li>
+		 				</ul>
+		 				<div id="reviewBlock" class='media' style="display:none">
+		 					<img id="pictureFM" class="pull-left" style="padding-bottom:10px; width:50px; height:50px" src="{{MEDIA_URL}}{{userProfile.picture}}">
+		 					<div class="media-body">
+		 						<p class="lead">{{userProfile.name}}</p>
+		 						<textarea id="reviewText" class="input-block-level"  rows="3" food_id=""placeholder="Write a review here..."></textarea>​
+			 					<button id="submit_review" onclick="submitFoodReview()"class="btn btn-primary pull-right">Submit Review</button>
+		 					</div>
+			 				
+				 		</div>
+				 		<div id="foodcomment_row">
+				 		</div>
+		 				
+				 		
+			 		</div>
+			 	</div>
+		 		
+ 			</div>
+	 		
+ 		</div>
+ 		<a href="/restaurant/business/{{restaurant.name}}/menu" class="pull-right">more</a>
+ 		<br>
+
+
+ 		<!-- followers -->
+ 		<!-- <div class="row-fluid">
+ 			<legend>Staff</legend>
+ 			<legend>Followers</legend>
+ 			<ul class="inline">
+ 			{% for i in restaurant.follower.all %}
+ 				<li>
+	 				<img src="{{MEDIA_URL}}{{i.picture}}" style="width:100px; height:100px;">
+	 				<h4><a href="#">{{i.name}}</a></h4>
+	 			</li>
+ 			{% endfor %}
+ 			</ul>
+ 		</div> -->
+
+ 		<!-- Post -->
+ 		<div class="row-fluid">
+ 			<div class="span7">
+ 				<legend>Recent Posts</legend>
+ 				{% for i in post %}
+	 				<div style="background-color:white; box-shadow: 1px 1px 1px #888888;">
+	 					{% if i.picture %}
+	 						<img src="{{MEDIA_URL}}{{i.picture}}" style="padding-bottom:10px">
+	 					{% endif %}
+	 					<div style="padding:10px">
+		 					<a href="/restaurant/business/{{i.name}}" class='lead'>{{i.text}}</a>
+		 					<div class="media">
+		 					  <a class="pull-left" href="#">
+		 					    <img class="media-object" src="{{MEDIA_URL}}{{i.business.picture}}" style="height:40px; width:40px">
+		 					  </a>
+		 					  <div class="media-body">
+		 					  	<h4 class="media-heading">{{i.business.name}}</h4>
+		 					    <p>Little Miss Sweeter Thing turned three last week. If you ask her ..</p>
+		 					    <a href="#f" onclick='likeRestaurantPost("{{i.id}}",this,"post")'>
+		        	  				{% if userProfile in i.who_like.all %}
+		        			  			Unlike
+		        			  		{% else %}
+		        			  			Like
+		        			  		{% endif %}
+							    </a><i class="icon-thumbs-up"></i>
+							    <a href="#f" id='like_num_restaurantPost-{{i.id}}'>{{i.like}}</a>
+						     	| <i class="icon-comment"></i><a id='comment_num_restaurantPost-{{i.id}}' href="#f" onclick="displayComment({{i.id}})"> {{i.comment_num}} Comments</a> 
+						       	| <i class="icon-share"></i> <a href="#">{{i.share}} Shares</a>
+						       	| <i class="icon-calendar"></i>{{i.datetime}}
+					       		<div id="comment_content-{{i.id}}" style="display:none;">
+					       			<hr>
+					       			<div id="comment_row-{{i.id}}">
+					       			</div>
+					       			<div class="media">
+					       				<img class="media-object pull-left" src="{{MEDIA_URL}}{{i.user.picture}}" style="height:40px; width:40px">
+					       				<div class="media-body">
+					       					<textarea id="commentInput-{{i.id}}" class="input-block-level" placeholder="Write a comment..."></textarea>​
+					       					<button class="btn btn-primary pull-right" onclick='comment("{{i.id}}")'>Comment</button>
+					       				</div>
+					       			</div>
+					       		</div>
+		 					  </div>
+		 					</div>
+		 				</div>
+	 				</div>
+	 				<hr>
+ 				{% endfor %}
+ 			</div>
+ 			<div class="span5">
+	 				<ul class="inline">
+	 					<li><h2>Reviews</h2></li>
+	 					<li><a id="post-addBtn" href="#f"><span class="badge badge-info">Review</span></a></li>
+	 				</ul>
+	 				<div id="post-addForm" style="display:none;">
+	 					<div class="media">
+	 					  <a class="pull-left" href="#">
+	 					    <img class="media-object" src="{{MEDIA_URL}}{{userProfile.picture}}" style="width:40px; height:40px;">
+	 					  </a>
+	 					  <div class="media-body">
+	 					    <!-- <h4 class="media-heading">Media heading</h4> -->
+	 					    <input id="title_ResRev" class="input-block-level" type="text" placeholder="Title">
+	 						<textarea id="text_ResRev" class="input-block-level" rows="3" placeholder="Text"></textarea>
+	 						<button class="btn btn-primary pull-right" onclick="post_restaurant_review()">post</button>
+	 					  </div>
+	 					</div>
+	 					
+	 					<hr>
+	 				</div>
+	 				<div id ="restaurantReview">
+	 				{% for i in restaurantReview %}
+		 				  <div style="background-color:white;box-shadow: 1px 1px 1px #888888;padding:5px;">
+	 						<h4>{{i.title}}</h4>
+	 						<div class="media">
+	 						    <img class="media-object pull-left" src="{{MEDIA_URL}}{{i.user.picture}}" style="height:40px; width:40px">
+	 						  	<div class="media-body">
+	 						  		<h5 class="media-heading"><a href="#">{{i.user.name}}</a></h5>
+	 						    	<p>{{i.text}}</p>
+							        <a href="#f" onclick='likeRestaurantReview("{{i.id}}",this,"restaurantReview")'>
+			        	  				{% if userProfile in i.who_like.all %}
+			        			  			Unlike
+			        			  		{% else %}
+			        			  			Like
+			        			  		{% endif %}
+							         </a><i class="icon-thumbs-up"></i>
+							         <a href="#f" id='like_num_restaurantReview-{{i.id}}'>{{i.like}}</a>
+						       		| <i class="icon-calendar"></i>{{i.datetime}}
+						       		
+	 						  	</div>
+	 						</div>
+		 				  </div>	
+		 				  <hr>
+	 				{% endfor %}
+	 				</div>
+ 				</div>
+ 		</div>
+ 		
+	</div>
+<script type="text/javascript">
+var user_id = $("#user_info").attr("user_id");
+var restaurant_id = $('#title').attr('restaurant_id')
+var type = $('#title').attr('type')
+var menu_num;
+$(document).ready(function(){
+	$('#check-in').click(function(){
+		$(this).parent().slideUp("slow")
+	})
+	$('#post-addBtn').click(function(){
+		$('#post-addForm').slideDown('slow')
+	})
+	$('#foodModal').on('hidden', function () {
+	  $('#reviewBlock').hide()
+	  $('#reviewText').val("")
+	  $('#foodcomment_row').empty()
+	})
+
+	$("#followBtn").hover(
+	  function () {
+	  	if($(this).attr("follow") == "true"){
+	  		$(this).attr("class", "btn btn-danger")
+	    	$(this).text("Unfollow")
+	  	}
+	  },
+	  function () {
+	    if($(this).attr("follow") == "true"){
+	    	$(this).attr("class", "btn btn-primary ")
+	    	$(this).text("Following")
+	  	}
+	  }
+	);
+})
+function post_restaurant_review(){
+	title = $("#title_ResRev").val()
+	text = $("#text_ResRev").val()
+	// check empty str before 
+	$.get('/restaurant/comment', {'title':title, 'text':text, 'restaurant_id':restaurant_id, 'mode':"restaurant"},function(data){
+			$("<div style='background-color:white;box-shadow: 1px 1px 1px #888888;'>"+
+					"<a href='/restaurant/business/{{i.name}}'><h4>"+data['title']+"</h4></a>"+
+					"<div class='media'>"+
+					    "<img class='media-object pull-left' src='{{MEDIA_URL}}imgs/"+data['user_picture']+"' style='height:40px; width:40px'>"+
+					  "<div class='media-body'>"+
+					  	"<h5 class='media-heading'><a href='#'>"+data['name']+"</a></h5>"+
+					    "<p>"+data['text']+"</p>"+
+				        "<a href='#'>Like </a><i class='icon-thumbs-up'></i> "+data['like']+
+			     	" | <i class='icon-comment'></i>"+data['comment_num']+" Comments"+
+			       	" | <i class='icon-calendar'></i>"+data['datetime']+""+
+					  "</div>"+
+					"</div>"+
+				  "</div>"+
+				"<hr>").hide().prependTo($('#restaurantReview')).fadeIn(1000);
+			$("#title_ResRev").val("")
+			$("#text_ResRev").val("")
+		})
+}
+
+function follow(e){
+	if ($(e).attr("follow") == "false") {
+		$(e).attr("follow", "true")
+	}
+	else{
+		$(e).attr("follow", "false")
+	}
+	$(e).attr("class", "btn btn-primary")
+	$.get('/restaurant/follow', {'restaurant_id':restaurant_id}, function(data){
+		$(e).text(data)
+	})	
+}
+function displayReviewInput(){
+	$('#reviewBlock').slideDown("slow");
+}
+function createCommentBlock(data, position){
+	$("<div class='media'>"+
+		"<img class='media-object pull-left' src='{{MEDIA_URL}}imgs/"+data['user_picture']+
+			"' style='height:40px; width:40px'>"+
+		"<div class='media-body'>"+
+				"<h5 class='media-heading'><a href='#f'>"+data['name']+"</a></h5>"+
+				"<p>"+data['text']+"</p>"+
+				"<a href='#f' onclick='likeRestaurantComment("+data['id']+",this)'>"+data['liked']+" </a><i class='icon-thumbs-up'></i> "+
+				"<a href='#f' id='like_num_restaurantComment-"+data['id']+"'>"+data['like']+"</a>"+
+			" | <i class='icon-calendar'></i>"+data['datetime']+
+			"<hr>"+
+		"</div>"+
+	  "</div>").hide().appendTo(position).fadeIn(2000);
+}
+function createFoodReviewBlock(data, position){
+	$("<div class='media' style='background-color:white;box-shadow:1px 1px"+								" 1px #888888;padding:5px;'>"+
+		"<img id='pictureFM' class=' media-object pull-left' style='padding-bottom:10px;"+" width:50px; height:50px' src='{{MEDIA_URL}}imgs/"+
+			data['user_picture']+"'/>"+
+		"<div class='media-body'>"+
+				"<h5 class='media-heading'><a href='#f'>"+data['name']+"</a></h5>"+
+				"<p>"+data['text']+"</p>"+
+				"<a href='#f' onclick='likeFoodReview("+data['id']+",this)'>"+data['liked']+" </a><i class='icon-thumbs-up'></i> "+
+				"<a href='#f' id='like_num_foodReview-"+data['id']+"'>"+data['like']+"</a>"+
+			" | <i class='icon-calendar'></i>"+data['datetime']+
+		"</div>"+
+	  "</div>").hide().appendTo(position).fadeIn(2000);
+}
+function comment(post_id){
+	text = $('#commentInput-'+post_id).val()
+	$.get('/restaurant/commentRestaurantPost', {'post_id':post_id, 'text':text},function(data){
+		commentNum = parseInt($("#comment_num_restaurantPost-"+post_id).html())
+		alert(commentNum)
+		$("#comment_num_restaurantPost-"+post_id).text((commentNum+1)+" Comments")
+		createCommentBlock(data, $('#comment_row-'+post_id))
+		$('#commentInput-'+post_id).val("")
+	})
+}
+function displayComment(post_id){
+	$.get('/restaurant/get_restaurant_post_comment', {'post_id':post_id}, function(data){
+		$('#comment_row-'+post_id).empty()
+		for( var i = 0; i<data.length; i++){
+			createCommentBlock(data[i], $('#comment_row-'+post_id))
+		}
+		$('#comment_content-'+post_id).slideDown("slow");
+	})
+}
+function displayFoodModal(id, picture, name, price, description, like){
+	$('#pictureFM').attr('src','{{MEDIA_URL}}'+picture)
+	$('#nameFM').text(name)
+	$('#descriptionFM').text(description)
+	$('#priceFM').text(price)
+	$('#likeFM').text(like)
+	$('#reviewText').attr("food_id",id)
+	$.get('/restaurant/get_food_comment', {'food_id':id}, function(data){
+		for (var i =0; i<data.length; i++){
+			createFoodReviewBlock(data[i], $('#foodcomment_row'))
+        }
+	})
+	$('#foodModal').modal("show")
+}
+function submitFoodReview(){
+	var text = $('#reviewText').val()
+	var food_id = $('#reviewText').attr('food_id')
+	if (text.length > 0){
+		$.get('/restaurant/comment', {'user_id':user_id, 'text':text, 'food_id':food_id, 'mode':"food"},function(data){
+			createFoodReviewBlock(data, $('#foodcomment_row'))
+		})
+		$('#reviewText').val("")
+		$('#reviewBlock').slideUp("slow");
+	}
+}
+function likeRestaurantReview(review_id, e, mode){
+	$.get('/restaurant/like',{'user_id':user_id,'mode':"restaurantReview",'id':review_id}, function(data){
+		$(e).text(data)
+		likeNum = parseInt($("#like_num_restaurantReview-"+review_id).html())
+		if (data == "Unlike"){
+			$("#like_num_restaurantReview-"+review_id).text(likeNum+1)
+		}
+		else{
+			$("#like_num_restaurantReview-"+review_id).text(likeNum-1)
+		}
+	})
+}
+function likeFoodReview(review_id, e, mode){
+	$.get('/restaurant/like',{'user_id':user_id,'mode':"foodReview",'id':review_id}, function(data){
+		$(e).text(data)
+		likeNum = parseInt($("#like_num_foodReview-"+review_id).html())
+		if (data == "Unlike"){
+			$("#like_num_foodReview-"+review_id).text(likeNum+1)
+		}
+		else{
+			$("#like_num_foodReview-"+review_id).text(likeNum-1)
+		}
+	})
+}
+function likeRestaurantPost(post_id, e, mode){
+	$.get('/restaurant/like',{'user_id':user_id,'mode':"post",'id':post_id}, function(data){
+		$(e).text(data)
+		likeNum = parseInt($("#like_num_restaurantPost-"+post_id).html())
+		if (data == "Unlike"){
+			$("#like_num_restaurantPost-"+post_id).text(likeNum+1)
+		}
+		else{
+			$("#like_num_restaurantPost-"+post_id).text(likeNum-1)
+		}
+	})
+}
+function likeRestaurantComment(comment_id, e){
+	$.get('/restaurant/like',{'user_id':user_id,'mode':"comment",'id':comment_id}, function(data){
+		$(e).text(data)
+		likeNum = parseInt($("#like_num_restaurantComment-"+comment_id).html())
+		if (data == "Unlike"){
+			$("#like_num_restaurantComment-"+comment_id).text(likeNum+1)
+		}
+		else{
+			$("#like_num_restaurantComment-"+comment_id).text(likeNum-1)
+		}
+	})
+}
+$(document).ready(function(){
+	$('#check-in').click(function(){
+		$(this).parent().slideUp("slow")
+	})
+})
+
+
+</script>
+{% endblock %}

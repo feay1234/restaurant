@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<HTML xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<HEADER>
+        <META http-equiv="Content-type" content="text/html; charset=utf-8" />
+    <TITLE>Restaurant</TITLE>
+	<LINK href="{{ STATIC_URL}}css/basic/basic.css" rel="stylesheet" title="basicstyle" type="text/css" />
+</HEADER>
+<BODY>
+
+        <DIV>
+                <DIV id="page_header">
+                        <H1><A href="/restaurant/">Restaurant</A></H1>
+                        <DIV id="page_user">
+                                {% if user.is_authenticated %}
+                                        Welcome {{ user.username }}  |
+                                        <A href="/restaurant/logout/">Logout</A>
+                                {% else %}
+                                        <A href="/restaurant/register/">Register</A> |
+                                        <A href="/restaurant/login/">Login</A>
+                                {% endif %}
+                        </DIV>
+                </DIV>
+
+                <DIV id="page_navbar">
+                        <A href="/restaurant/restricted/">Restricted</A> |
+                        <A href="/restaurant/about/">About</A>
+                </DIV>
+
+                <DIV>
+                        {% block sidebar %}{% endblock %}
+                </DIV>
+
+                <DIV id="page_content">
+                        {% block content %}{% endblock %}
+                </DIV>
+
+                <DIV id="page_footer">
+                        {% block footer %}{% endblock %}
+                </DIV>
+
+        <DIV>
+</BODY>
+</HTML>

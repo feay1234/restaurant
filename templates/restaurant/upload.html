@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <title>Restaurant</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <script type="text/javascript" src="{{STATIC_URL}}js/jquery.min.js"></script>
+    <script type="text/javascript" src="{{STATIC_URL}}css/bootstrap/js/bootstrap.js"></script>
+    <link href="{{STATIC_URL}}css/bootstrap/css/cosmo.css" rel="stylesheet">
+
+    <style type="text/css">
+      body {
+        /*margin-left:-20px; */
+        /*margin-top:-10px*/
+        /*width: 550px;*/
+      }
+      
+    </style>
+    <link href="{{STATIC_URL}}css/bootstrap/css/bootstrap-responsive.css" rel="stylesheet">
+
+  </head>
+
+			    {% if menuForm.as_p %}
+		        	<FORM id="form" type="restaurant" enctype="multipart/form-data" method="post" action="/restaurant/upload/{{business.name}}/">
+			                {% csrf_token %}
+			                {{ menuForm.as_p }}
+		                <INPUT class="btn btn-primary btn-block" type="submit" name="submit" value="submit" />
+			        </FORM>
+			    {% else %}
+			    {% if businessPForm.as_p %}
+			    <!-- <div class="panel" > -->
+			        <FORM id="form" type="restaurant" enctype="multipart/form-data" method="post" action="/restaurant/upload_post/{{business.name}}/">
+				        
+		 					{% csrf_token %}
+		 					{{businessPForm.as_p}}
+		 					<INPUT class="btn btn-primary btn-block" type="submit" name="submit" value="submit" />
+		 					
+		 					<!-- <div class="panel-footer2">
+		 						
+		 						<button type="submit" class="btn btn-default">Picture</button>
+		 						<button type="submit" class="btn btn-default pull-right">Post</button>
+		 						
+		 					</div>	 -->	 		
+	 				</FORM>
+	 			<!-- </div> -->
+			    {% else %}
+			    	<FORM id="form" type="shop" enctype="multipart/form-data" method="post" action="/restaurant/upload/{{business.name}}/">
+			                {% csrf_token %}
+			                {{ productForm.as_p }}
+		                <INPUT type="submit" name="submit" value="submit" />
+			        </FORM>
+			    {% endif %}
+			  	{% endif %}
+
+			  	
+
+			  	{% if success %}
+			  		<p id="success" status="true"></p>
+			  	{% else %}
+			  		<p id="success" status="false"></p>
+			  	{% endif %}
+
+			  	{% if post_success %}
+			  		<p id="post_success" status="true">
+			  	{% else %}
+			  		<p id="post_success" status="false"></p>
+			  	{% endif %}
+
+  </body>
+</html>
